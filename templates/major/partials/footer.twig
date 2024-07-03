@@ -99,7 +99,6 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
         path: '/templates/major/partials/forms/feedback/',
         extension: 'twig'
         }) | raw }}
-
 </div>
 <div class="popup" id="popupBronNew" style="display: none; width: 100%; max-width: 500px;">
     {{ runSnippet('Form', {
@@ -107,7 +106,6 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
         path: '/templates/major/partials/forms/bronNew/',
         extension: 'twig'
         }) | raw }}
-
 </div>
 <div class="popup" id="popupCredNew" style="display: none; width: 100%; max-width: 500px;">
     {{ runSnippet('Form', {
@@ -115,7 +113,6 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
         path: '/templates/major/partials/forms/creditNew/',
         extension: 'twig'
         }) | raw }}
-
 </div>
 <div class="popup" id="popupTradeIn" style="display: none; width: 100%; max-width: 580px;">
     {{ runSnippet('Form', {
@@ -123,22 +120,32 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
         path: '/templates/major/partials/forms/newTradeIn/',
         extension: 'twig'
         }) | raw }}
-
 </div>
-<script type="text/javascript">
-$(document).on('change', '.calc-input', function() {
-  var loanAmount = parseFloat($('#loan-amount').val());
-  var initialPaymentPercent = parseFloat($('#initial-payment-percent').val());
-  var loanTerm = parseFloat($('#loan-term').val());
-  var initialPayment = loanAmount * initialPaymentPercent / 100;
-  var monthlyPayment = (loanAmount - initialPayment) / loanTerm;
-  console.log('loanAmount: ', loanAmount);
-  console.log('initialPaymentPercent: ', initialPaymentPercent);
-  console.log('loanTerm: ', loanTerm);
-  console.log('initialPayment: ', initialPayment);
-  console.log('monthlyPayment: ', monthlyPayment);
-  $('#initial-payment-amount').val(initialPayment.toFixed(2));
-  $('#monthly-payment-amount').text(monthlyPayment.toFixed(2));
-});
+<div class="popup" id="popupcred2" style="display: none; width: 100%; max-width: 580px;">
+        
+            {{ runSnippet('Form', {
+            formid: 'FormCallback',
+            path: '/templates/major/partials/forms/credNew/',
+            extension: 'twig'
+            }) | raw }}
+</div>
 
-</script>
+ <script type="text/javascript">
+// $(document).on('change', '.calc-input', function() {
+//   var loanAmount = parseFloat($('#loan-amount').val());
+//   var initialPaymentPercent = parseFloat($('#initial-payment-percent').val());
+//   var loanTerm = parseFloat($('#loan-term').val());
+//   var initialPayment = loanAmount * initialPaymentPercent / 100;
+//   var monthlyPayment = (loanAmount - initialPayment) / loanTerm;
+//   console.log('loanAmount: ', loanAmount);
+//   console.log('initialPaymentPercent: ', initialPaymentPercent);
+//   console.log('loanTerm: ', loanTerm);
+//   console.log('initialPayment: ', initialPayment);
+//   console.log('monthlyPayment: ', monthlyPayment);
+//   $('#initial-payment-amount').val(initialPayment.toFixed(2));
+//   $('#monthly-payment-amount').text(monthlyPayment.toFixed(2));
+// });
+
+// </script>
+    
+
