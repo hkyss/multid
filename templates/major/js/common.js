@@ -34,7 +34,28 @@ $(function(){
 	  slidesToShow: 4,
 	  slidesToScroll: 1,
 	  asNavFor: '.slider-for',
-	  focusOnSelect: true
+	  focusOnSelect: true,
+	  responsive: [{
+		breakpoint: 1200,
+		settings: {
+			slidesToShow: 5
+		}
+	},
+	{
+		breakpoint: 768,
+		settings: {
+			slidesToShow: 4
+		}
+	},
+	{
+		breakpoint: 575,
+		settings: {
+			slidesToShow: 1,
+			dots: true,
+			arrows: false
+		}
+	}
+]
 	});
 });
 $(document).ready(function () {
