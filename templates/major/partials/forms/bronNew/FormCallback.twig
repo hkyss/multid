@@ -34,7 +34,7 @@ var phoneMask = IMask(
         <input type="hidden" name="price" value="{{ data.yourprice | default(resource[car-price]) }}" data-price>
         {{ data['form.messages'] | raw }}
         <div class="name mb-3" style="color: #3B80CC;">
-            Летняя распродажа {{ resource.mark_id }}!
+            Летняя распродажа {{ resource.mark_id is empty ? resource.mark : resource.mark_id }}!
         </div>
         <div class="row">
             <div class="col-md-12 mb-3">
