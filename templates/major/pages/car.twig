@@ -752,6 +752,18 @@
   right: 70px;
   background: #f4f4f4 url('/templates/major/img/prev-hover.svg') no-repeat center;
 }
+.slider-for .slick-slide img {
+    display: block;
+    height: 510px;
+    object-fit: cover;
+}
 
+@media (max-width: 575px) {
+    .slider-for .slick-slide img {
+    display: block;
+    height: auto;
+    object-fit: contain;
+}
+}
     </style>
 {% endblock %}
