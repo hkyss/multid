@@ -2668,16 +2668,16 @@ right: -58px;
     width: 100%;
     height: 520px;
     position: relative;
-  }
-  .bottom-page-contacts .contacts {
+    margin-bottom: 0;
+}
+.bottom-page-contacts .contacts {
     z-index: 3;
     box-shadow: 0px 18px 35px rgba(136, 178, 222, 0.13);
-    /* border-radius: 16px; */
     left: auto;
     top: auto;
     width: 100%;
+    position: relative;
   }
-
 }
 @media (max-width: 430px) {
   .credit-block-home .content .top{
