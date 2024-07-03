@@ -126,4 +126,15 @@ $(document).ready(function () {
 
 	updateResults()
   })
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var showAllButton = document.getElementById('show-all-brands');
+    showAllButton.addEventListener('click', function() {
+        var brands = document.querySelectorAll('.brands-container .brand-item');
+        brands.forEach(function(brand) {
+            brand.style.display = 'flex';
+        });
+        showAllButton.style.display = 'none';
+    });
+});
   
