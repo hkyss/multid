@@ -26,15 +26,17 @@ class catalog_filtersDocLister extends site_contentDocLister
             'makePaginateUrl' => function($data, $modx, $_DL, $_eDL) {
                 $url = (string) $_SERVER['REQUEST_URI'];
 
-                if (strpos($url, "filters/") === false) {
-                    return $modx->makeUrl($modx->documentIdentifier);
-                }
+                $params = parse_url($url);
+                $params = $params['query'];
+                parse_str($params, $params_arr);
+                unset($params_arr['page']);
+                $params = http_build_query($params_arr);
 
                 $url = explode("?", $url);
                 $url = (string) $url[0];
 
-                if (empty($url)) {
-                    return $modx->makeUrl($modx->documentIdentifier);
+                if (empty($url) || strpos($url, "filters/") === false) {
+                    return "{$url}?{$params}";
                 }
 
                 if (substr($url, 0, 1) !== "/") {
