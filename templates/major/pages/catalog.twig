@@ -1,20 +1,26 @@
 {% extends './app.twig' %}
 
 {% block MAIN %}
-    {% set brand = _GET.brand %}
-    {% if not brand %}
-        {% set brand = 'renault' %}
+    {% set filters = "" %}
+
+    {% if _GET.brand %}
+        {% set filters = 'tv:mark_id:=:' ~ _GET.brand %}
     {% endif %}
 
-    {% set model = _GET.model %}
-    {% if not model %}
-        {% set model = '' %}
+    {% if _GET.model %}
+        {% set filters = filters ~ ';tv:model_id:like:' ~ _GET.model %}
+    {% endif %}
+
+    {% if filters %}
+        {% set filters = 'AND(' ~ filters ~ ')' %}
+    {% else %}
+        {% set filters = 'tv:car-price:>:0' %}
     {% endif %}
 
     {% set DLModels = runSnippet('DocLister', {
         id: 'catalog',
         controller: 'catalog_filters',
-        filters: 'AND(tv:mark_id:=:' ~ brand ~ ';tv:model_id:like:'~ model ~')' ,
+        filters: filters ,
         _filters: 'AND(tv:price:>:0;tv:region:=:' ~ plh.activeLangAlias ~ ')',
         display: 4,
         parents: baseSettings['catalog_number'],
