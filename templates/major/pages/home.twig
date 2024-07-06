@@ -1,62 +1,26 @@
 {% extends 'app.twig' %}
 {% block MAIN %}
     {# % cache 'main' ~ resource.id % #}
-    {% set brand = _GET.brand %}
-    {% if not brand %}
-        {% set brand = 'renault' %}
+    {% set filters = "" %}
+
+    {% if _GET.brand %}
+        {% set filters = 'tv:mark_id:=:' ~ _GET.brand %}
     {% endif %}
-    {% set model = _GET.model %}
-    {% if not model %}
-        {% set model = '' %}
+
+    {% if _GET.model %}
+        {% set filters = filters ~ ';tv:model_id:like:' ~ _GET.model %}
     {% endif %}
-    {#    {% set DLCatalog = runSnippet('DocLister', {#}
-    {#        id: 'catalog',#}
-    {#        controller: 'catalog_filters',#}
-    {#        filters: 'AND(tv:mark_id:=:' ~ brand ~ ';tv:model_id:like:'~ model ~')' ,#}
-    {#        _filters: 'AND(tv:price:>:0;tv:region:=:' ~ plh.activeLangAlias ~ ')',#}
-    {#        display: 4,#}
-    {#        parents: baseSettings['catalog_number'],#}
-    {#        depth: 2,#}
-    {#        addWhereList: 'c.template=28',#}
-    {#        orderBy: 'car-price',#}
-    {#        order: 'RAND()',#}
-    {#        tvSortType: 'SIGNED',#}
-    {#        tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,gear,year, image,mark_id,model_id',#}
-    {#        ownerTPL: '@T_FILE:partials/wrap',#}
-    {#        tpl:'@T_FILE:partials/catalogcard',#}
-    {#        paginate:'pages',#}
-    {#        TplNextP:'',#}
-    {#        TplPrevP:'',#}
-    {#        TplPage:'@CODE:<li class="page-item"><a class="page-link" href="[+link+]">[+num+]</a></li>',#}
-    {#        TplCurrentPage:'@CODE: <li class="page-item active" aria-current="page"><span class="page-link">[+num+]</span></li>',#}
-    {#        TplWrapPaginate:'@CODE:<ul class="pagination">[+wrap+]</ul>',#}
-    {#        filter: 'filters',#}
-    {#        filterRangeSeparator: ':',#}
-    {#        filterValuesSeparator: '|',#}
-    {#        filterDelimiter: '||',#}
-    {#        __filterPriceId: 14,#}
-    {#        filterList: '42,43,19',#}
-    {#        _filterList: '19:checkbox,20:checkbox,42:checkbox,43:checkbox',#}
-    {#        filterTpl: '@T_FILE:partials/filters/tpl',#}
-    {#        filterOwnerRange: '@T_FILE:partials/filters/ownerRange',#}
-    {#        filterTplRange: '@T_FILE:partials/filters/tplRange',#}
-    {#        filterOwnerCheckbox: '@T_FILE:partials/filters/ownerCheckbox',#}
-    {#        filterTplCheckbox: '@T_FILE:partials/filters/tplCheckbox',#}
-    {#        tvSortType: 'UNSIGNED',#}
-    {#        api: 0,#}
-    {#        debug:0,#}
-    {#        noneTPL:'@CODE: <div class="container">#}
-    {#	<div class="row">#}
-    {#		<div class="col text-center">#}
-    {#			<h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте немного изменить условия поиска</h1>#}
-    {#		</div>#}
-    {#	</div>#}
-    {#</div>',#}
-    {#    }) %}#}
+
+    {% if filters %}
+        {% set filters = 'AND(' ~ filters ~ ')' %}
+    {% else %}
+        {% set filters = 'tv:car-price:>:0' %}
+    {% endif %}
+
     {% set DLModels = runSnippet('DocLister', {
         id: 'catalog',
         controller: 'catalog_filters',
-        filters: 'AND(tv:mark_id:=:' ~ brand ~ ';tv:model_id:like:'~ model ~')' ,
+        filters: filters ,
         _filters: 'AND(tv:price:>:0;tv:region:=:' ~ plh.activeLangAlias ~ ')',
         display: 8,
         parents: baseSettings['catalog_number'],
@@ -99,6 +63,7 @@
         showParent: 1,
         prepare: "DocLister ModelsPrepare"
     }) %}
+
     {% set models = runSnippet('DocLister', {
         id: 'catalog',
         filters: 'AND(tv:mark_id:=:' ~ brand ~ ')' ,
@@ -113,72 +78,69 @@
         api: 1,
         debug:0,
         noneTPL:'@CODE: <div class="container">
-	<div class="row">
-		<div class="col text-center">
-			<h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте немного изменить условия поиска</h1>
-		</div>
-	</div>
-</div>',
-    })
-        | json %}
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте немного изменить условия поиска</h1>
+                </div>
+            </div>
+        </div>',
+    }) | json %}
+
     {% set banner = runSnippet('multiTV', {tvName: 's-vigoda-pulkovo1', docid: 'id', display:'all',
         rowTpl:'@CODE:
-<div class="item" style="background: url([+image+]) center/cover;">
-	<div class="container">
-		<div class="text">
-			<div class="top-text mb-3">
-			</div>
-			<div class="text mb-3">
-				[+title+]
-			</div>
-            <div class="text2 mb-2">
-				[+vigoda+]
-			</div>
-            <div class="text3">
-				[+text+]
-			</div>
-			<button class="mt-2" data-src="#popup" data-fancybox="">Оставить заявку</button>
-		</div>
-	</div>
-</div>'}) %}
+        <div class="item" style="background: url([+image+]) center/cover;">
+            <div class="container">
+                <div class="text">
+                    <div class="top-text mb-3">
+                    </div>
+                    <div class="text mb-3">
+                        [+title+]
+                    </div>
+                    <div class="text2 mb-2">
+                        [+vigoda+]
+                    </div>
+                    <div class="text3">
+                        [+text+]
+                    </div>
+                    <button class="mt-2" data-src="#popup" data-fancybox="">Оставить заявку</button>
+                </div>
+            </div>
+        </div>'}) %}
+
     {% set bannermob = runSnippet('multiTV', {tvName: 's-vigoda-pulkovo1', docid: 'id', display:'all',
         rowTpl:'@CODE:
-	<div class="container">
-		<div class="text">
-			<div class="top-text mb-3">
-			</div>
-			<div class="text mb-3">
-				[+title+]
-			</div>
-            <div class="text2 mb-2">
-				[+vigoda+]
-			</div>
-            <div class="text3">
-				[+text+]
-			</div>
-			<button class="mt-2" data-src="#popup" data-fancybox="">Оставить заявку</button>
-		</div>
-</div>'}) %}
-    {# % include '/partials/brands.twig' % #}
-    {# { runSnippet('Form', {
-formid: 'FormCredit',
-path: '/templates/rofl/partials/forms/credit_home/',
-extension: 'twig'
-}) | raw } #}
+            <div class="container">
+                <div class="text">
+                    <div class="top-text mb-3">
+                    </div>
+                    <div class="text mb-3">
+                        [+title+]
+                    </div>
+                    <div class="text2 mb-2">
+                        [+vigoda+]
+                    </div>
+                    <div class="text3">
+                        [+text+]
+                    </div>
+                    <button class="mt-2" data-src="#popup" data-fancybox="">Оставить заявку</button>
+                </div>
+        </div>'
+    }) %}
+
     <main>
         <div class="index-page-slider text-light d-none d-sm-block">
             {{ banner |raw }}
         </div>
         {% if baseSettings['mob_banner'] is not empty %}
-        <div class="index-page-slider text-light d-block d-sm-none">
-            <div class="item" style="background: url('{{baseSettings['mob_banner']}}') center/cover;">
-                {{ bannermob |raw }}
+            <div class="index-page-slider text-light d-block d-sm-none">
+                <div class="item" style="background: url('{{ baseSettings['mob_banner'] }}') center/cover;">
+                    {{ bannermob |raw }}
+                </div>
             </div>
-        </div>
         {% else %}
-        <div class="index-page-slider text-light d-block d-sm-none">
-            {{ banner |raw }}
-        </div>
+            <div class="index-page-slider text-light d-block d-sm-none">
+                {{ banner |raw }}
+            </div>
         {% endif %}
         <div class="index-top-counts pt-3 text-light mb-5">
             <div class="container">
@@ -239,34 +201,13 @@ extension: 'twig'
                         <div class="col-6 col-md-3">
                             <p class="mb-2">Уточните выбор: </p>
                             <button class="w-100 px-3 select-box btn btn-danger"
-                                    onclick="location.href='{{ modx.makeUrl(baseSettings['catalog_number']) }}podborka-po-parametram'">Больше
+                                    onclick="location.href='{{ modx.makeUrl(baseSettings['catalog_number']) }}podborka-po-parametram'">
+                                Больше
                                 фильтров
                             </button>
                         </div>
-                        {# <div class="col-3">
-						<p class="mb-2">Цена от, руб</p>
-						<input id="min-price" type="text" placeholder="Не выбрана..." class="w-100 px-3">
-					</div>
-					<div class="col-3">
-						<p class="mb-2">Цена до, руб</p>
-						<input id="max-price" type="text" placeholder="Не выбрана..." class="w-100 px-3">
-					</div> #}
                     </div>
                 </div>
-                {# <div class="buttons mb-3">
-				<p class="mb-2">КПП</p>
-				<div class="row">
-					<div class="col-4">
-						<button class="w-100">Любая</button>
-					</div>
-					<div class="col-4">
-						<button class="w-100">АКПП</button>
-					</div>
-					<div class="col-4">
-						<button class="w-100">МКПП</button>
-					</div>
-				</div>
-			</div> #}
             </div>
         </div>
         <div class="dealers-block pb-5">
@@ -275,88 +216,49 @@ extension: 'twig'
                     30 марок авто в наличии
                 </div>
                 {# <div class="row"> #}
-                    {% include('partials/brands.twig') %}
+                {% include('partials/brands.twig') %}
                 {# </div> #}
             </div>
-            {# <div class="button text-center pt-3">
-			<button class="btn btn-danger">Смотреть все модели</button>
-		</div> #}
         </div>
         </div>
-        {# <div class="index-credit-block mb-4">
-            <div class="container">
-                <div class="row"> #}
-                    {# <div class="col-lg-4 col-sm-6 d-flex">
-                        <a href="#" data-src="#popupcred" data-fancybox>
-                            <div class="item mb-3 position-relative">
-                                <span class="d-block mb-2">Купить в кредит</span>
-                                Оставьте заявку и мы подберем для вас самое выгодное кредитное предложение сотрудничаем с 14 банками 98% 
-                                одобрений по кредиту
+        <section class="index-credit-block2 container my-4">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <a href="#" data-src="#popupCredNew" data-fancybox>
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title">Купить в кредит</h3>
+                                <p class="card-text flex-grow-1">Оставьте заявку и мы подберем для вас самое выгодное
+                                    кредитное предложение сотрудничаем с 14 банками 98% одобрений по кредиту</p>
                             </div>
-                        </a>
-                    </div> #}
-                    {# <div class="col-lg-4 col-sm-6">
-					<a href="#" data-src="#popup" data-fancybox>
-						<div class="item mb-3 position-relative">
-							<span class="d-block mb-2">Купить в лизинг</span>
-							Оставьте заявку и мы свяжемся с Вами
-						</div>
-					</a>
-				</div> #}
-                    {# <div class="col-lg-4 col-sm-6 d-flex">
-                        <a href="#" data-src="#popup" data-fancybox>
-                            <div class="item mb-3 position-relative">
-                                <span class="d-block mb-2">Купить по трейд-ин</span>
-                                Заполните форму на оценку вашего авто и мы подберем новый автомобиль в замен вашего
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <a href="#" data-src="#popupTradeIn" data-fancybox>
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title">Купить по трейд-ин</h3>
+                                <p class="card-text flex-grow-1">Заполните форму на оценку вашего авто и мы подберем
+                                    новый автомобиль в замен вашего</p>
                             </div>
-                        </a>
-                    </div> #}
-                    {# <div class="col-lg-4 col-sm-6 d-flex">
-                        <a href="#" data-src="#popup" data-fancybox>
-                            <div class="item mb-3 position-relative">
-                                <span class="d-block mb-2">Купить в рассрочку</span>
-                                0% на полгода на проверенные автомобили. Оставьте заявку на рассрочку и 
-                                мы сделаем вам предложение от которого вы не сможете отказаться
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <a href="#" data-src="#popupcred2" data-fancybox>
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title">Купить в рассрочку</h3>
+                                <p class="card-text flex-grow-1">0% на полгода на проверенные автомобили. Оставьте
+                                    заявку на рассрочку и мы сделаем вам предложение от которого вы не сможете
+                                    отказаться</p>
                             </div>
-                        </a>
-                    </div> #}
-                {# </div>
-            </div>
-        </div> #}
-    <section class="index-credit-block2 container my-4">
-        <div class="row">
-            <div class="col-md-4 mb-4">
-            <a href="#" data-src="#popupCredNew" data-fancybox>
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h3 class="card-title">Купить в кредит</h3>
-                        <p class="card-text flex-grow-1">Оставьте заявку и мы подберем для вас самое выгодное кредитное предложение сотрудничаем с 14 банками 98% одобрений по кредиту</p>
-                    </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
             </div>
-            <div class="col-md-4 mb-4">
-            <a href="#" data-src="#popupTradeIn" data-fancybox>
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h3 class="card-title">Купить по трейд-ин</h3>
-                        <p class="card-text flex-grow-1">Заполните форму на оценку вашего авто и мы подберем новый автомобиль в замен вашего</p>
-                    </div>
-                </div>
-            </a>
-            </div>
-            <div class="col-md-4 mb-4">
-            <a href="#" data-src="#popupcred2" data-fancybox>
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h3 class="card-title">Купить в рассрочку</h3>
-                        <p class="card-text flex-grow-1">0% на полгода на проверенные автомобили. Оставьте заявку на рассрочку и мы сделаем вам предложение от которого вы не сможете отказаться</p>
-                    </div>
-                </div>
-            </a>
-            </div>
-        </div>
-    </section>
+        </section>
         <div class="index-catalog-block2 pb-5">
             <div class="container">
                 <h2 class="h2 mb-5">Предложение дня</h2>
@@ -471,69 +373,7 @@ extension: 'twig'
             {% include '/partials/contacts.twig' %}
 
     </main>
-    {# <script type="text/javascript">
-const marksSelect = document.querySelector('#marks');
-const modelsSelect = document.querySelector('#models');
 
-marksSelect.addEventListener('change', function() {
-	const selectedOption = marksSelect.options[marksSelect.selectedIndex].value;
-	const url = new URL(window.location.href);
-	url.searchParams.set('brand', selectedOption);
-
-	if (modelsSelect.value !== '') {
-		url.searchParams.set('models', modelsSelect.value);
-	}
-
-	$.ajax({
-			url: url.toString(),
-			method: 'GET',
-			dataType: 'html'
-		})
-		.done(function(data) {
-			const catalogHtml = $('<div>').html(data).find('#catalog').html();
-			const modelsHtml = $('<div>').html(data).find('#models').html();
-			$('#catalog').html(catalogHtml);
-			$('#models').html(modelsHtml);
-		})
-		.fail(function(jqXHR, textStatus, errorThrown) {
-			console.error(errorThrown);
-		});
-});
-
-modelsSelect.addEventListener('change', function() {
-	const selectedOption = marksSelect.options[marksSelect.selectedIndex].value;
-	const url = new URL(window.location.href);
-
-	if (selectedOption !== '') {
-		url.searchParams.set('brand', selectedOption);
-	}
-
-	if (modelsSelect.value !== '') {
-		url.searchParams.set('model', modelsSelect.value);
-	} else {
-		url.searchParams.delete('model');
-	}
-
-	$.ajax({
-			url: url.toString(),
-			method: 'GET',
-			dataType: 'html'
-		})
-		.done(function(data) {
-			const catalogHtml = $('<div>').html(data).find('#catalog').html();
-			const modelsHtml = $('<div>').html(data).find('#models').html();
-			$('#catalog').html(catalogHtml);
-			$('#models').html(modelsHtml);
-		})
-		.fail(function(jqXHR, textStatus, errorThrown) {
-			console.error(errorThrown);
-		});
-});
-
-</script> #}
-<style>
-
-</style>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         const marksSelect = document.querySelector('#marks')
@@ -614,10 +454,6 @@ modelsSelect.addEventListener('change', function() {
           ]
         })
       })
-
-    </script>
-        <script type="text/javascript">
-
 
     </script>
 {% endblock %}
