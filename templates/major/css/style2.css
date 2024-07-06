@@ -619,7 +619,7 @@ main {
 }
 
 .index-top-line.mob .container .buy-credit {
-  background-color: #ffffff; 
+  background-color: #ffffff;
   color: #181818;
   border: none;
   padding: 10px 20px;
@@ -629,7 +629,7 @@ main {
   height: 45px;
 }
 .index-top-line.mob .container .order-call {
-  background-color: #3B80CC; 
+  background-color: #3B80CC;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -648,12 +648,12 @@ main {
 }
 .index-top-line p button:hover,
 .index-top-line.mob .container .buy-credit:hover {
-  background-color: #35374E; 
+  background-color: #35374E;
   color: #FFFFFF;
 }
 .index-top-line p button.but2:hover,
 .index-top-line.mob .container .order-call:hover {
-  background-color: #D12D1E; 
+  background-color: #D12D1E;
   color: #ffffff;
   border: solid 1px #D12D1E;
 }
@@ -1366,7 +1366,7 @@ right: -58px;
 }
 
 .contacts p {
-  font-size: 16px;    
+  font-size: 16px;
 }
 .contacts span {
   font-size: 16px;
@@ -1705,7 +1705,7 @@ right: -58px;
   font-weight: 700;
   font-size: 28px;
   line-height: 34px;
-  
+
 }
 .credit-block-home .content .top h2 {
   font-weight: 700;
@@ -2196,7 +2196,7 @@ right: -58px;
 .menubg{
   display: none;
   color: #FFFF;
-  
+
 }
 .index-top-line.mob {
   display: none;
@@ -2469,7 +2469,7 @@ right: -58px;
   .not-found-block .image_mob img{
     display: block;
   }
-  
+
   .not-found-block .text {
     width: auto;
   }
@@ -2760,8 +2760,12 @@ right: -58px;
 }
 
 .brand-logo {
-  height: 34px;
-  margin-right: 10px;
+    width: 34px;
+    height: 34px;
+    margin-right: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .brand-title {
