@@ -3,15 +3,14 @@
     id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
 
 {% set photo = data['image_format'] %}
+{% set modifications = data['tv.car_modifications'] | json %}
 
 <div class="item position-relative"><a href="{{ data['url'] }}">
         <span class="hit position-absolute py-1 px-3">HIT</span>
-        <div class="image">
-            <img src="{{ photo }}">
-        </div>
+        <div class="image model--image" style="background-image: url('{{ photo }}')"></div>
         <div class="p-3">
             <a href="{{ data.url }}"
-               class="name d-block mb-2">{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }} </a>
+               class="name d-block mb-2 model--title">{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }} </a>
             {# <div class="row data text-center">
 
             </div> #}
@@ -19,19 +18,20 @@
                 <!-- Placeholder for flexible space -->
             </div>
             <div class="config_car row text-center mt-1 mb-1">
-                <div class="col-4 d-flex flex-column justify-content-center align-items-center">
-                    <img src="/templates/major/img/tabler_engine.png" alt="Гарантия">
-                    <p>3.0 л.</p>
+                <div class="col-4 d-flex flex-column justify-content-start align-items-center">
+                    <img src="/templates/major/img/tabler_engine.png" alt="Объём">
+                    <p>{{ modifications['Modification#0']['items']['engine_volume']['value'] }} л.</p>
                 </div>
-                <div class="col-4 d-flex flex-column justify-content-center align-items-center">
-                    <img src="/templates/major/img/fluent_transmission-24-filled.png" alt="Гарантия">
-                    <p>Автомат</p>
+                <div class="col-4 d-flex flex-column justify-content-start align-items-center">
+                    <img src="/templates/major/img/fluent_transmission-24-filled.png" alt="Коробка передач">
+                    <p>{{ modifications['Modification#0']['items']['gear']['value'] }}</p>
                 </div>
-                <div class="col-4 d-flex flex-column justify-content-center align-items-center">
-                    <img src="/templates/major/img/fluent_drive-train-24-regular.png" alt="Гарантия">
-                    <p>Полный</p>
+                <div class="col-4 d-flex flex-column justify-content-start align-items-center">
+                    <img src="/templates/major/img/fluent_drive-train-24-regular.png" alt="Привод">
+                    <p>{{ modifications['Modification#0']['items']['drive']['value'] }}</p>
                 </div>
             </div>
+
             <div class="price mb-3">
                 {% if data["tv.old-car-price"] %}
                     <span class="old d-inline-block mb-1">{{ data["tv.old-car-price"] }} ₽</span>
