@@ -1,46 +1,24 @@
-{# <form class="p-md-5 p-4 text-center">
-    <input type="hidden" name="docid" value="{{ data.docid | default(resource.id) }}">
-    <input type="hidden" name="price" value="{{ data.yourprice | default(resource[car-price]) }}" data-price>
-    {{ data['form.messages'] | raw }}
-            <div class="block-name mb-sm-5 mb-4 text-light">
-                Выгодные условия на покупку <br />Вашего автомобиля в Кредит!
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-sm-6 mb-4">
-                    <input name="brand" value="{{data.brand}}" type="text" placeholder="Интересующий Вас автомобиль" class="form-control">
-                </div>
-                <div class="col-md-4 col-sm-6 mb-4">
-                    <input name="desired_amount" value="{{data.desired_amount}}" type="text" placeholder="Стоимость" class="form-control numbers">
-                </div>
-                <div class="col-md-4 col-sm-6 mb-4">
-                    <select name="credit_term" value="{{data.credit_term}}"class="form-select">
-                        <option>Срок: 12 месяцев</option>
-                        <option>Срок: 18 месяцев</option>
-                        <option>Срок: 24 месяцев</option>
-                        <option>Срок: 30 месяцев</option>
-                        <option>Срок: 36 месяцев</option>
-                        <option>Срок: 42 месяцев</option>
-                        <option>Срок: 48 месяцев</option>
-                    </select>
-                </div>
-                <div class="col-md-4 col-sm-6 mb-4">
-                    <input name="first_name" value="{{data.first_name}}" type="text" placeholder="Ваше имя" class="form-control">
-                </div>
-                <div class="col-md-4 col-sm-6 mb-4">
-                    <input type="text" value="{{ data.mobile_tel }}" name="mobile_tel" placeholder="Ваш телефон" class="form-control">
-                </div>
-                <div class="col-md-4 col-sm-6 mb-4">
-                    <input value="{{ data.email }}" name="email" type="text" placeholder="Ваш e-mail" class="form-control">
-                </div>
-            </div>
-            <button class="btn btn-danger mt-2">Получить условия и цену</button>
-        </form> #}
+{% set baseSettings = runSnippet('helpers', {action: 'getBaseSettings'}) %}
+
+{% set modelsCredit = runSnippet('DocLister', {
+    parents: baseSettings['catalog_number'],
+    depth: 5,
+    tvList: 'model_full_title',
+    addWhereList: 'isfolder=1 AND c.template=20',
+    api: 1,
+    showParent: 1,
+    tvPrefix: '',
+    orderBy: 'model_full_title ASC'
+}) %}
+{% set modelsCredit = modelsCredit | json %}
+
 <form>
     <div class="credit-block-home mb-5">
         <div class="container">
             <div class="content">
                 <input type="hidden" name="docid" value="{{ data.docid | default(resource.id) }}">
-                <input type="hidden" name="price" value="{{ data.yourprice | default(resource[car-price]) }}" data-price>
+                <input type="hidden" name="price" value="{{ data.yourprice | default(resource[car-price]) }}"
+                       data-price>
                 {{ data['form.messages'] | raw }}
                 <div class="top">
                     <h2 class="text-start mb-4">Автокредит от 4,9%</h2>
@@ -49,20 +27,21 @@
                         <div class="col-lg-6 mb-4">
                             <div class="top-calc">
                                 <div class="item mb-5">
-                                    <p class="mb-2"style="font-weight: 700">Выберите автомобиль</p>
+                                    <p class="mb-2" style="font-weight: 700">Выберите автомобиль</p>
                                     <div class="edit_car col-12 d-flex justify-content-center align-items-center">
                                         <select class="w-100 px-3">
                                             <option>Выбрать...</option>
-                                            {# {% for item in marks %} #}
-                                            {# <option>{{ item.pagetitle }}</option> #}
-                                            {# {% endfor %} #}
+                                             {% for item in modelsCredit %}
+                                                <option>{{ item['model_full_title'] }}</option>
+                                             {% endfor %}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="item mb-5">
                                     <p class="mb-2 item-cred-text">Срок кредита</p>
                                     <div class="price mb-4">
-                                        <input type="text" id="amount2" readonly> <a href="#" class="edit"></a>
+                                        <input type="text" id="amount2" value="12 месяцев" readonly> <a href="#"
+                                                                                                        class="edit"></a>
                                     </div>
                                     <div id="slider-range-max2"></div>
                                     <div class="values flex mt-3">
@@ -76,7 +55,8 @@
                                 <div class="item mb-5">
                                     <p class="mb-2 item-cred-text">Первоначальный взнос</p>
                                     <div class="price mb-4">
-                                        <input type="text" id="amount" readonly> <a href="#" class="edit"></a>
+                                        <input type="text" id="amount" value="250000 ₽" readonly> <a href="#"
+                                                                                                     class="edit"></a>
                                     </div>
                                     <div id="slider-range-max"></div>
                                     <div class="values flex mt-3">
@@ -115,9 +95,9 @@
                                     <div class="tb2">Без штрафов</div>
                                 </div>
                             </div>
-                            
+
                             <img src="../templates/major/img/car7.png">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -129,18 +109,23 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-6">
                             <p class="mb-2">Ваше имя</p>
-                            <input type="text" name="first_name" value="{{ data.first_name }}" placeholder="Например Иван" class="{{ data['first_name.classname'] }} w-100 px-3 mb-3">
+                            <input type="text" name="first_name" value="{{ data.first_name }}"
+                                   placeholder="Например Иван"
+                                   class="{{ data['first_name.classname'] }} w-100 px-3 mb-3">
                         </div>
                         <div class="col-md-4 col-sm-6">
                             <p class="mb-2">Ваш телефон</p>
-                            <input type="text" value="{{ data.mobile_tel }}" name="mobile_tel" placeholder="+7(___) ___-____" class="phone-imask {{ data['mobile_tel.classname'] }} w-100 px-3 mb-3">
+                            <input type="text" value="{{ data.mobile_tel }}" name="mobile_tel"
+                                   placeholder="+7(___) ___-____"
+                                   class="phone-imask {{ data['mobile_tel.classname'] }} w-100 px-3 mb-3">
                         </div>
                         <div class="col-md-4">
                             <button class="w-100 mb-3" type="submit">Отправить заявку</button>
                         </div>
                         <div class="col-xl-4 offset-xl-8">
                             <div class="bottom-text">
-                                Нажимая на кнопку "Отправить заявку" вы даете согласие на обработку <a href="/policy">персональных данных</a>
+                                Нажимая на кнопку "Отправить заявку" вы даете согласие на обработку <a href="/policy">персональных
+                                    данных</a>
                             </div>
                         </div>
                     </div>
