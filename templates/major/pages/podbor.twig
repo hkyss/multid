@@ -190,7 +190,8 @@
               const catalogHtml = $('<div>').html(data).find('#catalog').html()
               const modelsHtml = $('<div>').html(data).find('#models').html()
               $('#catalog').html(catalogHtml)
-              $('#models').html(modelsHtml)
+              modelsSelect.html(modelsHtml)
+              modelsSelect.val(model)
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
               console.error(errorThrown)
