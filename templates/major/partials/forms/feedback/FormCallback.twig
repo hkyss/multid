@@ -29,7 +29,7 @@ var phoneMask = IMask(
     </div>
 </form> #}
 <form>
-    <div class="bg p-sm-5 pl-4 pr-4 pb-4 pt-2 text-light">
+    <div class="bg-dark p-sm-5 pl-4 pr-4 pb-4 pt-2 text-light">
         <input type="hidden" name="docid" value="{{ data.docid | default(resource.id) }}">
         <input type="hidden" name="price" value="{{ data.yourprice | default(resource[car-price]) }}" data-price>
         {{ data['form.messages'] | raw }}
@@ -49,8 +49,8 @@ var phoneMask = IMask(
                 <button class="w-100 mt-3">Оставить заявку</button>
             </div>
             <div class="col-xl-12 mt-1">
-                <div class="form-bottom-text">
-                    Нажимая на кнопку "Отправить заявку" вы даете согласие на обработку <a href="/policy">персональных данных</a>
+                <div>
+                    Нажимая на кнопку "Отправить заявку" вы даете согласие на обработку <a href="/policy" class="text-red">персональных данных</a>
                 </div>
             </div>
         </div>
