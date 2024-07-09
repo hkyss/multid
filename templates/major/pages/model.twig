@@ -7,7 +7,13 @@
         id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
 
     {% set photos = resource['colors_list'] | json %}
-    {% set photo = photos['Color#1']['items']['image']['value'] %}
+
+    {% set photo = "" %}
+    {% for i in 0..10 %}
+        {% if not photo and photos['Color#' ~ i]['items']['image']['value'] %}
+            {% set photo = photos['Color#' ~ i]['items']['image']['value'] %}
+        {% endif %}
+    {% endfor %}
 
     {% set modifications = resource['car_modifications'] | json %}
 
