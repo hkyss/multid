@@ -2825,3 +2825,8 @@ right: -58px;
 .model--title {
     white-space: nowrap;
 }
+.model__header--title {
+    background: #3b7ac9;
+    padding: 12px;
+    display: initial;
+}
