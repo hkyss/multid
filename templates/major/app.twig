@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% set site_start = modx.config['site_start'] %}
-{% set cacheKey = md5(site_start ~ "major") %}
+{% set cacheKey = md5(site_start ~ "major" ~ "template") %}
 {% set title = resource.longtitle | default(resource.pagetitle) | parser %}
 {% set baseSettings = runSnippet('helpers', {action: 'getBaseSettings'}) %}
 {# {% set favicon = runSnippet('phpthumb', {input: baseSettings['logo'], options:'w=16,h=16,f=png,far=C, zc=L'}) %} #}
@@ -81,6 +81,78 @@
     {% include('partials/popup.twig') %}
 {% endcache %}
 {% block SCRIPTS %}{% endblock %}
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    function updateResults () {
+      const creditAmount = $('#slider-range-max3').slider('value')
+      const downPayment = $('#slider-range-max5').slider('value')
+      const term = $('#slider-range-max4').slider('value')
+      const creditRate = 0.1
+      const monthlyPayment = (creditAmount - downPayment) * (creditRate / 12) / (1 - Math.pow(1 + creditRate / 12, -term))
+
+      $('.tbl1 tr:nth-child(1) td:nth-child(2)').text(creditAmount.toLocaleString() + ' ₽')
+      $('.tbl1 tr:nth-child(2) td:nth-child(2)').text(downPayment.toLocaleString() + ' ₽')
+      $('.tbl1 tr:nth-child(3) td:nth-child(2)').text(term + ' месяцев')
+      $('.tbl2 tr:nth-child(1) td:nth-child(2)').text(Math.round(monthlyPayment).toLocaleString() + ' ₽/мес.')
+    }
+
+    function updateDownPaymentSlider (creditAmount) {
+      const minDownPayment = 0.1 * creditAmount
+      const maxDownPayment = 0.9 * creditAmount
+      let currentDownPayment = $('#slider-range-max5').slider('value')
+
+      if (currentDownPayment < minDownPayment) {
+        currentDownPayment = minDownPayment
+      } else if (currentDownPayment > maxDownPayment) {
+        currentDownPayment = maxDownPayment
+      }
+
+      $('#slider-range-max5').slider('option', 'min', minDownPayment)
+      $('#slider-range-max5').slider('option', 'max', maxDownPayment)
+      $('#slider-range-max5').slider('value', currentDownPayment)
+
+      $('#amount5').val(currentDownPayment.toLocaleString() + ' ₽')
+    }
+
+    $('#slider-range-max3').slider({
+      range: 'max',
+      min: 100000,
+      max: 1000000,
+      value: 500000,
+      slide: function (event, ui) {
+        $('#amount3').val(ui.value.toLocaleString() + ' ₽')
+        updateDownPaymentSlider(ui.value)
+        updateResults()
+      }
+    })
+
+    $('#slider-range-max5').slider({
+      range: 'max',
+      min: 10000,
+      max: 900000,
+      value: 250000,
+      slide: function (event, ui) {
+        $('#amount5').val(ui.value + ' ₽')
+        updateResults()
+      }
+    })
+
+    $('#slider-range-max4').slider({
+      range: 'max',
+      min: 12,
+      max: 60,
+      value: 12,
+      slide: function (event, ui) {
+        $('#amount6').val(ui.value + (ui.value > 12 && ui.value < 60 ? ' месяца' : ' месяцев'))
+        updateResults()
+      }
+    })
+
+    updateResults()
+  })
+</script>
+
 <div name="213" id="loader"></div>
 </body>
 {% set stats = runSnippet('helpers', {action:'stats'}) | json %}
