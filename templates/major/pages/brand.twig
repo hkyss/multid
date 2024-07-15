@@ -13,7 +13,6 @@
 
     {% set DLModels = runSnippet('DocLister', {
         id: 'catalog',
-        display: 20,
         parents: resource.id,
         depth: 2,
         addWhereList: 'c.template=20',
