@@ -22,7 +22,6 @@
         controller: 'catalog_filters',
         filters: filters ,
         _filters: 'AND(tv:price:>:0;tv:region:=:' ~ plh.activeLangAlias ~ ')',
-        display: 9,
         parents: baseSettings['catalog_number'],
         depth: 2,
         addWhereList: 'c.template=20',
