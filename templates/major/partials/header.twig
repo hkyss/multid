@@ -50,7 +50,7 @@ outerTpl: '@CODE:<ul>
         {{ runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1', class:"phone mt-3 pt-2"}) | raw}}
                 <a href="{{baseSettings["salon-phone"]}}">заказать экспресс-звонок</a>
         </div>
-        
+
     </div>
 </header>
 #}
@@ -83,9 +83,9 @@ outerTpl: '@CODE:<ul>
             </div>
             <div class="phone pb-1">
                 {{ runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1'}) | raw}}
-                <a href="#" data-src="#popup" data-fancybox="">заказать экспресс-звонок</a>
+                <a href="#" data-src="#popupCredNew" data-fancybox="">заказать экспресс-звонок</a>
             </div>
-            <img src="/templates/major/img/close.svg" class="img_close" style="width:20px; height:20px; margin-top: 38px;"> 
+            <img src="/templates/major/img/close.svg" class="img_close" style="width:20px; height:20px; margin-top: 38px;">
         </div>
     <div class="container">
         <div>
@@ -133,7 +133,7 @@ outerTpl: '@CODE:<ul>
             {{headermenu|raw}}
             <div class="phone pb-1">
                 {{ runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1'}) | raw}}
-                <a href="#" data-src="#popup" data-fancybox="">заказать экспресс-звонок</a>
+                <a href="#" data-src="#popupCredNew" data-fancybox="">заказать экспресс-звонок</a>
             </div>
             <a class="menu-button">
                 <span></span>
@@ -143,17 +143,17 @@ outerTpl: '@CODE:<ul>
             {#<div class="location">
             <span>Адрес: {{baseSettings.salon_location}}</span>
             </div>#}
-            
+
         </div>
     </header>
-                    
+
     <div class="index-top-line py-3">
         <div class="container flex">
             <p>В кредит под {% if baseSettings.credit_rate is empty %}
     4.9
 {% else %}
     {{ baseSettings.credit_rate }}
-{% endif %}% или в рассрочку под 0% <button  data-src="#popupCredNew" data-fancybox="">Купить в кредит</button><span class="d-inline-block mx-3">|</span> В трейд-ин с выгодой до 300 000 ₽<button class="but2" data-src="#popup" data-fancybox="">Заказать звонок</button></p>
+{% endif %}% или в рассрочку под 0% <button  data-src="#popupCredNew" data-fancybox="">Купить в кредит</button><span class="d-inline-block mx-3">|</span> В трейд-ин с выгодой до 300 000 ₽<button class="but2" data-src="#popupCredNew" data-fancybox="">Заказать звонок</button></p>
             {# <img src="/templates/major/img/car.png"> #}
             <a href="#" onclick="closeBlock(event)" class="close-link link d-block"></a>
         </div>
@@ -162,7 +162,7 @@ outerTpl: '@CODE:<ul>
     <div class="container flex">
         <div class="credit-section w-100">
             <p class="mb-2">В кредит под
-            {% if baseSettings.credit_rate is empty %} 
+            {% if baseSettings.credit_rate is empty %}
             4.9%
             {% else %}
             {{ baseSettings.credit_rate }}
@@ -172,7 +172,7 @@ outerTpl: '@CODE:<ul>
         <hr class="divider">
         <div class="trade-in-section w-100">
             <p class="mb-2">В трейд-ин с выгодой до 300 000 ₽</p>
-            <button class="order-call" data-src="#popup" data-fancybox="">Заказать звонок</button>
+            <button class="order-call" data-src="#popupCredNew" data-fancybox="">Заказать звонок</button>
         </div>
              <a href="#" onclick="closeBlock(event)" class="close-link link d-block"></a>
     </div>
