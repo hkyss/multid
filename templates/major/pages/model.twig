@@ -92,12 +92,12 @@
                                         </span>
                                     </div>
                                     <div class="buttons">
-                                        <button class="scroll-btn">В кредит
+                                        <button class="scroll-btn" data-fancybox="" data-src="#popupCredNew">В кредит
                                             за {{ (modx.runSnippet("toInt", { value: modificationItem['items']['price']['value'] }) / 82) | round | number_format(0, '.', ' ') }}
                                              ₽/мес.
                                         </button>
-                                        <button data-fancybox="" data-src="#popup">Trade-in</button>
-                                        <button data-fancybox="" data-src="#popup">Забронировать</button>
+                                        <button data-fancybox="" data-src="#popupCredNew">Trade-in</button>
+                                        <button data-fancybox="" data-src="#popupCredNew">Забронировать</button>
                                     </div>
                                 </div>
                                 <div class="item-content collapse" id="id_{{ modificationKey }}">
@@ -143,8 +143,8 @@
                                                 </div>
                                             </div>
                                             <div class="buttons">
-                                                <button data-fancybox="" data-src="#popup" class="w-100 mb-2">В кредит от 4,9%</button>
-                                                <button data-fancybox="" data-src="#popup" class="w-100 mb-2">Забронировать</button>
+                                                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
+                                                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button>
                                                 <button class="w-100" onclick="location.href='{{ car.url }}';">Подробнее</button>
                                             </div>
                                         </div>

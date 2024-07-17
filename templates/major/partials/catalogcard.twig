@@ -100,14 +100,14 @@ tpl:'@CODE:[+tv.configuration_id+]'}) %}
                 </div>
             </div>
             <div class="buttons">
-                <button data-fancybox="" data-src="#popup" class="w-100 mb-2">В кредит
+                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит
                     от {% if baseSettings.credit_rate is empty %}
                     4.9
                     {% else %}
                         {{ baseSettings.credit_rate }}
                     {% endif %}%
                 </button>
-                <button data-fancybox="" data-src="#popup" class="w-100 mb-2">Забронировать</button>
+                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button>
                 <button class="w-100" onclick="location.href='{{ data.url }}';">Подробнее</button>
             </div>
         </div>
