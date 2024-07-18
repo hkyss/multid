@@ -23,7 +23,7 @@
         addWhereList: "c.template = 28",
         tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,gear,year, image,mark_id,model_id',
     }) | json %}
-    {% set prices = cars | column('tv_car-price') %}
+    {% set prices = cars | column('tv_car-price') | default([0]) %}
 
     <div class="index-page-slider text-light">
         <div class="item other"
