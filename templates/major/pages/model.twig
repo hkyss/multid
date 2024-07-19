@@ -1,8 +1,9 @@
 {% extends 'app.twig' %}
 {% block MAIN %}
-    {% set oldprice = runSnippet('helpers', {caroldprice: resource['car-price'],
+    {% set price = resource['car-price'] | number_format %}
+    {% set oldprice = runSnippet('helpers', {caroldprice: price,
         action:'caroldprice'}) %}
-    {% set vigoda = oldprice - resource['car-price'] %}
+    {% set vigoda = oldprice - price %}
     {% set configuration_id = runSnippet('DocLister', {
         id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
 
@@ -183,6 +184,6 @@
 
     </script>
     {{ runSnippet('takemodels', {configuration_id: resource['configuration_id'] }) }}
-    {% set minam = resource['car-price'] / 10 %}
-    {% set maxam = resource['car-price'] %}
+    {% set minam = price / 10 %}
+    {% set maxam = price %}
 {% endblock %}
