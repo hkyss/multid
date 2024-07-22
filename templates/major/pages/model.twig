@@ -57,6 +57,7 @@
             {% endif %}
         {% endfor %}
     {% endfor %}
+    {% set mod_collection = mod_collection | sort((a, b) => a.price <=> b.price) %}
 
     {% set modifications_show = mod_collection | slice(0, 3) %}
     {% set modifications_hide = mod_collection | slice(3) %}
