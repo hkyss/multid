@@ -161,8 +161,13 @@
                 <div class="col-lg-5">
                     <h1 class="mb-3">{{ resource.pagetitle }}</h1>
                     <div class="price mb-3">
-                        <span class="new mr-2">{{ resource["car-price"] }}₽</span>
-                        <span class="old">{{ resource["old-car-price"] }}₽</span>
+                        {% if resource["car-price"] %}
+                            <span class="new mr-2">{{ resource["car-price"] }}₽</span>
+                        {% endif %}
+
+                        {% if resource["old-car-price"] %}
+                            <span class="old">{{ resource["old-car-price"] }}₽</span>
+                        {% endif %}
                     </div>
                     <div class="credit mb-4">
                         В кредит от {{ (resource["car-price"] / 72)|round }} ₽/мес <span
