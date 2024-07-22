@@ -16,7 +16,50 @@
         {% endif %}
     {% endfor %}
 
+    {% set mod_collection = [] %}
     {% set modifications = resource['car_modifications'] | json %}
+
+    {% for modificationKey, modification in modifications %}
+        {% set modificationKey = modificationKey | replace({'#': "-"}) %}
+
+        {% set modificationTitle = modification["value"] %}
+        {% if modificationTitle is empty %}
+            {% set modificationTitle = "Мод. " ~ loop.index %}
+        {% endif %}
+
+        {% for modificationItemKey, modificationItem in modification['items'] %}
+            {% if "ModificationItem" in modificationItemKey %}
+                {% set options = [] %}
+                {% set modificationKey = modificationKey ~ "-" ~ modificationItemKey | replace({'#': "-"}) %}
+                {% set modificationItemTitle = modificationTitle ~ ": " ~ modificationItem['value'] %}
+
+                {% for modificationItemOptionKey, modificationItemOption in modificationItem['items'] %}
+                    {% if "ModificationItemOption" in modificationItemOptionKey %}
+                        {% set options = options | merge([
+                            {
+                                title: modificationItemOption['value'],
+                                key: modificationItemOptionKey,
+                                content: modificationItemOption['items']['content']['value']
+                            }
+                        ]) %}
+                    {% endif %}
+                {% endfor %}
+
+                {% set mod_collection = mod_collection | merge([
+                    {
+                        title: modificationItemTitle,
+                        key: modificationKey,
+                        complectTitle: modificationItem['value'],
+                        price: modificationItem['items']['price']['value'],
+                        options: options
+                    }
+                ]) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    {% set modifications_show = mod_collection | slice(0, 3) %}
+    {% set modifications_hide = mod_collection | slice(3) %}
 
     {% set cars = runSnippet("DocLister", {
         api: 1,
@@ -55,77 +98,111 @@
                     <div class="name mb-3">
                         {{ runSnippet ('DocInfo', {docid: resource.parent, field:pagetitle}) |raw }} {{ resource.pagetitle }}
                     </div>
-                    <span class="items text-light mb-3 py-2 px-3 d-inline-block bg-dark">Автомобилей: {{ cars | count }}</span> <br/>
+                    <span class="items text-light mb-3 py-2 px-3 d-inline-block bg-dark">Автомобилей: {{ cars | count }}</span>
+                    <br/>
                     <span class="price d-inline-block py-2 px-3">от {{ min(prices) | number_format(0, '', ' ') }} ₽</span>
                 </div>
             </div>
 
-            {% if modifications %}
-                <div class="modifications-block pb-2 mb-3 accordion" id="accordionOptionsModel">
+            {% if modifications_show %}
+                <div class="modifications-block pb-2 mb-3">
+                    {% for modification in modifications_show %}
+                        <h3 class="mb-3">{{ modification.title }}</h3>
+                        <div class="item mb-2">
+                            <div class="item-name flex">
+                                <div class="name" type="button" data-toggle="collapse"
+                                     data-target="#id_{{ modification.key }}" aria-expanded="false"
+                                     aria-controls="id_{{ modification.key }}" style="word-break: break-word;     max-width: 170px;
+    ">
+                                    {{ modification.complectTitle }}
+                                </div>
+                                <div class="price">
+                                    <span class="old">
+                                        -
+                                    </span>
+                                    <span class="new">
+                                        {{ modification.price }}
+                                    </span>
+                                </div>
+                                <div class="buttons">
+                                    <button class="scroll-btn" data-fancybox=""
+                                            data-src="#popupCredNew">В кредит
+                                        за {{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}
+                                         ₽/мес.
+                                    </button>
+                                    <button data-fancybox="" data-src="#popupCredNew">Trade-in
+                                    </button>
+                                    <button data-fancybox="" data-src="#popupCredNew">
+                                        Забронировать
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="item-content collapse" id="id_{{ modification.key }}">
+                                {% for option in modification.options %}
+                                    <div class="card-header">{{ option.title }}</div>
+                                    <div class="card-body">
+                                        {{ option.content | raw }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if modifications_hide %}
+                <div class="modifications-block pb-2 mb-3 accordion" id="accordionModelOptions">
                     <div class="card">
                         <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
                                 <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Модификации и комплектации
+                                    Показать больше модификаций
                                 </button>
                             </h2>
                         </div>
 
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionOptionsModel">
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionModelOptions">
                             <div class="card-body">
-                                {% for modificationKey, modification in modifications %}
-                                    {% set modificationKey = modificationKey | replace({'#': "-"}) %}
-
-                                    {% set modificationTitle = modification["value"] %}
-                                    {% if modificationTitle is empty %}
-                                        {% set modificationTitle = "Мод. " ~ loop.index %}
-                                    {% endif %}
-
-                                    {% for modificationItemKey, modificationItem in modification['items'] %}
-                                        {% if "ModificationItem" in modificationItemKey %}
-                                            {% set modificationKey = modificationKey ~ "-" ~ modificationItemKey | replace({'#': "-"}) %}
-
-                                            {% set modificationItemTitle = modificationTitle ~ ": " ~ modificationItem['value'] %}
-
-                                            <h3 class="mb-3">{{ modificationItemTitle }}</h3>
-                                            <div class="item mb-2">
-                                                <div class="item-name flex">
-                                                    <div class="name" type="button" data-toggle="collapse"
-                                                         data-target="#id_{{ modificationKey }}" aria-expanded="false"
-                                                         aria-controls="id_{{ modificationKey }}" style="word-break: break-word;     max-width: 170px;
+                                {% for modification in modifications_hide %}
+                                    <h3 class="mb-3">{{ modification.title }}</h3>
+                                    <div class="item mb-2">
+                                        <div class="item-name flex">
+                                            <div class="name" type="button" data-toggle="collapse"
+                                                 data-target="#id_{{ modification.key }}" aria-expanded="false"
+                                                 aria-controls="id_{{ modification.key }}" style="word-break: break-word;     max-width: 170px;
     ">
-                                                        {{ modificationItem['value'] }}
-                                                    </div>
-                                                    <div class="price">
-                                            <span class="old">
-                                                -
-                                            </span>
-                                                        <span class="new">
-                                                {{ modificationItem['items']['price']['value'] }}
-                                            </span>
-                                                    </div>
-                                                    <div class="buttons">
-                                                        <button class="scroll-btn" data-fancybox="" data-src="#popupCredNew">В кредит
-                                                            за {{ (modx.runSnippet("toInt", { value: modificationItem['items']['price']['value'] }) / 82) | round | number_format(0, '.', ' ') }}
-                                                             ₽/мес.
-                                                        </button>
-                                                        <button data-fancybox="" data-src="#popupCredNew">Trade-in</button>
-                                                        <button data-fancybox="" data-src="#popupCredNew">Забронировать</button>
-                                                    </div>
-                                                </div>
-                                                <div class="item-content collapse" id="id_{{ modificationKey }}">
-                                                    {% for modificationItemOptionKey, modificationItemOption in modificationItem['items'] %}
-                                                        {% if "ModificationItemOption" in modificationItemOptionKey %}
-                                                            <div class="card-header">{{ modificationItemOption['value'] }}</div>
-                                                            <div class="card-body">
-                                                                {{ modificationItemOption['items']['content']['value'] | raw }}
-                                                            </div>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </div>
+                                                {{ modification.complectTitle }}
                                             </div>
-                                        {% endif %}
-                                    {% endfor %}
+                                            <div class="price">
+                                    <span class="old">
+                                        -
+                                    </span>
+                                                <span class="new">
+                                        {{ modification.price }}
+                                    </span>
+                                            </div>
+                                            <div class="buttons">
+                                                <button class="scroll-btn" data-fancybox=""
+                                                        data-src="#popupCredNew">В кредит
+                                                    за {{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}
+                                                     ₽/мес.
+                                                </button>
+                                                <button data-fancybox="" data-src="#popupCredNew">Trade-in
+                                                </button>
+                                                <button data-fancybox="" data-src="#popupCredNew">
+                                                    Забронировать
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="item-content collapse" id="id_{{ modification.key }}">
+                                            {% for option in modification.options %}
+                                                <div class="card-header">{{ option.title }}</div>
+                                                <div class="card-body">
+                                                    {{ option.content | raw }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -166,9 +243,14 @@
                                             {% endif %}
                                         </div>
                                         <div class="buttons">
-                                            <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
-                                            <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button>
-                                            <button class="w-100" onclick="location.href='{{ car.url }}';">Подробнее</button>
+                                            <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В
+                                                кредит от 4,9%
+                                            </button>
+                                            <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">
+                                                Забронировать
+                                            </button>
+                                            <button class="w-100" onclick="location.href='{{ car.url }}';">Подробнее
+                                            </button>
                                         </div>
                                     </div>
                                 </a>
@@ -178,7 +260,8 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col text-center">
-                                    <h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте немного изменить условия поиска</h2>
+                                    <h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте
+                                        немного изменить условия поиска</h2>
                                 </div>
                             </div>
                         </div>
