@@ -2834,6 +2834,6 @@ right: -58px;
 .slick-list {
     margin: 0 -5px;
 }
-.slick-slide > div {
+.slick-slide > img {
     padding: 0 5px;
 }
