@@ -2830,3 +2830,10 @@ right: -58px;
     padding: 12px;
     display: initial;
 }
+
+.slick-list {
+    margin: 0 -5px;
+}
+.slick-slide > div {
+    padding: 0 5px;
+}
