@@ -138,10 +138,17 @@
 
                                             </div>
                                             <div class="price mb-3">
-                                                <span class="old d-inline-block mb-1">{{ car["tv_old-car-price"] | number_format(0, '', ' ') }} ₽</span>
-                                                <div class="new">
-                                                    {{ car["tv_car-price"] | number_format(0, '', ' ') }} ₽
-                                                </div>
+                                                {% if car["tv_old-car-price"] | number_format(0, '', ' ') %}
+                                                    <span class="old d-inline-block mb-1">
+                                                        {{ car["tv_old-car-price"] | number_format(0, '', ' ') }} ₽
+                                                    </span>
+                                                {% endif %}
+
+                                                {% if car["tv_car-price"] | number_format(0, '', ' ') %}
+                                                    <div class="new">
+                                                        {{ car["tv_car-price"] | number_format(0, '', ' ') }} ₽
+                                                    </div>
+                                                {% endif %}
                                             </div>
                                             <div class="buttons">
                                                 <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
