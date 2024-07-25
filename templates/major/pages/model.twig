@@ -101,7 +101,10 @@
                     </div>
                     <span class="items text-light mb-3 py-2 px-3 d-inline-block bg-dark">Автомобилей: {{ cars | count }}</span>
                     <br/>
-                    <span class="price d-inline-block py-2 px-3">от {{ min(prices) | number_format(0, '', ' ') }} ₽</span>
+
+                    {% if min(prices) %}
+                        <span class="price d-inline-block py-2 px-3">от {{ min(prices) | number_format(0, '', ' ') }} ₽</span>
+                    {% endif %}
                 </div>
             </div>
 
