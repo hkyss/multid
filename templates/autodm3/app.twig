@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% set site_start = modx.config['site_start'] %}
-{% set cacheKey = md5(site_start ~ "autodm2") %}
+{% set cacheKey = md5(site_start ~ "autodm3") %}
 {% set title = resource.longtitle | default(resource.pagetitle) | parser %}
 {% set baseSettings = runSnippet('helpers', {action: 'getBaseSettings'}) %}
 
@@ -33,15 +33,14 @@
     <link rel="mask-icon" href="static/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#5bbad5">
     <link rel="stylesheet" href="assets/site/bootstrap/css/bootstrap.min.css">
-    {# <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> #}
-    <link rel="stylesheet" href="/templates/autodm/style.css?123213112112">
-    <link rel="stylesheet" href="templates/autodm/color1.css">
-    <link rel="stylesheet" href="/templates/autodm/slick.css">
+    <link rel="stylesheet" href="/templates/autodm3/style.css?123213112112">
+    <link rel="stylesheet" href="templates/autodm3/color1.css">
+    <link rel="stylesheet" href="/templates/autodm3/slick.css">
     {# <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" /> #}
     <link href="assets/site/fancybox/jquery.fancybox.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="/templates/autodm/css/filter.css">
-    <link rel="stylesheet" href="/templates/autodm2/{{baseSettings.color_css}}">
+    <link rel="stylesheet" href="/templates/autodm3/css/filter.css">
+    <link rel="stylesheet" href="/templates/autodm3/{{baseSettings.color_css}}">
 
     {{baseSettings.scripts_head | raw}}
     {% set isPageSpeed = runSnippet('helpers', {action:'checkPageSpeed'}) %}
