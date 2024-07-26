@@ -1,0 +1,69 @@
+{% set headermenu = runSnippet('DLMenu', {
+    parents: baseSettings["id"],
+    tvList: 'image',
+    maxDepth: 1,
+    rowTpl: '@CODE:<li><a href="[+url+]">[+pagetitle+]</a></li>',
+    outerTpl: '@CODE:<ul>
+        [+wrap+]</ul>'}) %}
+
+    <div class="menubg"></div>
+    <header class="header">
+        <div class="container-fluid flex">
+            <a href="/">
+                {% if baseSettings["logo"] %}
+                        <img src="{{baseSettings["logo"]}}">
+                    {% else %}
+                    <div style="width: 200px;
+                height: 48px;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 24px;
+                display: flex;
+                align-items: center;
+                text-transform: uppercase;
+                justify-content: center;
+                color: #D12D1E;">{{ baseSettings.pagetitle }}
+                    </div>
+                {% endif %}
+            </a>
+            
+            {{ headermenu|raw}}
+
+            <div class="contacts">
+                <div class="head_info">
+                    <span>{{baseSettings.salon_location}}</span>
+                    {{  runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1'}) | raw}}
+                </div>                
+                <button type="button"data-toggle="modal" data-target="#oneclick">Заказать звонок</button>
+                <a class="menu-button"></a>
+            </div>
+            <div class="location">
+            </div>
+        </div>
+
+    </header>
+    <style>
+    .header .contacts{
+        display: flex;
+    }
+    .header .head_info{
+        display: flex;
+        flex-direction: column;
+        padding-right: 5px;
+    }
+    header .contacts button{
+        display: block;
+    }
+
+    @media (max-width: 991px) {
+    .header .menu-button {
+        display: block;
+    }
+        header .contacts button{
+        display: none;
+    }
+}
+    </style>
+
+

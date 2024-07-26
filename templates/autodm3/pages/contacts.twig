@@ -1,0 +1,14 @@
+{% extends 'app.twig' %}
+
+{% block MAIN %}
+    {% include('partials/contacts.twig') %}
+
+    <div class="section">
+        <div class="container">
+          <div class="p-3">
+{% set content = runSnippet('DocInfo', {field: "content", docid: site_start}) %} 
+
+            {{content | raw}}          </div>
+        </div>
+    </div>
+{% endblock %}
