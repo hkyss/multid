@@ -1,0 +1,66 @@
+    {% set footermenu = runSnippet('DLMenu', {
+    parents: baseSettings["id"],
+    tvList: 'image',
+    maxDepth: 1,
+    rowTpl: '@CODE:<li class="li-foot col-md-2 col-sm-6 col-12"><a href="[+url+]">[+pagetitle+]</a></li>',
+    outerTpl: '@CODE:<ul class="foot-menu row d-flex justify-content-between col-xl-8 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        [+wrap+]</ul>'}) %}
+    <footer class="footer">
+        <div class="container-fluid flex">
+            <div class="left-block">
+                <div class="logo">
+                    <a href="/">
+                        {% if baseSettings["logo"] %}
+                        <img src="{{baseSettings["logo"]}}">
+                    {% else %}
+                            <div style="width: 200px;
+                height: 48px;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 24px;
+                display: flex;
+                align-items: center;
+                text-transform: uppercase;
+                justify-content: center;
+                color: #D12D1E;">{{ baseSettings.pagetitle }}
+                            </div>
+                        {% endif %}
+                    </a>
+                </div>
+{{  runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1', class: 'phone'}) | raw}}                <a href="/policy" class="rules">Политика конфиденциальности</a>
+                <button type="button"data-toggle="modal" data-target="#oneclick">Заказать звонок</button>
+            </div>
+            {# <nav>
+                <p>Каталог</p>
+                <ul>
+                    <li><a href="/avtomobili-s-probegom">Автомобили с пробегом</a></li>
+
+                </ul>
+            </nav> #}
+            {# <nav>
+                <p>Акции</p>
+                <ul>
+                    <li><a href="/akcii2">Спецпредложения</a></li>
+
+                </ul>
+            </nav> #}
+
+            {# <nav>
+                <p>Контакты</p>
+                <ul>
+                    <li><a href="#adres">Мы на карте</a></li>
+                </ul>
+            </nav> #}
+
+            {{ footermenu|raw}}
+            
+        </div>
+    </footer>
+     <div class="copy-block">
+        <div class="container-fluid">
+            
+            <p style="font-size: 10px">{{baseSettings.footer |raw}}</p>
+
+        </div>
+    </div>
