@@ -538,7 +538,8 @@ header .contacts button{
 }
 
 .index-first-block {
-  padding: 180px 0 192px;
+  /* padding: 180px 0 192px; */
+  padding: 42px 0 75px;
 }
 
 .index-first-block.inner {
@@ -2697,9 +2698,9 @@ header .contacts button{
   .header .contacts {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-top: 20px;
+    justify-content: flex-end;
+    width: 75%;
+    /* margin-top: 20px; */
   }
 
   .header .location {
