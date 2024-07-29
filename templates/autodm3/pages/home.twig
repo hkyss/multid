@@ -155,61 +155,97 @@ rowTpl:'@CODE: <div class="index-first-block" style="background: url([+image+]) 
 		</div>
 	</div>
 </div>
-<div class="services-block_mob">
-	<div class="container-fluid">
-		<h2>Услуги</h2>
-        <div class="slick-carousel">
-            <div class="item">
-				<div class="name">
-					Trade - in
-				</div>
-				<p>Доступна услуга обмена старого автомобиля на новый автомобиль с пробегом с доплатой или на аналогичную сумму.</p>
-				<button>Подать заявку</button>
-				<img src="/templates/autodm3/img/service1.png">
-			</div>
-            <div class="item">
-				<div class="name">
-					ОСАГО
-				</div>
-				<p>Доступна услуга обмена старого автомобиля на новый автомобиль с пробегом с доплатой или на аналогичную сумму.</p>
-				<button>Подать заявку</button>
-				<img src="/templates/autodm3/img/service2.png">
-			</div>
-            <div class="item">
-				<div class="name">
-					КАСКО
-				</div>
-				<p>Доступна услуга обмена старого автомобиля на новый автомобиль с пробегом с доплатой или на аналогичную сумму.</p>
-				<button>Подать заявку</button>
-				<img src="/templates/autodm3/img/service3.png">
-			</div>
-        </div>
 
-	</div>
-</div>
 
-<script>
-</script>
+
 <script type="text/javascript">
-$(document).ready(function(){
-    $('.slick-carousel').slick({
-        infinite: true,
-        slidesToShow: 3,  // Количество слайдов, отображаемых одновременно
-        slidesToScroll: 1,
-        arrows: false,    // Показать стрелки навигации
-        dots: true,      // Показать точки навигации
-        responsive: [
+// $(document).ready(function(){
+//     $('.slick-carousel').slick({
+//         infinite: true,
+//         slidesToShow: 3,  // Количество слайдов, отображаемых одновременно
+//         slidesToScroll: 1,
+//         arrows: false,    // Показать стрелки навигации
+//         dots: true,      // Показать точки навигации
+//         responsive: [
 
-            {
-                breakpoint: 991,   // Настройки для экранов шириной до 600px
-                settings: {
-                    slidesToShow: 1
-                }
-            }
-        ]
-    });
-});
+//             {
+//                 breakpoint: 991,   // Настройки для экранов шириной до 600px
+//                 settings: {
+//                     slidesToShow: 1
+//                 }
+//             }
+//         ]
+//     });
+
+// });
+// $(document).ready(function(){
+//   function initSlick() {
+//     if ($(window).width() <= 576) {
+//       if (!$('.row.list').hasClass('slick-initialized')) {
+//         $('.row.list').slick({
+//           dots: true,
+//           infinite: true,
+//           speed: 300,
+//           slidesToShow: 1,
+//           slidesToScroll: 1,
+//           adaptiveHeight: true
+//         });
+//       }
+//     } else {
+//       if ($('.row.list').hasClass('slick-initialized')) {
+//         $('.row.list').slick('unslick');
+//       }
+//     }
+//   }
+
+
+//   initSlick();
+
+
+//   $(window).on('resize', function(){
+//     initSlick();
+//   });
+// });
 </script>
+ <script type="text/javascript">
+  $(document).ready(function(){
+    function initSlick(selector, rowSelector) {
+      if ($(window).width() <= 576) {
+        if (!$(selector).hasClass('slick-initialized')) {
+          $(selector).slick({
+            dots: true,
+			arrows: false,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            adaptiveHeight: true
+          });
+          $(selector).closest(rowSelector).addClass('slick-initialized');
+        }
+      } else {
+        if ($(selector).hasClass('slick-initialized')) {
+          $(selector).slick('unslick');
+          $(selector).closest(rowSelector).removeClass('slick-initialized');
+        }
+      }
+    }
+
+    function initAllSlicks() {
+      initSlick('.catalog-block .row.list', '.row');
+      initSlick('.compilations-block .row', '.row');
+      initSlick('.services-block .row', '.row');
+    }
+
+    // Initialize slick on document ready
+    initAllSlicks();
+
+    // Re-initialize slick on window resize
+    $(window).on('resize', function(){
+      initAllSlicks();
+    });
+  });
+  </script>
 
 	
 <div class="feedback-block">
