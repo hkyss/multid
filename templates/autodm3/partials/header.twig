@@ -32,7 +32,8 @@
 
             <div class="contacts">
                 <div class="head_info">
-                    <span>{{baseSettings.salon_location}}</span>
+                    <span>{{ baseSettings.salon_location|split(',', 2)[0] }}<br>
+                            {{ baseSettings.salon_location|split(',', 2)[1] }}</span>
                     {{  runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1'}) | raw}}
                 </div>                
                 <button type="button"data-toggle="modal" data-target="#oneclick">Заказать звонок</button>
