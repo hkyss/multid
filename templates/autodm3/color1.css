@@ -55,7 +55,13 @@
 .services-block .item button {
   color: #b71f25;
 }
+.services-block_mob .item button {
+  color: #b71f25;
+}
 .services-block .item button:hover {
+  background: #b71f25;
+}
+.services-block_mob .item button:hover {
   background: #b71f25;
 }
 .feedback-block form button {
@@ -113,7 +119,7 @@
 .compilations-block_mob .slick-dots li.slick-active button {
   background: #b71f25;
 }
-.services-block .slick-dots li.slick-active button {
+.services-block_mob .slick-dots li.slick-active button {
   background: #b71f25;
 }
 .item-page .photos .slick-dots li.slick-active button {
