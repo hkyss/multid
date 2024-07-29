@@ -116,11 +116,25 @@ rowTpl:'@CODE: <div class="index-first-block" style="background: url([+image+]) 
 </div>
 </div>
 {# {% include '/partials/services.twig' %} #}
+{% set site_start = modx.config['site_start'] %}
+
+{% set services = runSnippet('DocLister', {
+    display: 3,
+    parents: site_start,
+    depth: 3,
+    addWhereList: 'c.template = (32)',
+    tvList:'image,color',
+    tpl:'@T_FILE:partials/services_services'
+})
+%}
 {% include '/partials/podbor.twig' %}
+
+
 <div class="services-block">
 	<div class="container-fluid">
 		<h2>Услуги</h2>
 		<div class="row">
+			{% if services is empty %}
 			<div class="col-xl-4 col-md-6">
 				<div class="item">
 					<div class="name">
@@ -152,61 +166,13 @@ rowTpl:'@CODE: <div class="index-first-block" style="background: url([+image+]) 
 					<img src="/templates/autodm3/img/service3.png">
 				</div>
 			</div>
+			{% else %}
+    			{{services | raw}}
+			{% endif %}
 		</div>
 	</div>
 </div>
 
-
-
-<script type="text/javascript">
-// $(document).ready(function(){
-//     $('.slick-carousel').slick({
-//         infinite: true,
-//         slidesToShow: 3,  // Количество слайдов, отображаемых одновременно
-//         slidesToScroll: 1,
-//         arrows: false,    // Показать стрелки навигации
-//         dots: true,      // Показать точки навигации
-//         responsive: [
-
-//             {
-//                 breakpoint: 991,   // Настройки для экранов шириной до 600px
-//                 settings: {
-//                     slidesToShow: 1
-//                 }
-//             }
-//         ]
-//     });
-
-// });
-// $(document).ready(function(){
-//   function initSlick() {
-//     if ($(window).width() <= 576) {
-//       if (!$('.row.list').hasClass('slick-initialized')) {
-//         $('.row.list').slick({
-//           dots: true,
-//           infinite: true,
-//           speed: 300,
-//           slidesToShow: 1,
-//           slidesToScroll: 1,
-//           adaptiveHeight: true
-//         });
-//       }
-//     } else {
-//       if ($('.row.list').hasClass('slick-initialized')) {
-//         $('.row.list').slick('unslick');
-//       }
-//     }
-//   }
-
-
-//   initSlick();
-
-
-//   $(window).on('resize', function(){
-//     initSlick();
-//   });
-// });
-</script>
  <script type="text/javascript">
   $(document).ready(function(){
     function initSlick(selector, rowSelector) {

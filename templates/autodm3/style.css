@@ -2477,7 +2477,7 @@ header .contacts button{
   border-radius: .25rem;
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
-.modal-body button.btn.btn-primary.text-white.text-nowrap {
+.modal-body button.btn.text-white.text-nowrap {
   width: 100%;
   height: 59px;
   border-radius: 6px;
