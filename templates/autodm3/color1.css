@@ -49,6 +49,9 @@
 .compilations-block .item button {
   color: #b71f25;
 }
+.compilations-block_mob .item button {
+  color: #b71f25;
+}
 .services-block .item button {
   color: #b71f25;
 }
@@ -105,6 +108,9 @@
   background: #b71f25;
 }
 .compilations-block .slick-dots li.slick-active button {
+  background: #b71f25;
+}
+.compilations-block_mob .slick-dots li.slick-active button {
   background: #b71f25;
 }
 .services-block .slick-dots li.slick-active button {
