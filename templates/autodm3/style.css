@@ -2447,6 +2447,49 @@ header .contacts button{
   margin-top:20px;
   font-size: 16px;
 }
+.modal-content .modal-titles{
+  padding: 0rem 3rem;
+}
+.modal-content .modal-body {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 3rem;
+}
+.modal-title {
+  margin-bottom: 0;
+  line-height: 59px;
+  font-size: 58px;
+}
+.modal-body .form-control {
+  display: block;
+  width: 100%;
+  /* height: calc(1.5em + .75rem + 2px); */
+  height: 59px;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.modal-body button.btn.btn-primary.text-white.text-nowrap {
+  width: 100%;
+  height: 59px;
+  border-radius: 6px;
+}
+.modal-body p {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18.75px;
+  text-align: center;
+
+}
 
 @media (max-width: 1510px) {
   .container-fluid {
@@ -2818,6 +2861,42 @@ header .contacts button{
   .service-page .item .text {
     max-width: 240px;
   }
+
+  .modal-content .modal-titles {
+    padding: 0rem 1rem;
+}
+.modal-titles h1.col-12.text-center {
+    font-size: 30px;
+}
+.modal-titles .city {
+    color: #b71f25;
+    font-size: 30px;
+}
+.modal-title {
+    margin-bottom: 0;
+    line-height: 24px;
+    font-size: 24px;
+
+}
+.modal-content .modal-titles p {
+    color: #6D6D6D;
+    font-size: 18px;
+    margin-top: 10px;
+    line-height: 22px;
+}
+.modal-content .modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+.modal-body p {
+    font-family: 'Roboto';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.06px;
+    text-align: center;
+}
 }
 
 @media (max-width: 575px) {
