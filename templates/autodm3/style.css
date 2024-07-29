@@ -1000,7 +1000,6 @@ header .contacts button{
 .compilations-block {
   background: #FBFBFB;
   padding: 64px 0 96px;
-  display: block;
 }
 
 .compilations-block h2 {
@@ -1081,21 +1080,9 @@ header .contacts button{
 
 .services-block {
   padding: 67px 0 205px;
-  display: block;
-}
-.services-block_mob {
-  padding: 67px 0 205px;
-  display: none;
 }
 
 .services-block h2 {
-  text-align: center;
-  margin-bottom: 62px;
-  font-weight: 500;
-  font-size: 40px;
-  line-height: 48px;
-}
-.services-block_mob h2 {
   text-align: center;
   margin-bottom: 62px;
   font-weight: 500;
@@ -1109,23 +1096,11 @@ header .contacts button{
   position: relative;
   overflow: hidden;
   padding: 30px 183px 47px 34px;
+  margin-bottom: 40px;
 }
 
-.services-block_mob .item {
-  background: #FBFBFB;
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-  padding: 30px 183px 47px 34px;
-}
 
 .services-block .item img {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-.services-block_mob .item img {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -1140,25 +1115,7 @@ header .contacts button{
   z-index: 2;
 }
 
-.services-block_mob .item .name {
-  margin-bottom: 32px;
-  font-weight: 500;
-  font-size: 30px;
-  line-height: 36px;
-  position: relative;
-  z-index: 2;
-}
-
 .services-block .item p {
-  margin-bottom: 32px;
-  font-size: 14px;
-  line-height: 17px;
-  color: #646464;
-  position: relative;
-  z-index: 2;
-}
-
-.services-block_mob .item p {
   margin-bottom: 32px;
   font-size: 14px;
   line-height: 17px;
@@ -1178,35 +1135,11 @@ header .contacts button{
   z-index: 2;
 }
 
-.services-block_mob .item button {
-  background: #fff;
-  width: 173px;
-  height: 50px;
-  border-radius: 10px;
-  font-weight: 500;
-  font-size: 16px;
-  position: relative;
-  z-index: 2;
-}
-
 .services-block .item button:hover {
   color: #fff;
 }
 
-.services-block_mob .item button:hover {
-  color: #fff;
-}
-
 .services-block .slick-dots {
-  display: table;
-  width: calc(100% - 32px);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 0 16px;
-}
-
-.services-block_mob .slick-dots {
   display: table;
   width: calc(100% - 32px);
   -webkit-box-sizing: border-box;
@@ -1220,19 +1153,7 @@ header .contacts button{
   vertical-align: middle;
 }
 
-.services-block_mob .slick-dots li {
-  display: table-cell;
-  vertical-align: middle;
-}
-
 .services-block .slick-dots li button {
-  width: 100%;
-  height: 4px;
-  font-size: 0;
-  background: #F0F0F0;
-}
-
-.services-block_mob .slick-dots li button {
   width: 100%;
   height: 4px;
   font-size: 0;
@@ -2526,9 +2447,6 @@ header .contacts button{
   margin-top:20px;
   font-size: 16px;
 }
-.compilations-block_mob {
-  display: none;
-}
 
 @media (max-width: 1510px) {
   .container-fluid {
@@ -2577,86 +2495,6 @@ header .contacts button{
     font-size: 20px;
     line-height: 29px;
   }
-  .compilations-block_mob {
-    background: #FBFBFB;
-    padding: 64px 0 96px;
-    display: none;
-  }
-  
-  .compilations-block_mob h2 {
-    text-align: center;
-    margin-bottom: 62px;
-    font-weight: 500;
-    font-size: 40px;
-    line-height: 48px;
-  }
-  
-  .compilations-block_mob .item {
-    height: 352px;
-    margin-bottom: 40px;
-    position: relative;
-    background: radial-gradient(64.74% 64.74% at 37.02% 35.26%, #ffffff 0%, #eeeeee 100%);
-    border-radius: 10px;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
-  }
-  
-  .compilations-block_mob .item:hover {
-    transform: scale(1.05);
-  }
-  
-  .compilations-block_mob .item img {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    z-index: 1
-  }
-  
-  .compilations-block_mob .item .name {
-    position: absolute;
-    top: 47px;
-    left: 28px;
-    font-size: 24px;
-    line-height: 29px;
-  }
-  
-  .compilations-block_mob .item button {
-    background: #fff;
-    z-index: 2;
-    position: absolute;
-    top: 37px;
-    right: 37px;
-    box-shadow: 6px 7px 23px rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
-    font-weight: 500;
-    font-size: 16px;
-    width: 170px;
-    height: 50px;
-  }
-  
-  .compilations-block_mob .slick-dots {
-    display: table;
-    width: calc(100% - 32px);
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    margin: 0 16px;
-  }
-  
-  .compilations-block_mob .slick-dots li {
-    display: table-cell;
-    vertical-align: middle;
-  }
-  
-  .compilations-block_mob .slick-dots li button {
-    width: 100%;
-    height: 4px;
-    font-size: 0;
-    background: #F0F0F0;
-  }
 }
 
 @media (max-width: 1199px) {
@@ -2688,7 +2526,7 @@ header .contacts button{
   }
 
   .index-first-block form .flex .prices {
-    width: 49%;
+    width: 48%;
     border-radius: 10px;
   }
 
@@ -2696,6 +2534,12 @@ header .contacts button{
     width: 49%;
     border-radius: 10px;
   }
+  .index-first-block form .flex .prices .flex input[type='text'] {
+    width: 40%;
+    height: 50px;
+    padding: 0 25px;
+    font-size: 16px;
+}
 
   .feedback-block form {
     padding: 30px;
@@ -2828,19 +2672,7 @@ header .contacts button{
     margin-right: 0;
   }
 
-  .services-block{
-    display: none;
-  }
-
-  .services-block_mob{
-    display: block;
-  }
-
   .services-block .item {
-    padding: 30px 150px 45px 30px;
-  }
-
-  .services-block_mob .item {
     padding: 30px 150px 45px 30px;
   }
 
@@ -2869,16 +2701,13 @@ header .contacts button{
     header .contacts button{
     display: none;
   }
-  .compilations-block {
-    display: none;
-  }
 
-  .compilations-block_mob {
-    background: #FBFBFB;
-    padding: 64px 0 96px;
-    display: block;
-  }
-
+  /* .index-first-block form .flex .prices .flex input[type='text'] {
+    width: 100%;
+    height: 50px;
+    padding: 0 25px;
+    font-size: 16px;
+} */
 }
 
 @media (max-width: 767px) {
@@ -2894,7 +2723,7 @@ header .contacts button{
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    width: 75%;
+    width: 74%;
     margin-top: 0px;
   }
 
@@ -2960,11 +2789,9 @@ header .contacts button{
 
   .services-block .item {
     padding: 30px 183px 47px 34px;
+    margin-bottom: 40px;
   }
 
-  .services-block_mob .item {
-    padding: 30px 183px 47px 34px;
-  }
 
   .feedback-block form input[type='text'] {
     margin-bottom: 20px;
@@ -3092,18 +2919,6 @@ header .contacts button{
     background: none;
   }
 
-  .compilations-block_mob {
-    padding: 0 0 34px 0;
-    background: none;
-  }
-
-  .compilations-block_mob h2 {
-    text-align: left;
-    margin-bottom: 20px;
-    font-size: 20px;
-    line-height: 24px;
-  }
-
   .compilations-block h2 {
     text-align: left;
     margin-bottom: 20px;
@@ -3114,15 +2929,6 @@ header .contacts button{
   .compilations-block .item {
     height: 260px;
     margin-bottom: 16px;
-  }
-  .compilations-block_mob .item {
-    height: 260px;
-    margin-bottom: 16px;
-  }
-
-  .compilations-block_mob .name {
-    font-size: 16px;
-    left: 26px;
   }
 
   .compilations-block .item .name {
@@ -3137,26 +2943,11 @@ header .contacts button{
     right: 20px;
   }
 
-  .compilations-block_mob .item button {
-    right: 20px;
-  }
-
   .services-block {
     padding: 0 0 36px 0;
   }
 
-  .services-block_mob {
-    padding: 0 0 36px 0;
-  }
-
   .services-block h2 {
-    text-align: left;
-    margin-bottom: 20px;
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  .services-block_mob h2 {
     text-align: left;
     margin-bottom: 20px;
     font-size: 20px;
@@ -3168,31 +2959,13 @@ header .contacts button{
     margin-bottom: 16px;
   }
 
-  .services-block_mob .item {
-    padding: 30px 145px 37px 15px;
-    margin-bottom: 16px;
-  }
-
   .services-block .item .name {
     margin-bottom: 20px;
     font-size: 16px;
     line-height: 19px;
   }
 
-  .services-block_mob .item .name {
-    margin-bottom: 20px;
-    font-size: 16px;
-    line-height: 19px;
-  }
-
   .services-block .item p {
-    margin-bottom: 20px;
-    font-size: 10px;
-    line-height: 12px;
-    padding-right: 60px;
-  }
-
-  .services-block_mob .item p {
     margin-bottom: 20px;
     font-size: 10px;
     line-height: 12px;
