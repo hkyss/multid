@@ -223,3 +223,9 @@
   margin: -1rem -1rem -1rem auto;
   color: #b71f25;
 }
+.modal-body button.btn.text-white.text-nowrap {
+  width: 100%;
+  height: 59px;
+  border-radius: 6px;
+  background: #000000;
+}
