@@ -64,3 +64,20 @@
 
         </div>
     </div>
+
+
+<div class="popup" id="popup">
+		{{ runSnippet('Form', {
+		formid: 'FormCallback',
+		path: '/templates/autodm3/partials/forms/feedback_popup2/',
+		extension: 'twig'
+		}) | raw }}
+</div>
+<style>
+.popup.fancybox-content{
+	display: none; 
+	width: 60%; 
+	border-radius: 20px; 
+	height: 740px;
+}
+</style>
