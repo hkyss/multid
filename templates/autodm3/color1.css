@@ -190,3 +190,9 @@
   border-radius: 6px;
   background: #b71f25;
 }
+.application-form .price span strong{
+  color: #b71f25;
+}
+div#trade-in-popup .credit-info strong{
+  color: #b71f25;
+}
