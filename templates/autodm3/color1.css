@@ -196,3 +196,7 @@
 div#trade-in-popup .credit-info strong{
   color: #b71f25;
 }
+
+.navi a:last-of-type {
+  color: #b71f25; /* замените на нужный вам цвет */
+}
