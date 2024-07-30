@@ -573,7 +573,7 @@ header .contacts button{
   font-weight: 500;
   font-size: 62px;
   line-height: 77px;
-  padding: 0 20%;
+  /* padding: 0 20%; */
 }
 .index-first-block p {
   margin-bottom: 36px;
@@ -684,6 +684,10 @@ header .contacts button{
   font-size: 18px;
   line-height: 21px;
   margin-right: 49px;
+}
+
+.index-first-block form .links a:hover {
+  text-decoration: underline;
 }
 
 .index-first-block form .links a:last-child {
@@ -837,6 +841,7 @@ header .contacts button{
   font-weight: 500;
   font-size: 22px;
   line-height: 26px;
+  width: 100%;
 }
 
 .catalog-block .item .nal {
@@ -1177,7 +1182,8 @@ header .contacts button{
 }
 
 .feedback-block form {
-  background: #FBFBFB;
+  /* background: #FBFBFB; */
+  background: #dfdcdc6e;
   border-radius: 10px;
   padding: 55px 94px;
 }
@@ -2502,14 +2508,192 @@ header .contacts button{
   text-align: center;
 
 }
-.application-form .form-header-mob{
+.popup-fb.popup_trade-in .application-form .form-header-mob{
 	display: none;
 }
-.application-form .form-header {
+.popup-fb.popup_trade-in .application-form .form-header {
   display: flex;
   flex-direction: column;
   display: block;
 }
+
+.popup-fb.popup_trade-in .application-form .form-group {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  flex-direction: row;
+}
+.popup-fb.popup_trade-in .application-form .form-container {
+  position: relative;
+}
+.popup-fb.popup_trade-in .application-form .form-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #666;
+}
+
+.popup-fb.popup_trade-in .application-form .car-details1.row {
+  padding-left: 16px;
+  margin-top: 12px;
+}
+
+.popup-fb.popup_trade-in .application-form .detail {
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18.75px;
+  text-align: left;
+  color: #81869A;
+  
+}
+.popup-fb.popup_trade-in .application-form .detail p{
+color:#000000;
+}
+
+.popup-fb.popup_trade-in .application-form .details {
+  margin-left: 20px;
+}
+
+.popup-fb.popup_trade-in .application-form .details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.popup-fb.popup_trade-in .application-form .details li {
+  margin: 5px 0;
+}
+
+.popup-fb.popup_trade-in .application-form .price {
+  margin-top: 10px;
+    display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.popup-fb.popup_trade-in .application-form .price span{
+font-family: Roboto;
+font-size: 16px;
+font-weight: 500;
+line-height: 18.75px;
+text-align: left;
+color:#81869A;
+}
+.popup-fb.popup_trade-in .application-form .price span strong{
+font-family: 'Roboto';
+font-size: 33px;
+font-weight: 700;
+line-height: 42.19px;
+text-align: left;
+}
+
+
+.popup-fb.popup_trade-in .application-form .price .old-price {
+  color: #999;
+  text-decoration: line-through;
+}
+
+.popup-fb.popup_trade-in .application-form .credit-info h3 {
+margin: 0;
+font-family: Fira Sans;
+font-size: 24px;
+font-weight: 500;
+line-height: 28.8px;
+text-align: left;
+color: #6D6D6D;
+margin-bottom: 13px;
+}
+.popup-fb.popup_trade-in .application-form .credit-info p{
+font-family: Roboto;
+font-size: 16px;
+font-weight: 500;
+line-height: 18.75px;
+text-align: left;
+color:#81869A;
+}
+.popup-fb.popup_trade-in .application-form .credit-info p strong{
+font-family: Roboto;
+font-size: 16px;
+font-weight: 600;
+line-height: 18.75px;
+text-align: right;
+color:#B71F25;
+}
+
+
+.popup-fb.popup_trade-in .application-form .form-group input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.popup-fb.popup_trade-in .application-form .submit-btn {
+  background-color: #B71F25;
+  color: #fff;
+  padding: 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+.popup-fb.popup_trade-in .application-form .consent {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.popup-fb.popup_trade-in .application-form .consent a {
+  color: #B71F25;
+}
+
+
+div#trade-in-popup {
+  width: 80%;
+  border-radius: 10px;
+  padding: auto;
+}
+
+div#trade-in-popup .application-form .form-header h1 {
+  font-weight: bold;
+  font-family: 'Fira Sans';
+  font-size: 64px;
+  font-weight: 500;
+  line-height: 60px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+div#trade-in-popup .details2 .row div img{
+  max-width: 75%;
+}
+div#trade-in-popup .application-form .details2.row.mt-2 {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 9px;
+}
+div#trade-in-popup .application-form .details2 .row{
+display: flex;
+  align-items: center;
+  margin-right: 0px;
+  margin-left: 0px;
+  width: auto;
+}
+div#trade-in-popup .details2 .row div p{
+  font-size: 16px;
+  color: #646464;
+  font-family: 'Roboto';
+  font-weight: 400;
+  line-height: 18.75px;
+  text-align: left;
+}
+.popup-fb.popup_trade-in .group-button.col-12 {
+  padding: 0 8%;
+}
+div#trade-in-popup .details1{
+  margin-top: 12px;
+}
+/* тут конецдекс */
 
 @media (max-width: 1510px) {
   .container-fluid {
@@ -2771,11 +2955,28 @@ header .contacts button{
     padding: 0 25px;
     font-size: 16px;
 } */
-  .application-form .form-header-mob{
+div#trade-in-popup .application-form .form-header-mob{
     display: block;
   }
-  .application-form .form-header{
+  div#trade-in-popup .application-form .form-header-mob h2{
+    font-size: 18px;
+    color: #666;
+  }
+  div#trade-in-popup .application-form .form-header-mob h1{
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: left;
+
+  }
+  div#trade-in-popup .application-form .form-header{
     display: none;
+  }
+  div#trade-in-popup .application-form .form-group {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-direction: column;
   }
 }
 
@@ -2924,6 +3125,24 @@ header .contacts button{
     text-align: center;
 }
 }
+
+@media (max-width: 650px) {
+  div#trade-in-popup .application-form .price span strong {
+  font-family: 'Roboto';
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 42.19px;
+  text-align: left;
+  }
+  div#trade-in-popup .application-form .form-header-mob h1{
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 30px;
+      text-align: left;
+  }
+
+}
+
 
 @media (max-width: 575px) {
   .container-fluid {
@@ -3577,6 +3796,39 @@ header .contacts button{
     width: 60%;
     margin-top: 0px;
   }
+  div#trade-in-popup {
+    width: 100%;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  .popup-fb.popup_trade-in .application-form .details {
+    margin-left: 3px;
+  }
+  .application-form .price span strong {
+    font-family: 'Roboto';
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+}
+div#trade-in-popup .application-form .form-header-mob h1 {
+  font-weight: bold;
+  font-family: 'Fira Sans';
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+div#trade-in-popup .application-form .details2 .row {
+  display: flex;
+  align-items: center;
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 48%;
+}
+  /* тут 575 */
 
 }
 
