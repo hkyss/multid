@@ -468,7 +468,7 @@ main {
 
 .header ul {
   padding-top: 14px;
-  margin-right: 100px;
+  /* margin-right: 100px; */
 }
 
 .header ul li {
@@ -2748,7 +2748,12 @@ div#trade-in-popup .details1{
   .container-fluid {
     width: 970px;
   }
-
+  .header .head_info {
+    display: flex;
+    flex-direction: column;
+    padding-right: 8px;
+    width: 154px;
+  }
   .header ul li {
     margin-right: 15px;
   }
@@ -2854,6 +2859,12 @@ div#trade-in-popup .details1{
   .header ul.opened {
     left: 0;
   }
+  .header .head_info {
+    display: flex;
+    flex-direction: column;
+    padding-right: 8px;
+    width: auto;
+}
 
   .left-listCall {
     display: none;
