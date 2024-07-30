@@ -249,9 +249,5 @@ var waitForJQuery2 = setInterval(function() {
 {% include('partials/banks.twig') %}
 {#% include '/partials/tradein.twig' %#}
 {#% endcache %#}
-		{{ runSnippet('Form', {
-		formid: 'FormCallback',
-		path: '/templates/autodm3/partials/forms/feedback_popup2/',
-		extension: 'twig'
-		}) | raw }}
+		
 {% endblock %}
