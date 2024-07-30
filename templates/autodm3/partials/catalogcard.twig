@@ -55,7 +55,19 @@ display: 1
         <div class="buttons">
             <button onclick="location.href='{{ data['url'] }}';">Подробнее</button>
             {# <button class="btn" type="button" data-toggle="modal" data-target="#oneclick">Купить в кредит</button> #}
-            <button class="btn" type="button" onclick="openPopupForm()">Купить в кредит</button>
+            {# <button class="btn" type="button" onclick="openPopupForm()">Купить в кредит</button> #}
+            <button class="btn" type="button" onclick="openPopupForm(this)"
+                data-title="{{ data['title'] }}"
+                data-image="{{ randomPhotoLink }}"
+                data-year="{{ data['tv.year'] }}"
+                data-run="{{ (data['tv.run'])|number_format(0, '.', ' ') }}"
+                data-engine-volume="{{ data['tv.engine_volume'] }}"
+                data-gear="{{ data['tv.gear'] }}"
+                data-engine-power="{{ data['tv.engine_power'] }}"
+                data-price="{{ ( data['tv.car-price'] )|number_format(0, '.', ' ') }}"
+                data-old-car-price="{{ data['tv.old-car-price']|number_format(0, '.', ' ') }}">
+                Купить в кредит
+            </button>
         </div>
     </div>
 </div>
