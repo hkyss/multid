@@ -565,12 +565,22 @@ header .contacts button{
 .index-first-block h1 {
   text-align: center;
   color: #fff;
-  margin-bottom: 46px;
+  /* margin-bottom: 46px; */
+  margin-bottom: 16px;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: 64px;
+  font-size: 62px;
   line-height: 77px;
   padding: 0 20%;
+}
+.index-first-block p {
+  margin-bottom: 36px;
+  font-family: 'Fira Sans';
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 48px;
+  text-align: center;
+  color: #FFFFFF;
 }
 
 .index-first-block form {
@@ -2912,6 +2922,15 @@ header .contacts button{
     margin-bottom: 34px;
     font-size: 24px;
     line-height: 29px;
+  }
+  .index-first-block p {
+    margin-bottom: 32px;
+    font-family: 'Fira Sans';
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
   }
 
   .index-first-block form {
