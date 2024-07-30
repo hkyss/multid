@@ -34,10 +34,7 @@
 .catalog-block .item .buttons button:nth-child(1) {
   background: #DC9A1B;
 }
-.catalog-block .item .buttons button:nth-child(2) {
-  color: #DC9A1B;
-  background: rgba(47, 128, 237, 0.31);
-}
+
 .catalog-block .bottom-button button {
   color: #DC9A1B;
 }

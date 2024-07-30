@@ -33,10 +33,7 @@
 .catalog-block .item .buttons button:nth-child(1) {
   background: #000000;
 }
-.catalog-block .item .buttons button:nth-child(2) {
-  color: #000000;
-  background: rgba(47, 128, 237, 0.31);
-}
+
 .catalog-block .bottom-button button {
   color: #000000;
 }
