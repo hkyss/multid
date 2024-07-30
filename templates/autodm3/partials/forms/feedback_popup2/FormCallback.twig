@@ -8,7 +8,7 @@
         	<h1>Volkswagen Multivan 2022</h1>
         </div>
 		<div class="col-lg-5 col-12">
-			<img src="path/to/car-image.png" alt="Volkswagen Multivan 2022">
+			<img src="https://s2.server.multiauto.site/blurred/1117454160-05f18c13/912f6829228e1ff31be11ab0f9b019d3.webp" alt="Volkswagen Multivan 2022">
 		</div>
 		<div class="col-lg-7 col-12">
 			<div class="form-header">
@@ -24,7 +24,7 @@
 			</div>
 
 			<div class="details2 row mt-2">
-				<div class="row ml-1 col-md-6">
+				<div class="row ml-1">
 					<div class="d-flex align-items-center justify-content-center pt-1">
 						<img src="/templates/autodm3/img/imgpop1.svg" alt="">
 					</div>
@@ -32,7 +32,7 @@
 						<p class="text-left body-conf">Бензин</p>
 					</div>
 				</div>
-				<div class="row ml-1 col-md-6">
+				<div class="row ml-1">
 					<div class="d-flex align-items-center justify-content-center pt-1">
 						<img src="/templates/autodm3/img/imgpop2.svg" alt="">
 					</div>
@@ -40,15 +40,15 @@
 						<p class="text-left title-conf">Полный</p>
 					</div>
 				</div>
-				<div class="row ml-1 col-md-6">
+				<div class="row ml-1">
 					<div class="d-flex align-items-center justify-content-center pt-1">
-						<img src="/templates/autodm3/img/imgpop2.svg" alt="">
+						<img src="/templates/autodm3/img/imgpop3.svg" alt="">
 					</div>
 					<div class="p-0  pl-1 pt-1">
 						<p class="text-left title-conf">Автоматическая</p>
 					</div>
 				</div>
-				<div class="row ml-1 col-md-6">
+				<div class="row ml-1">
 					<div class="d-flex align-items-center justify-content-center pt-1">
 						<img src="/templates/autodm3/img/imgpop1.svg" alt="">
 					</div>
@@ -77,71 +77,28 @@
 			</div>
         </div>      
     </div>
-	        <div class="form-group col-12">
-            <input type="text" placeholder="Ваше имя" name="first_name" class="w-100 mb-3 px-3 {{ data['first_name.classname'] }}" id="first_name" value="{{ data.first_name }}">
-            <input type="text" placeholder="Ваш телефон" name="mobile_tel" class="w-100 mb-3 px-3 {{ data['mobile_tel.classname'] }}" id="mobile_tel" value="{{ data.mobile_tel }}">
-		
+    <div class="group-button col-12">
+	        <div class="form-group">
+            <div class="col-6">
+                <input type="text" placeholder="Ваше имя" name="first_name" class="w-100 mb-3 px-3 {{ data['first_name.classname'] }}" id="first_name" value="{{ data.first_name }}">
+            </div>
+            <div class="col-6">
+                <input type="text" placeholder="Ваш телефон" name="mobile_tel" class="w-100 mb-3 px-3 {{ data['mobile_tel.classname'] }}" id="mobile_tel" value="{{ data.mobile_tel }}">
+            </div>
         </div>
 				<button type="submit" class="submit-btn" class="col-12">Оставить заявку</button>
         <p class="consent col-12">Нажимая кнопку «Оставить заявку», вы принимаете <a href="/policy">условия обработки персональных данных</a>.</p>
+    </div>
 </form>
 
 <style>
-
-
-.application-form .container-fluid {
-    padding: 20px;
-}
-
-.application-form .item {
-    text-align: center;
-}
-
-.application-form .icon img {
-    width: 50px;
-    height: 50px;
-}
-
-.application-form .application-form {
-    background-color: #fff;
-    /* border-radius: 10px; */
-    /* padding: 20px;
-    max-width: 800px;
-    margin: 20px auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-}
 
 .application-form .form-container {
     position: relative;
 }
 
-.application-form .form-header {
-    display: flex;
-    /* justify-content: space-between; */
-    /* align-items: center; */
-	flex-direction: column;
-}
 
-.application-form .form-header h1 {
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
-	
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
-    font-family: Fira Sans;
-    font-size: 64px;
-    font-weight: 500;
-    line-height: 60px;
-    text-align: left;
 
-}
-.application-form .details2 .row{
-	display: flex;
-    align-items: center;
-
-}
 .application-form .form-header h2 {
     margin: 0;
     font-size: 18px;
@@ -154,25 +111,16 @@
 }
 
 .application-form .detail {
-    font-family: Roboto;
+    font-family: 'Roboto';
     font-size: 16px;
     font-weight: 400;
     line-height: 18.75px;
     text-align: left;
     color: #81869A;
+    
 }
 .application-form .detail p{
 	color:#000000;
-}
-.application-form .car-details {
-    display: flex;
-    margin: 20px 0;
-}
-
-.application-form .car-details img {
-    width: 300px;
-    height: auto;
-    border-radius: 10px;
 }
 
 .application-form .details {
@@ -203,8 +151,8 @@ text-align: left;
 color:#81869A;
 }
 .application-form .price span strong{
-font-family: Roboto;
-font-size: 36px;
+font-family: 'Roboto';
+font-size: 33px;
 font-weight: 700;
 line-height: 42.19px;
 text-align: left;
@@ -217,13 +165,14 @@ text-align: left;
 }
 
 .application-form .credit-info h3 {
-    margin: 0;
-	font-family: Fira Sans;
+margin: 0;
+font-family: Fira Sans;
 font-size: 24px;
 font-weight: 500;
 line-height: 28.8px;
 text-align: left;
 color: #6D6D6D;
+margin-bottom: 13px;
 
 	
 }
@@ -279,33 +228,52 @@ color:#B71F25;
 .application-form .consent a {
     color: #B71F25;
 }
-.application-form .details2 p {
-    font-family: 'Roboto';
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 18.75px;
-    text-align: left;
-    color: #646464;
+
+
+div#trade-in-popup {
+    width: 80%;
+    border-radius: 10px;
 }
 
+div#trade-in-popup .application-form .form-header h1 {
+    font-weight: bold;
+    font-family: 'Fira Sans';
+    font-size: 64px;
+    font-weight: 500;
+    line-height: 60px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+div#trade-in-popup .details2 .row div img{
+    max-width: 75%;
+}
+.application-form .details2.row.mt-2 {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 9px;
+}
 .application-form .details2 .row{
 	display: flex;
     align-items: center;
-    font-size: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
-.application-form .form-header-mob{
-	display: none;
+div#trade-in-popup .details2 .row div p{
+    font-size: 12px;
+    color: #646464;
+    font-family: 'Roboto';
+    font-weight: 400;
+    line-height: 18.75px;
+    text-align: left;
+}
+.group-button.col-12 {
+    padding: 0 8%;
+}
+div#trade-in-popup .details1{
+    margin-top: 12px;
 }
 
 
-    /* .agree input[type="checkbox"] {
-        display: block;
-        appearance: auto;
-		background-color: #4E3249;
-    }
-	.form-block input{
-		background-color: #FFFFFF;
-	} */
 
 </style> 
 

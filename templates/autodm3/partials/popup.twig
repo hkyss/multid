@@ -19,6 +19,49 @@
     </div>
   </div>
 </div>
+{# <div id="trade-in-popup" class="popup-fb popup_trade-in" style="display: none;">
+  <div class="popup__header popup__header_trade-in">
+    <div>
+      <div class="popup__heading">Получите лучшее предложение по&nbsp;Trade&nbsp;In</div>
+      <div class="popup__subheading">Оценим ваш автомобиль за 10 минут</div>
+    </div>
+    <div>
+      <div class="popup__descr">Выгода до</div>
+      <div class="popup__nums">{% if baseSettings.vigoda_trade %}
+                        {{baseSettings.vigoda_trade}}
+                    {% else %}
+                      150 000 рублей
+                                          {% endif %}
+
+                      </div>
+    </div>
+    <div class="popup__auto">
+      <img src="/templates/autosalon/images/tradein-popup-car.png" alt="">
+    </div>
+    <img class="popup__header-pic" src="/templates/autosalon/images/money-popup.png" alt="">
+  </div>
+  <div class="popup__content">
+    <div role="form" class="wpcf7" id="" lang="ru-RU" dir="ltr">
+      {{ runSnippet('Form', {
+      formid: 'FormCallback',
+      path: '/templates/autosalon/partials/forms/feedback_popup/',
+      extension: 'twig'
+      }) | raw }}
+    </div>
+  </div>
+</div> #}
+<div id="trade-in-popup" class="popup-fb popup_trade-in" style="display: none;">
+<div class="popup__content">
+    <div role="form" class="wpcf7" id="" lang="ru-RU" dir="ltr">
+      {{ runSnippet('Form', {
+      formid: 'FormCallback',
+      path: '/templates/autodm3/partials/forms/feedback_popup2/',
+      extension: 'twig'
+      }) | raw }}
+    </div>
+  </div>
+
+</div>
 
 <link rel="stylesheet" href="assets/site/bootstrap-icons/font/bootstrap-icons.css">
 <div class="float-button " id="float-button">
@@ -49,6 +92,13 @@ setInterval(function() {
   domElement.heartBeat(1500);
 }, 5000);
 
+function openPopupForm() {
+	// Откройте попап с id "popup-trade_innew"
+	$.fancybox.open({
+	  src: "#trade-in-popup",
+	  type: "inline"
+	});
+  } 
 </script>
 
 

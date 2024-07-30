@@ -2500,6 +2500,14 @@ header .contacts button{
   text-align: center;
 
 }
+.application-form .form-header-mob{
+	display: none;
+}
+.application-form .form-header {
+  display: flex;
+  flex-direction: column;
+  display: block;
+}
 
 @media (max-width: 1510px) {
   .container-fluid {
@@ -2761,6 +2769,12 @@ header .contacts button{
     padding: 0 25px;
     font-size: 16px;
 } */
+  .application-form .form-header-mob{
+    display: block;
+  }
+  .application-form .form-header{
+    display: none;
+  }
 }
 
 @media (max-width: 767px) {
