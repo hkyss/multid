@@ -5,6 +5,15 @@
     rowTpl: '@CODE:<li class="li-foot col-md-2 col-sm-6 col-12"><a href="[+url+]">[+pagetitle+]</a></li>',
     outerTpl: '@CODE:<ul class="foot-menu row d-flex justify-content-between col-xl-8 col-lg-9 col-md-12 col-sm-12 col-xs-12">
         [+wrap+]</ul>'}) %}
+
+        {% set headermenu = runSnippet('DLMenu', {
+    parents: baseSettings["id"],
+    tvList: 'image',
+    maxDepth: 1,
+    rowTpl: '@CODE:<li><a href="[+url+]">[+pagetitle+]</a></li>',
+    outerTpl: '@CODE:<ul>
+        [+wrap+]</ul>'}) %}
+
     <footer class="footer">
         <div class="container-fluid flex">
             <div class="left-block">
@@ -28,40 +37,53 @@
                         {% endif %}
                     </a>
                 </div>
-{{  runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1', class: 'phone'}) | raw}}                <a href="/policy" class="rules">Политика конфиденциальности</a>
+                {{  runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1', class: 'phone'}) | raw}}                
+                <a href="/policy" class="rules">Политика конфиденциальности</a>
                 <button type="button"data-toggle="modal" data-target="#oneclick">Заказать звонок</button>
             </div>
-            {# <nav>
-                <p>Каталог</p>
-                <ul>
-                    <li><a href="/avtomobili-s-probegom">Автомобили с пробегом</a></li>
-
-                </ul>
-            </nav> #}
-            {# <nav>
-                <p>Акции</p>
-                <ul>
-                    <li><a href="/akcii2">Спецпредложения</a></li>
-
-                </ul>
-            </nav> #}
-
-            {# <nav>
-                <p>Контакты</p>
-                <ul>
-                    <li><a href="#adres">Мы на карте</a></li>
-                </ul>
-            </nav> #}
 
             {{ footermenu|raw}}
             
         </div>
     </footer>
+
+    <footer class="footer-lg">
+    <div class="container-fluid flex">
+            <a href="/">
+                {% if baseSettings["logo"] %}
+                        <img src="{{baseSettings["logo"]}}" style="height: 45px;">
+                    {% else %}
+                    <div style="width: 200px;
+                height: 48px;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 24px;
+                display: flex;
+                align-items: center;
+                text-transform: uppercase;
+                justify-content: center;
+                color: #D12D1E;">{{ baseSettings.pagetitle }}
+                    </div>
+                {% endif %}
+            </a>
+            
+            {{ headermenu|raw}}
+
+            <div class="contacts">
+
+                    {{  runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1'}) | raw}}
+               
+                <button type="button"data-toggle="modal" data-target="#oneclick">Заказать звонок</button>
+            </div>
+        </div>
+    </footer>
+
+
      <div class="copy-block">
         <div class="container-fluid">
-            
             <p style="font-size: 10px">{{baseSettings.footer |raw}}</p>
-
+            <p style="font-size: 15px"><a href="/policy" class="rules">Политика конфиденциальности</a></p>
         </div>
     </div>
 
@@ -80,4 +102,50 @@
 	border-radius: 20px; 
 	height: 740px;
 }
+.footer-lg ul {
+    padding-top: 14px;
+    /* margin-right: 100px; */
+}
+
+
+/* .footer .left-block .phone{
+    display: none;
+}
+.footer .left-block .rules{
+    display:none;
+}
+.footer .left-block button {
+    display:none;
+}
+.footer .right-block{
+    
+    display:block;
+}
+.footer .right-block .phone {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 12px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+}
+.footer .right-block .rules {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 28px;
+    font-size: 12px;
+    line-height: 14px;
+    color: #646464;
+}
+.footer .right-block button {
+    width: 202px;
+    height: 50px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 16px;
+}
+.footer .right-block button:hover{
+    opacity: 0.5;
+} */
 </style>
