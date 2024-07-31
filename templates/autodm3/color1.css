@@ -74,6 +74,12 @@
 .footer .left-block button {
   background: #b71f25;
 }
+.footer .right-block .phone:hover {
+  color: #b71f25;
+}
+.footer .right-block button {
+  background: #b71f25;
+}
 .footer nav ul li a:hover {
   color: #b71f25;
 }

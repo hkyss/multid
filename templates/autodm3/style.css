@@ -561,7 +561,7 @@ header .contacts button{
 }
 
 .index-first-block.inner form {
-  background: #e8e8e8;
+  background: #999696e8;
 }
 
 .index-first-block h1 {
@@ -1016,7 +1016,8 @@ header .contacts button{
 
 .compilations-block {
   background: #FBFBFB;
-  padding: 64px 0 96px;
+  /* padding: 64px 0 96px; */
+  padding: 25px 0 0px;
 }
 
 .compilations-block h2 {
@@ -1096,7 +1097,8 @@ header .contacts button{
 
 
 .services-block {
-  padding: 67px 0 205px;
+  /* padding: 67px 0 205px; */
+  padding: 67px 0 15px;
 }
 
 .services-block h2 {
@@ -1334,13 +1336,14 @@ header .contacts button{
 }
 
 .footer .left-block .logo {
-  margin-bottom: 42px;
+  margin-bottom: 10px;
+  /* margin-bottom: 42px; */
 }
 
 .footer .left-block .phone {
   display: block;
   text-decoration: none;
-  margin-bottom: 12px;
+  margin-bottom: 7px;
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
@@ -1349,7 +1352,8 @@ header .contacts button{
 .footer .left-block .rules {
   display: block;
   text-decoration: none;
-  margin-bottom: 28px;
+  margin-bottom: 8px;
+  /* margin-bottom: 28px; */
   font-size: 12px;
   line-height: 14px;
   color: #646464;
@@ -2693,6 +2697,83 @@ div#trade-in-popup .details2 .row div p{
 div#trade-in-popup .details1{
   margin-top: 12px;
 }
+.footer{
+  display: none;
+}
+.footer-lg{
+  display: block;
+}
+
+.footer-lg ul li {
+  display: inline-block;
+  /* margin-right: 105px; */
+  margin-right: 84px;
+  padding: 0 30px;
+}
+.footer-lg ul li a {
+  display: block;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  font-weight: 500;
+}
+.footer-lg .contacts {
+  display: flex;
+  margin-top: 0px;
+  flex-direction: column;
+  align-items: center;
+
+}
+.footer-lg .head_info {
+  display: flex;
+  flex-direction: column;
+  padding-right: 8px;
+}
+.footer-lg .contacts a {
+  display: inline-block;
+  text-decoration: none;
+  margin-right: 25px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+}
+.footer-lg .contacts button {
+  background: #2f80ed;
+}
+.footer-lg .contacts button {
+  color: #fff;
+  width: 202px;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 16px;
+}
+@media (max-width: 1510px) {
+  .footer-lg ul li {
+      margin-right: 30px;
+  }
+}
+
+@media (max-width: 1510px) {
+  .footer-lg ul {
+      margin-right: 0;
+  }
+}
+@media (max-width: 1199px) {
+  .footer-lg .head_info {
+      display: flex;
+      flex-direction: column;
+      padding-right: 8px;
+      width: 154px;
+  }
+  .footer-lg .contacts a {
+      margin-right: 15px;
+      FONT-SIZE: 15PX;
+      padding-bottom: 5px;
+  }
+}
+
 /* тут конецдекс */
 
 @media (max-width: 1510px) {
@@ -2804,7 +2885,8 @@ div#trade-in-popup .details1{
 
   .footer .flex .left-block {
     order: 1;
-    padding-top: 30px;
+    padding-top: 10px;
+    /* padding-top: 30px; */
   }
 
   .item-page .icons-block .item {
@@ -2889,7 +2971,12 @@ div#trade-in-popup .details1{
   .header .contacts .menu-button {
     display: block;
   }
-
+  .footer-lg{
+    display: none;
+  }
+  .footer{
+    display: block;
+  }
   .footer .foot-menu{
     width: 100%;
     order: 0;
@@ -3154,18 +3241,19 @@ div#trade-in-popup .application-form .form-header-mob{
 
 }
 
-
 @media (max-width: 575px) {
   .container-fluid {
     width: auto;
   }
 
   .index-first-block {
-    padding: 150px 0 48px;
+    /* padding: 150px 0 48px; */
+    padding: 50px 0 48px;
   }
 
   .index-first-block h1 {
-    margin-bottom: 34px;
+    /* margin-bottom: 34px; */
+    margin-bottom: 27px;
     font-size: 24px;
     line-height: 29px;
   }
@@ -3200,7 +3288,8 @@ div#trade-in-popup .application-form .form-header-mob{
   }
 
   .brands-block .flex2 .item {
-    width: 18%;
+    /* width: 18%; */
+    width: 30%;
     margin-bottom: 17px;
     margin-right: 2.5%;
     font-size: 12px;
@@ -3910,9 +3999,9 @@ div#trade-in-popup .application-form .details2 .row {
 }
 
 @media (max-width: 575px) {
-  .brands-block .flex2 .item:nth-child(n+1) {
+  /* .brands-block .flex2 .item:nth-child(n+1) {
     display: block;
-  }
+  } */
 
   .actions-page .item2 .content .name {
     font-size: 20px;
@@ -4044,6 +4133,10 @@ div#trade-in-popup .application-form .details2 .row {
     justify-content: space-between;
     width: 100%;
     margin-top: 20px;
+  }
+  .header .contacts {
+    width: 60%;
+    margin-top: 0px;
   }
 }
 
