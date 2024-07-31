@@ -129,6 +129,71 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
             extension: 'twig'
             }) | raw }}
 </div>
+<div class="popup" id="popupCredNew2" style="display: none; width: 100%; max-width: 1165px;">
+    <div class="modal-body">
+       <div class="application-form-car">
+      
+            <div class="form-container row">
+                <div class="form-header-mob mb-1">
+                    <h2>Оставить заявку на</h2>
+                    <h1 id="modal-car-title">Skoda Octavia 2018 год, 2.7, АТ</h1>
+                </div>
+                <div class="col-md-5 col-12">
+                    <img src ="https://s2.server.multiauto.site/blurred/1117192101-026bc551/0ed43c2b5464e62d80caa73022504186.webp" alt="Volkswagen Multivan 2022" id="car-image" style="border-radius: 10px;">
+                </div>
+                <div class="col-md-7 col-12">
+                    <div class="form-header">
+                        <h2>Оставить заявку на</h2>
+                        <h1 id="modal-car-title">Skoda Octavia 2018 год, 2.7, АТ</h1>
+                    </div>
+                    <div class="price-block mt-3">
+                        <div class="price-f mr-2">
+                            <span>1 000 000 ₽</span>
+                        </div>
+                        <div class="credit-info">
+                            <span>В кредит от 22 800 ₽/мес</span>
+                            <span class="stavka">Ставка от 4,9%</span>
+                        </div>
+                    </div>
+                    <div class="details row mt-2">
+                        <div class="row ml-1 mt-1 col-md-4 col-6">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop1.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p class="text-left conf-text">Привод:</p>
+                                <p id="modal-engine-volume" class="text-left conf-data pt-1">Передний</p>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-1 col-md-4 col-6 p-0">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop2.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p id="modal-gear" class="text-left conf-text">Мощность:</p>
+                                <p id="modal-engine-volume" class="text-left conf-data pt-1">2,7/150 л.с./145 Нм</p>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-1 col-md-4 col-6">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop3.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p id="modal-engine-power" class="text-left conf-text">КПП:</p>
+                                <p id="modal-engine-volume" class="text-left conf-data pt-1">Автомат</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/major/partials/forms/creditPrewCar/',
+        extension: 'twig'
+        }) | raw }}
+</div>
 
  <script type="text/javascript">
 // $(document).on('change', '.calc-input', function() {
@@ -147,5 +212,195 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
 // });
 
 // </script>
-    
+
+   <style>
+.popup .modal-body .application-form-car {
+    padding: 2rem;
+}
+.popup .modal-body .application-form-car .form-header-mob{
+  display: none;
+}
+.popup .modal-body .application-form-car .form-header{
+  display: block;
+}
+.popup .modal-body .application-form-car .form-header h1{
+  font-size: 46px;
+  font-weight: 500;
+}
+.popup .modal-body .application-form-car .form-header h2{
+  font-size: 34px;
+  color: #98AEC3;
+  font-weight: 400;
+}
+.popup .modal-body .application-form-car .form-header-mob h1{
+  font-size: 30px;
+}
+.popup .modal-body .application-form-car .form-header-mob h2{
+  font-size: 30px;
+  color: #98AEC3;
+  font-weight: 500;
+}
+.popup .modal-body .application-form-car .price-block .price-f span{
+        font-size: 27px;
+        font-weight: 700;
+        line-height: 32.91px;
+        text-align: center;
+        color: #252638;
+}
+.popup .modal-body .application-form-car .credit-info {
+    display: flex;
+    flex-direction: row;
+}
+.popup .modal-body .application-form-car .credit-info .stavka{
+    padding: 8px;
+    border-radius: 8px;
+    background: #D02E25;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12.65px;
+    text-align: right;
+    color: #FFFFFF;
+    margin: 0 15px;
+    }
+    .popup .modal-body .application-form-car .credit-info span{
+    color: #98AEC3;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17.07px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin: 0 15px;
+}
+.popup .modal-body .application-form-car .details .row .conf-text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.07px;
+    text-align: left;
+    color: #98AEC3;
+}
+.popup .modal-body .application-form-car .details .row .conf-data {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17.07px;
+    text-align: left;
+    color: #35374E;
+}
+.popup .modal-body .application-form-car .price-block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.popup .bg.formPopCredNew .credit-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 34.13px;
+    text-align: left;
+    color: #F2F3F7;
+    margin-top: 0px;
+}
+.popup .bg.formPopCredNew .credit-cont {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.38px;
+    text-align: left;
+    color: #F2F3F7;
+}
+.popup .bg.formPopCredNew .application label{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17.07px;
+    text-align: left;
+    color: #BDBDBD;
+}
+.popup .bg.formPopCredNew .application input[type='text'] {
+    height: 51px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #E6E6E6;
+    background: #FFF;
+}
+.popup .bg.formPopCredNew button{
+    background: #3B80CC;
+        border: 1px solid #3B80CC;
+        height: 51px;
+}
+.popup .bg.formPopCredNew button:hover{
+    background: #D12D1E;
+    border: 1px solid #D12D1E;
+}
+.popup .bg.formPopCredNew .personal-text{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.20000000298023224px;
+    text-align: left;
+    color: #F2F3F7;
+}
+
+.popup .bg.formPopCredNew .personal-text a {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.20000000298023224px;
+    text-align: left; 
+    color: #3B80CC;
+}
+.popup .bg.formPopCredNew {
+    background: linear-gradient(#0F1723 0%, #25344B 100%);
+    border-radius: 0px 0px 6px;
+}
+
+@media (max-width: 1037px) {
+    .popup .modal-body .application-form-car .price-block {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+}
+@media (max-width: 760px) {
+.popup .modal-body .application-form-car .price-block .price-f span{
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 32.91px;
+    text-align: center;
+
+}
+  .popup .modal-body .application-form-car .form-header-mob{
+    display: block;
+  }
+  .popup .modal-body .application-form-car .form-header{
+    display: none;
+    }
+
+
+}
+@media (max-width: 575px) {
+
+    .popup .modal-body .application-form-car .credit-info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.popup .modal-body .application-form-car .credit-info span {
+    margin: 0 0px;
+}
+.popup .modal-body .application-form-car .credit-info .stavka {
+
+    margin: 0 0px;
+    max-width: 61%;
+}
+.popup .modal-body .application-form-car {
+    padding: 5px;
+}
+.popup .bg.formPopCredNew .credit-title {
+    font-size: 26px;
+    margin-top: 20px;
+}
+.popup .bg.formPopCredNew .credit-cont {
+    font-size: 14px;
+}
+}
+   </style> 
 
