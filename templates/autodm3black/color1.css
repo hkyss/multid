@@ -1,14 +1,14 @@
 .header ul li a:hover {
-  color: #000000 ;
+  color: #b71f25;
 }
 .header .contacts a:hover {
-  color: #000000;
+  color: #b71f25;
 }
 .header .contacts button {
-  background: #000000;
+  background: #b71f25;
 }
 .index-first-block form .flex .prices .ui-widget-header {
-  background: #000000;
+  background: #b71f25;
 }
 .index-first-block form .flex .prices .ui-state-default,
 .index-first-block form .flex .prices .ui-widget-content .ui-state-default,
@@ -16,82 +16,92 @@
 .index-first-block form .flex .prices .ui-button,
 .index-first-block form .flex .prices html .ui-button.ui-state-disabled:hover,
 .index-first-block form .flex .prices html .ui-button.ui-state-disabled:active {
-  border: 5px solid #000000;
+  border: 5px solid #b71f25;
 }
 .index-first-block form .flex button {
-  background: #000000;
+  background: #b71f25;
 }
 .brands-block .bottom-button button {
-  color: #000000;
+  color: #b71f25;
 }
 .brands-block .bottom-button button span {
-  background: url('img/arrow3.svg');
+  background: url('img/arrow.svg');
 }
 .catalog-block .item .name:hover {
-  color: #000000;
+  color: #b71f25;
 }
 .catalog-block .item .buttons button:nth-child(1) {
-  background: #000000;
+  background: #b71f25;
 }
-
+.catalog-block .item .buttons button:nth-child(2) {
+  color: #b71f25;
+  background: #F8CCCE;
+}
 .catalog-block .bottom-button button {
-  color: #000000;
+  color: #b71f25;
 }
 .catalog-block .bottom-button button span {
-  background: url('img/arrow3.svg');
+  background: url('img/arrow.svg');
 }
 .catalog-block .pages a:hover {
-  color: #000000;
+  color: #b71f25;
 }
 .compilations-block .item button {
-  color: #000000;
+  color: #b71f25;
+}
+.compilations-block_mob .item button {
+  color: #b71f25;
 }
 .services-block .item button {
-  color: #000000;
+  color: #b71f25;
+}
+.services-block .slick-dots li.slick-active button {
+  background: #b71f25;
 }
 .services-block .item button:hover {
-  background: #000000;
+  background: #b71f25;
 }
+
 .feedback-block form button {
-  background: #000000;
+  background: #b71f25;
 }
 .map-block .content .contacts a {
-  color: #000000;
+  color: #b71f25;
 }
 .footer .left-block .phone:hover {
-  color: #000000;
+  color: #b71f25;
 }
 .footer .left-block button {
-  background: #000000;
+  background: #b71f25;
 }
 .footer .right-block .phone:hover {
-  color: #000000;
+  color: #b71f25;
 }
 .footer .right-block button {
-  background: #000000;
+  background: #b71f25;
 }
 .footer nav ul li a:hover {
-  color: #000000;
+  color: #b71f25;
 }
 .navi a:hover {
-  color: #000000;
+  color: #b71f25;
 }
 .index-first-block form .bottom-link {
-  color: #000000;
-  background: url('img/arrow6.svg') no-repeat right;
+  color: #b71f25;
+  background: url('img/arrow4.svg') no-repeat right;
 }
 .item-page .buttons button:nth-child(1) {
-  background: #000000;
+  background: #b71f25;
 }
 .item-page .buttons button:nth-child(2) {
-  color: #000000;
-  background: rgba(47, 128, 237, 0.31);
+  color: #b71f25;
+  background: #F8CCCE;
 }
 .item-page .counts .item .line span {
-  background: #000000;
+  background: #b71f25;
 }
 .item-page .calc .item .ui-widget-content {
-  background: #000000;
+  background: #b71f25;
 }
 .item-page .calc .item .ui-state-default,
 .item-page .calc .item .ui-widget-content .ui-state-default,
@@ -99,28 +109,31 @@
 .item-page .calc .item .ui-button,
 .item-page .calc .item html .ui-button.ui-state-disabled:hover,
 .item-page .calc .item html .ui-button.ui-state-disabled:active {
-  border: 2px solid #000000;
+  border: 2px solid #b71f25;
 }
 .item-page .calc button {
-  background: #000000;
+  background: #b71f25;
 }
 .catalog-block .slick-dots li.slick-active button {
-  background: #000000;
+  background: #b71f25;
 }
 .compilations-block .slick-dots li.slick-active button {
-  background: #000000;
+  background: #b71f25;
 }
-.services-block .slick-dots li.slick-active button {
-  background: #000000;
+.compilations-block_mob .slick-dots li.slick-active button {
+  background: #b71f25;
+}
+.services-block_mob .slick-dots li.slick-active button {
+  background: #b71f25;
 }
 .item-page .photos .slick-dots li.slick-active button {
-  background: #000000;
+  background: #b71f25;
 }
 .calc-page .block1 .price .new {
-  color: #000000;
+  color: #b71f25;
 }
 .calc-page .block2 .ui-widget-header {
-  background: #000000;
+  background: #b71f25;
 }
 .calc-page .block2 .ui-state-default,
 .calc-page .block2 .ui-widget-content .ui-state-default,
@@ -128,86 +141,37 @@
 .calc-page .block2 .ui-button,
 .calc-page .block2 html .ui-button.ui-state-disabled:hover,
 .calc-page .block2 html .ui-button.ui-state-disabled:active {
-  border: 5px solid #000000;
+  border: 5px solid #b71f25;
 }
 .calc-page .block3 table tr td:last-child {
-  color: #000000;
+  color: #b71f25;
 }
 .calc-page .bottom-button button {
-  background: #000000;
+  background: #b71f25;
 }
 .articles-block .list .item button {
-  background: #000000;
+  background: #b71f25;
 }
 .articles-block .slick-dots li.slick-active button {
-  background: #000000;
+  background: #b71f25;
 }
 .text-block blockquote {
-  border-left: 2px solid #000000;
+  border-left: 2px solid #b71f25;
 }
 .contacts-page a {
-  color: #000000;
+  color: #b71f25;
 }
 .actions-page .item button {
-  background: #000000;
+  background: #b71f25;
 }
 .services-page .item button {
-  color: #000000;
+  color: #b71f25;
 }
 .services-page .item button:hover {
-  background: #000000;
+  background: #b71f25;
 }
 .service-page .docs .doc .number {
-  color: #000000;
-}
-.left-listCall {
-  background: #000000;
-}
-
-.irs--round .irs-bar {
-  top: 36px;
-  height: 4px;
-  background-color: #000000;
-}
-.irs--round .irs-from, .irs--round .irs-to, .irs--round .irs-single {
-  font-size: 14px;
-  line-height: 1;
-  text-shadow: none;
-  padding: 3px 5px;
-  background-color: #000000;
-  color: white;
-  border-radius: 4px;
-}
-
-.irs--round .irs-handle {
-  top: 30px;
-  width: 16px;
-  height: 16px;
-  border: 4px solid #000000;
-  background-color: white;
-  border-radius: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 255, 0.3);
-}
-
-.irs--round .irs-from:before, .irs--round .irs-to:before, .irs--round .irs-single:before {
-  position: absolute;
-  display: block;
-  content: "";
-  bottom: -6px;
-  left: 50%;
-  width: 0;
-  height: 0;
-  margin-left: -3px;
-  overflow: hidden;
-  border: 3px solid transparent;
-  border-top-color: #000000;
-}
-
-.advantages-block .item .icon img {
-filter: invert(1) brightness(0);
-}
-.map-block .content .contacts ul li span img {
- filter: invert(1) brightness(0);
+  color: #b71f25;
 }
 .modal-titles .city {
   color: #b71f25;
@@ -230,14 +194,25 @@ filter: invert(1) brightness(0);
   width: 100%;
   height: 59px;
   border-radius: 6px;
-  background: #000000;
+  background: #b71f25;
+}
+.application-form .price span strong{
+  color: #b71f25;
+}
+div#trade-in-popup .credit-info strong{
+  color: #b71f25;
+}
+
+.navi a:last-of-type {
+  color: #b71f25; /* замените на нужный вам цвет */
 }
 .footer-lg .contacts button {
-  background: #000000;
+  background: #b71f25;
 }
 .footer-lg .contacts button:hover {
+  background: #b71f25;
   opacity: .8;
 }
 .footer-lg ul li a:hover {
-  opacity: .8;
+  color: #b71f25;
 }

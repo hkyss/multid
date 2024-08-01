@@ -1,0 +1,100 @@
+    {% set footermenu = runSnippet('DLMenu', {
+    parents: baseSettings["id"],
+    tvList: 'image',
+    maxDepth: 1,
+    rowTpl: '@CODE:<li class="li-foot col-md-2 col-sm-6 col-12"><a href="[+url+]">[+pagetitle+]</a></li>',
+    outerTpl: '@CODE:<ul class="foot-menu row d-flex justify-content-between col-xl-8 col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        [+wrap+]</ul>'}) %}
+
+        {% set headermenu = runSnippet('DLMenu', {
+    parents: baseSettings["id"],
+    tvList: 'image',
+    maxDepth: 1,
+    rowTpl: '@CODE:<li><a href="[+url+]">[+pagetitle+]</a></li>',
+    outerTpl: '@CODE:<ul>
+        [+wrap+]</ul>'}) %}
+
+    <footer class="footer">
+        <div class="container-fluid flex">
+            <div class="left-block">
+                <div class="logo">
+                    <a href="/">
+                        {% if baseSettings["logo"] %}
+                        <img src="{{baseSettings["logo"]}}">
+                    {% else %}
+                            <div style="width: 110px;
+                height: 48px;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 24px;
+                display: flex;
+                align-items: center;
+                text-transform: uppercase;
+                justify-content: center;
+                color: #D12D1E;">{{ baseSettings.pagetitle }}
+                            </div>
+                        {% endif %}
+                    </a>
+                </div>
+                {{  runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1', class: 'phone'}) | raw}}                
+                <a href="/policy" class="rules">Политика конфиденциальности</a>
+                <button type="button"data-toggle="modal" data-target="#oneclick">Заказать звонок</button>
+            </div>
+
+            {{ footermenu|raw}}
+            
+        </div>
+    </footer>
+
+    <footer class="footer-lg">
+    <div class="container-fluid flex">
+            <a href="/">
+                {% if baseSettings["logo"] %}
+                        <img src="{{baseSettings["logo"]}}" style="height: 45px;">
+                    {% else %}
+                    <div style="width: 110px;
+                height: 48px;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 24px;
+                display: flex;
+                align-items: center;
+                text-transform: uppercase;
+                justify-content: center;
+                color: #D12D1E;">{{ baseSettings.pagetitle }}
+                    </div>
+                {% endif %}
+            </a>
+            
+            {{ headermenu|raw}}
+
+            <div class="contacts">
+
+                    {{  runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1'}) | raw}}
+               
+                <button type="button"data-toggle="modal" data-target="#oneclick">Заказать звонок</button>
+            </div>
+        </div>
+    </footer>
+
+
+     <div class="copy-block">
+        <div class="container-fluid">
+            <p style="font-size: 10px">{{baseSettings.footer |raw}}</p>
+            <p style="font-size: 15px"><a href="/policy" class="rules">Политика конфиденциальности</a></p>
+        </div>
+    </div>
+<style>
+.popup.fancybox-content{
+	display: none; 
+	width: 60%; 
+	border-radius: 20px; 
+	height: 740px;
+}
+.footer-lg ul {
+    padding-top: 14px;
+    /* margin-right: 100px; */
+}
+</style>
