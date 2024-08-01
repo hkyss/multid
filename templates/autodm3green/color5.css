@@ -237,3 +237,10 @@
 .footer-lg .contacts button {
   background: #DC9A1B;
 }
+.footer-lg .contacts button:hover {
+  background: #DC9A1B;
+  opacity: .8;
+}
+.footer-lg ul li a:hover {
+  color: #DC9A1B;
+}
