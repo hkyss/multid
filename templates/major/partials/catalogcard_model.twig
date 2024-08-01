@@ -51,7 +51,7 @@
                         {{ baseSettings.credit_rate }}
                     {% endif %}%
                 </button> #}
-                <button class="btn" type="button" onclick="openPopupForm(this)"
+                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
                     data-price="{{ data["tv.car-price"] }}"
@@ -67,7 +67,7 @@
                     {% endif %}%
                 </button>
                 {# <button data-fancybox="" data-src="#popupCredNew2" class="w-100 mb-2">Забронировать</button> #}
-                <button class="btn" type="button" onclick="openPopupForm(this)"
+                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
                     data-price="{{ data["tv.car-price"] }}"
