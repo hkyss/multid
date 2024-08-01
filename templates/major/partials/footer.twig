@@ -129,7 +129,7 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
             extension: 'twig'
             }) | raw }}
 </div>
-<div class="popup" id="popupCredNew2" style="display: none; width: 100%; max-width: 1165px;">
+{# <div class="popup" id="popupCredNew2" style="display: none; width: 100%; max-width: 1165px;">
     <div class="modal-body">
        <div class="application-form-car">
       
@@ -193,7 +193,73 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
         path: '/templates/major/partials/forms/creditPrewCar/',
         extension: 'twig'
         }) | raw }}
+</div> #}
+
+<div class="popup" id="popupCredNew2" style="display: none; width: 100%; max-width: 1165px;">
+    <div class="modal-body">
+        <div class="application-form-car">
+            <div class="form-container row">
+                <div class="form-header-mob mb-1">
+                    <h2>Оставить заявку на</h2>
+                    <h1 id="modal-car-title">Skoda Octavia 2018 год, 2.7, АТ</h1>
+                </div>
+                <div class="col-md-5 col-12">
+                    <img src="" alt="" id="car-image" style="border-radius: 10px;">
+                </div>
+                <div class="col-md-7 col-12">
+                    <div class="form-header">
+                        <h2>Оставить заявку на</h2>
+                        <h1 id="modal-car-titleDecs">Skoda Octavia 2018 год, 2.7, АТ</h1>
+                    </div>
+                    <div class="price-block mt-3">
+                        <div class="price-f mr-2">
+                            <span id="car-price"></span>
+                        </div>
+                        <div class="credit-info">
+                            <span id="credit-price">В кредит от 1 ₽/мес</span>
+                            <span class="stavka">Ставка от 4,9%</span>
+                        </div>
+                    </div>
+                    <div class="details row mt-2">
+                        <div class="row ml-1 mt-1 col-md-4 col-6">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop1.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p class="text-left conf-text">Привод:</p>
+                                <p id="modal-engine-volume" class="text-left conf-data pt-1">Передний</p>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-1 col-md-4 col-6 p-0">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop2.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p class="text-left conf-text">Мощность:</p>
+                                <p id="modal-data-info" class="text-left conf-data pt-1">150 л.с.</p>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-1 col-md-4 col-6">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop3.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p class="text-left conf-text">КПП:</p>
+                                <p id="modal-gear" class="text-left conf-data pt-1">Автомат</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/major/partials/forms/creditPrewCar/',
+        extension: 'twig'
+        }) | raw }}
 </div>
+
 
  <script type="text/javascript">
 // $(document).on('change', '.calc-input', function() {
@@ -211,7 +277,36 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
 //   $('#monthly-payment-amount').text(monthlyPayment.toFixed(2));
 // });
 
-// </script>
+function openPopupForm(button) {
+    // Получаем данные из атрибутов кнопки
+    var title = button.getAttribute('data-title');
+    var image = button.getAttribute('data-image');
+    var price = button.getAttribute('data-price');
+    var engineVolume = button.getAttribute('data-engine-volume');
+    var gear = button.getAttribute('data-gear');
+    var info = button.getAttribute('data-info');
+    var cred = button.getAttribute('data-kred-car-price');
+    
+   
+
+    // Находим элементы формы и заполняем их данными
+    document.getElementById('modal-car-title').textContent = title + ',' + engineVolume + ',' + gear;
+    document.getElementById('modal-car-titleDecs').textContent = title + ',' + engineVolume + ',' + gear;
+    document.getElementById('car-image').src = image;
+    document.getElementById('car-price').textContent = price + ' ₽';
+    document.getElementById('credit-price').textContent = 'В кредит от '+ cred + ' ₽/мес';
+    document.getElementById('modal-engine-volume').textContent = engineVolume;
+    document.getElementById('modal-gear').textContent = gear;
+    document.getElementById('modal-data-info').textContent = info;
+
+    // Отображаем попап
+    $.fancybox.open({
+        src: '#popupCredNew2',
+        type: 'inline'
+    });
+}
+
+ </script>
 
    <style>
 .popup .modal-body .application-form-car {
@@ -258,9 +353,10 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
     font-size: 12px;
     font-weight: 500;
     line-height: 12.65px;
-    text-align: right;
+    text-align: center;
     color: #FFFFFF;
     margin: 0 15px;
+    margin-top: auto;
     }
     .popup .modal-body .application-form-car .credit-info span{
     color: #98AEC3;
@@ -374,6 +470,9 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
     display: none;
     }
 
+.popup .modal-body .application-form-car .credit-info span {
+    margin: 0;
+}
 
 }
 @media (max-width: 575px) {
@@ -390,6 +489,7 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
 
     margin: 0 0px;
     max-width: 61%;
+    margin-top: 6px;
 }
 .popup .modal-body .application-form-car {
     padding: 5px;
