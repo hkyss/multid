@@ -1,0 +1,194 @@
+<div class="modal fade" id="oneclick" tabindex="-1" role="dialog" aria-labelledby="oneclick" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background: #b71f25;" >
+      <!--div class="modal-header">
+        <h5 class="modal-title" id="oneclick">Форма обратной связи</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div-->
+      <!--div class="modal-body">
+        Оставьте заявку - и наш менеджер свяжется с Вами в ближайшее время      </div-->{{ runSnippet('Form', {
+                            formid: 'FormCallback',
+                            path: '/templates/autodm3yellow/partials/forms/feedback_modal/',
+                            extension: 'twig'
+                        })  | raw }}
+      <!--div class="modal-footer">
+        <button type="button" class="btn btn-primary">Отправить</button>
+      </div-->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<link rel="stylesheet" href="assets/site/bootstrap-icons/font/bootstrap-icons.css">
+<div class="float-button " id="float-button">
+  <a href="#" data-toggle="modal" data-target="#callphone"><i class="bi bi-telephone"></i></a><div class="waves-container">
+    <div class="waves"></div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+window.addEventListener('load', function() {
+// Проверяем, было ли уже показано окно в этой сессии
+if (!localStorage.getItem('isPopupShown')) {
+  // Запускаем таймер на 60 секунд
+  setTimeout(function() {
+    // Получаем элемент модального окна
+    var modalElement = document.getElementById('callphone');
+    // Открываем модальное окно
+    $(modalElement).modal('show');
+    // Сохраняем информацию о том, что окно уже было показано
+    localStorage.setItem('isPopupShown', true);
+  }, 60000);
+}
+});
+
+let domElement = document.getElementById("float-button");
+
+setInterval(function() {
+  domElement.heartBeat(1500);
+}, 5000);
+
+function openPopupForm(button) {
+    // Получаем данные из data-атрибутов
+    var title = button.getAttribute('data-title');
+    var image = button.getAttribute('data-image');
+    var year = button.getAttribute('data-year');
+    var run = button.getAttribute('data-run');
+    var color = button.getAttribute('data-color');
+    var engineVolume = button.getAttribute('data-engine-volume');
+    var gear = button.getAttribute('data-gear');
+    var enginePower = button.getAttribute('data-engine-power');
+    var equipment = button.getAttribute('data-equipment');
+    var price = button.getAttribute('data-price');
+    var oldPrice = button.getAttribute('data-old-car-price');
+
+    // Заполняем модальное окно данными
+    document.getElementById('modal-car-title').innerText = title;
+    // document.getElementById('modal-car-image').src = image;
+    document.getElementById('car-image').src = image;
+    document.getElementById('modal-year').innerText = year;
+    document.getElementById('modal-run').innerText = run + ' км';
+    document.getElementById('modal-engine-volume').innerText = engineVolume;
+    document.getElementById('modal-gear').innerText = gear;
+    document.getElementById('modal-engine-power').innerText = enginePower + ' л.с.';
+    document.getElementById('modal-equipment').innerText = equipment;
+    document.getElementById('modal-price').innerText = price + ' ₽';
+    document.getElementById('modal-oldPrice').innerText = oldPrice + ' ₽.';
+
+    // Открываем модальное окно
+    $.fancybox.open({
+        src: "#trade-in-popup",
+        type: "inline"
+    });
+}
+
+
+</script>
+
+
+{{ runSnippet('Form', {
+                            formid: 'FormCallback',
+                            path: '/templates/autodm3yellow/partials/forms/feedback_modal_call/',
+                            extension: 'twig'
+                        })  | raw }}
+
+<div id="trade-in-popup" class="popup-fb popup_trade-in" style="display: none;">
+  <div class="popup__content">
+    <div role="form" class="wpcf7" id="" lang="ru-RU" dir="ltr">
+      <div class="modal-body">
+       <div class="application-form">
+      
+        <div class="form-container row">
+          <div class="form-header-mob">
+            <h2>Оставить заявку на</h2>
+            <h1 id="modal-car-title">Volkswagen Multivan 2022</h1>
+          </div>
+          <div class="col-lg-5 col-12">
+            <img src ="" alt="Volkswagen Multivan 2022" id="car-image">
+          </div>
+          <div class="col-lg-7 col-12">
+            <div class="form-header">
+              <h2>Оставить заявку на</h2>
+              <h1 id="modal-car-title">Volkswagen Multivan 2022</h1>
+            </div>
+            <div class="car-details1 flex mt-3">
+              <div class="detail">Пробег: </div>
+              <strong id="modal-run">55360 км</strong>
+            </div>
+            <div class="car-details1 flex mt-1">
+              <div class="detail">Год выпуска:</div>
+              <strong id="modal-year">2019</strong>
+            </div>
+            <div class="details2 row mt-2">
+              <div class="row ml-1 mt-1">
+                <div class="d-flex align-items-center justify-content-center pt-1">
+                  <img src="/templates/autodm3yellow/img/imgpop1.svg" alt="">
+                </div>
+                <div class="p-0 pl-1 pt-1">
+                  <p id="modal-engine-volume" class="text-left body-conf">2.0</p>
+                </div>
+              </div>
+              <div class="row ml-1 mt-1">
+                <div class="d-flex align-items-center justify-content-center pt-1">
+                  <img src="/templates/autodm3yellow/img/imgpop2.svg" alt="">
+                </div>
+                <div class="p-0 pl-1 pt-1">
+                  <p id="modal-gear" class="text-left title-conf">Полный</p>
+                </div>
+              </div>
+              <div class="row ml-1 mt-1">
+                <div class="d-flex align-items-center justify-content-center pt-1">
+                  <img src="/templates/autodm3yellow/img/imgpop3.svg" alt="">
+                </div>
+                <div class="p-0 pl-1 pt-1">
+                  <p id="modal-engine-power" class="text-left title-conf">Автоматическая</p>
+                </div>
+              </div>
+              <div class="row ml-1 mt-1">
+                <div class="d-flex align-items-center justify-content-center pt-1">
+                  <img src="/templates/autodm3yellow/img/imgpop1.svg" alt="">
+                </div>
+                <div class="p-0 pl-1 pt-1">
+                  <p id="modal-equipment" class="text-left title-conf">Highline</p>
+                </div>
+              </div>
+            </div>
+            <div class="details row mt-3">
+              <div class="price">
+                <span>Цена:</span>
+                <span><strong id="modal-price">1 000 000 ₽</strong></span>
+              </div>
+            <div class="price">
+              <span class="old-price">Цена без скидки:</span>
+              <span id="modal-oldPrice"><del>2 000 000 ₽</del></span>
+            </div>
+          </div>
+          <div class="credit-info mt-3">
+            <h3>Кредит</h3>
+            <div class="flex" style="border-bottom: 1px solid #D8D8D8;">
+              <p>Процентная ставка: </p><strong>от 4,9% годовых</strong>
+            </div>
+            <div class="flex" style="border-bottom: 1px solid #D8D8D8;">
+              <p>Ежемесячный платеж:</p>
+              <strong>от 15 049 ₽</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+        {{ runSnippet('Form', {
+          formid: 'FormCallback',
+          path: '/templates/autodm3yellow/partials/forms/feedback_popup2/',
+          extension: 'twig'
+          }) | raw }}
+
+    </div>
+  </div>
+</div>
+</div>
