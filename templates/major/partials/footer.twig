@@ -49,10 +49,9 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
         </div>
         {# <div class="line mb-3"></div> #}
         <div class="info_footer_bottom flex">
-            {# <div class="copy mt-3 pt-2"> #}
-                {# Для повышения удобства работы с сайтом компания использует файлы cookie. <br />
-                В cookie содержатся данные о прошлых посещениях сайта. #}
-            {# </div> #}
+            <div class="copy mt-3 pt-2">
+                {{baseSettings.footer |raw}}
+            </div>
              
             {# {{ runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1', class:"phone mt-3 pt-2"}) | raw}} #}
             <div class="info_footer_bottom_elem">
