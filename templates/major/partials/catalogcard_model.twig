@@ -57,7 +57,8 @@
                     data-price="{{ data["tv.car-price"] }}"
                     data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] }}"
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
-                    data-info="{{ modifications['Modification#0']['items']['gear']['value'] }}"
+                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
+                    data-info="{{ modifications['Modification#0']['value'] }}"
                     data-kred-car-price="{{ (modx.runSnippet("toInt", { value: data["tv.car-price"] }) / 82) | round | number_format(0, '.', ' ') }}">
                     В кредит
                     от {% if baseSettings.credit_rate is empty %}
@@ -73,7 +74,8 @@
                     data-price="{{ data["tv.car-price"] }}"
                     data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] }}"
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
-                    data-info="{{ modifications['Modification#0']['items']['gear']['value'] }}"
+                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
+                    data-info="{{ modifications['Modification#0']['value'] }}"
                     data-kred-car-price="{{ (modx.runSnippet("toInt", { value: data["tv.car-price"] }) / 82) | round | number_format(0, '.', ' ') }}">
                     Забронировать
                 </button>
