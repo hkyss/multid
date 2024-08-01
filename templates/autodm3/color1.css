@@ -204,5 +204,8 @@ div#trade-in-popup .credit-info strong{
 }
 
 .navi a:last-of-type {
-  color: #b71f25; /* замените на нужный вам цвет */
+  color: #b71f25; 
+}
+.footer-lg .contacts button {
+  background: #b71f25;
 }
