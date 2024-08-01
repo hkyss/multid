@@ -1,0 +1,13 @@
+{# <a href='/katalog-avtomobilej/?f[42]=" . $val['value'] . "'> #}
+<div class="col-xl-4 col-md-6">
+	<div class="item">
+		<div class="name" onclick="location.href='{{data.url}}';">
+			{{ data.title }}
+		</div>
+	    <p>{{ data.description_item }}</p>
+		<button>Подать заявку</button>
+		<img src="
+                    {{ data['tv.image'] }}">
+	</div>
+</div>
+{# </a> #}
