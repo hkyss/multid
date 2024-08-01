@@ -1,0 +1,284 @@
+{% extends 'app.twig' %}
+{% block MAIN %}
+{#% cache 'main' ~ resource.id %#}
+{% set catalog_number = baseSettings['catalog_number'] %}
+{# {% set DLCatalog = runSnippet('DocLister', {
+id: 'catalog',
+controller: 'catalog_filters',
+display: 20,
+parents: catalog_number ,
+depth: 5,
+orderBy: 'menuindex',
+order: 'RAND()',
+tvSortType: 'SIGNED',
+tvList:'car-price,old-car-price,credit_rate,car_photos,run,engine_power,gear,year, image',
+ownerTPL: '@T_FILE:partials/wrap',
+tpl:'@T_FILE:partials/catalogcard',
+noneTPL:'@T_FILE:partials/noitems',
+paginate:'pages',
+TplNextP:'',
+TplPrevP:'',
+TplPage:'@CODE:<li class="page-item"><a class="page-link" href="[+link+]">[+num+]</a></li>',
+TplCurrentPage:'@CODE: <li class="page-item active" aria-current="page"><span class="page-link">[+num+]</span></li>',
+TplWrapPaginate:'@CODE:<ul class="pagination">[+wrap+]</ul>',
+filter: 'filters',
+filterRangeSeparator: ':',
+filterValuesSeparator: '|',
+filterDelimiter: '||',
+filterPriceId: 19,
+filterCurrencyId: 'RUB',
+__filterList: '19:range;20:dropdown;14:dropdown;42:dropdown;15:range;16:range;9:dropdown;11:dropdown;10:dropdown',
+filterList: '42,43,19,16',
+filterTpl: '@T_FILE:partials/filters/tpl',
+filterOwnerRange: '@T_FILE:partials/filters/ownerRange',
+filterTplRange: '@T_FILE:partials/filters/tplRange',
+filterOwnerCheckbox: '@T_FILE:partials/filters/ownerCheckbox',
+filterTplCheckbox: '@T_FILE:partials/filters/tplCheckbox',
+tvSortType: 'UNSIGNED',
+api: 0
+})
+%} #}
+{% set DLCatalog = runSnippet('DocLister', {
+    id: 'catalog',
+    controller: 'catalog_filters',
+    display: 20,
+    parents: catalog_number,
+    depth: 5,
+    tvList:'car-price,old-car-price,credit_rate,car_photos,run,engine_power,gear,year,image',
+    ownerTPL: '@T_FILE:partials/wrap',
+    tpl:'@T_FILE:partials/catalogcard',
+    paginate:'pages',
+    TplNextP:'@CODE:<li><a href="[+link+]"><span class="next"></span></a></li>',
+    TplPrevP:'@CODE:<li><a href="[+link+]"><span class="prev"></span></a></li>',
+    TplPage:'@CODE:<li><a href="[+link+]">[+num+]</a></li>',
+    TplCurrentPage:'@CODE:<li><a class="active-link-paginate" href="[+link+]">[+num+]</a></li>',
+    TplWrapPaginate:'@CODE:<ul class="pages">[+wrap+]</ul>',
+    noneTPL:'@T_FILE:partials/noitems',
+    filter: 'filters',
+    filterRangeSeparator: ':',
+    filterValuesSeparator: '|',
+    filterDelimiter: '||',
+    __filterPriceId: 19,  
+    filterList: '42:dropdown;43:dropdown;19:range',
+    filterCurrencyId: 'RUB',
+    filterTpl: '@T_FILE:partials/filters/tpl',
+    filterOwnerRange: '@T_FILE:partials/filters/ownerRange',
+    filterTplRange: '@T_FILE:partials/filters/tplRange',
+    filterOwnerCheckbox: '@T_FILE:partials/filters/ownerCheckbox',
+    filterTplCheckbox: '@T_FILE:partials/filters/tplCheckbox',
+    tvSortType: 'UNSIGNED'
+}) %}
+{% set banner = runSnippet('multiTV', {tvName: 's-vigoda-pulkovo1', docid: 'id', display:'all',
+rowTpl:'@CODE: <div class="index-first-block" style="background: url([+image+]) center/cover;">
+	<div class="container-fluid">
+		<h1>[+title+]</h1>
+		<p>[+text+]</p>
+		[+catalog.filters+]
+		</form>
+	</div>
+</div>'}) %}
+{{banner |raw}}
+
+<!-- Скрипт для изменения даты +3 дня в автоматическом режиме -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Код для работы с баннером и изменения даты -->
+<script>
+    $(document).ready(function() {
+    var bannerHtml = $(".index-first-block").html();
+    var titleMatches = bannerHtml.match(/<h1>(.*?)<\/h1>/);
+
+    if (titleMatches) {
+        var titleValue = titleMatches[1];
+
+        var dateRegex = /До (\d+)\s+([а-яА-Я]+)/;
+        var dateMatch = titleValue.match(dateRegex);
+
+        if (dateMatch) {
+            var day = parseInt(dateMatch[1], 10);
+            var monthName = dateMatch[2];
+
+            var monthIndex = monthNames.indexOf(monthName.toLowerCase());
+
+            if (monthIndex !== -1) {
+				
+                var currentDate = new Date();
+				var day = currentDate.getDate();
+        		var month = currentDate.getMonth();
+        		var year = currentDate.getFullYear();
+                
+                var bannerDateObj = new Date(year, month, day);
+
+                bannerDateObj.setDate(bannerDateObj.getDate() + 3);
+
+                var newDate = bannerDateObj.getDate() + ' ' + monthNames[bannerDateObj.getMonth()];
+                var newTitleValue = titleValue.replace(dateRegex, 'до ' + newDate);
+
+                bannerHtml = bannerHtml.replace(titleMatches[0], '<h1>' + newTitleValue + '</h1>');
+				
+                console.log(bannerHtml);
+				
+            } else {
+                console.log(titleValue);
+            }
+        } else {
+            console.log(titleValue);
+        }
+    }
+        $(".index-first-block").html(bannerHtml);
+});
+
+    var monthNames = [
+        "января", "февраля", "марта",
+        "апреля", "мая", "июня", "июля",
+        "августа", "сентября", "октября",
+        "ноября", "декабря"
+    ];
+</script>
+{% include '/partials/brands.twig' %}
+<div class="catalog-block">
+	<div class="container-fluid catalog-products" id="catalog">
+		<h2>Специальные предложения</h2>
+		{{DLCatalog |raw}}
+	</div>
+	<div class="bottom-button">
+		<button onclick="window.location.href = '{{ makeUrl(27) }}';">Смотреть все <span></span></button>
+	</div>
+</div>
+</div>
+{# {% include '/partials/services.twig' %} #}
+{% set site_start = modx.config['site_start'] %}
+
+{% set services = runSnippet('DocLister', {
+    display: 3,
+    parents: site_start,
+    depth: 3,
+    addWhereList: 'c.template = (15)',
+    tvList:'image,color',
+    tpl:'@T_FILE:partials/services_services'
+})
+%}
+{% include '/partials/podbor.twig' %}
+
+
+<div class="services-block">
+	<div class="container-fluid">
+		<h2>Услуги</h2>
+		<div class="row">
+			{% if services is empty %}
+			<div class="col-xl-4 col-md-6">
+				<div class="item">
+					<div class="name">
+						Trade-in
+					</div>
+					<p>Доступна услуга обмена старого автомобиля на новый автомобиль с пробегом с доплатой или на аналогичную сумму.</p>
+					<button type="button"data-toggle="modal" data-target="#oneclick">Подать заявку</button>
+					<img src="/templates/autodm3yellow/img/service1.png">
+				</div>
+			</div>
+			
+			<div class="col-xl-4 col-md-6">
+				<div class="item">
+					<div class="name">
+						ОСАГО
+					</div>
+					<p>Доступна услуга обмена старого автомобиля на новый автомобиль с пробегом с доплатой или на аналогичную сумму.</p>
+					<button type="button"data-toggle="modal" data-target="#oneclick">Подать заявку</button>
+					<img src="/templates/autodm3yellow/img/service2.png">
+				</div>
+			</div>
+			<div class="col-xl-4 col-md-6">
+				<div class="item">
+					<div class="name">
+						КАСКО
+					</div>
+					<p>Доступна услуга обмена старого автомобиля на новый автомобиль с пробегом с доплатой или на аналогичную сумму.</p>
+					<button type="button"data-toggle="modal" data-target="#oneclick">Подать заявку</button>
+					<img src="/templates/autodm3yellow/img/service3.png">
+				</div>
+			</div>
+			{% else %}
+    			{{services | raw}}
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+ <script type="text/javascript">
+  $(document).ready(function(){
+    function initSlick(selector, rowSelector) {
+      if ($(window).width() <= 576) {
+        if (!$(selector).hasClass('slick-initialized')) {
+          $(selector).slick({
+            dots: true,
+			arrows: false,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            adaptiveHeight: true
+          });
+          $(selector).closest(rowSelector).addClass('slick-initialized');
+        }
+      } else {
+        if ($(selector).hasClass('slick-initialized')) {
+          $(selector).slick('unslick');
+          $(selector).closest(rowSelector).removeClass('slick-initialized');
+        }
+      }
+    }
+
+    function initAllSlicks() {
+      initSlick('.catalog-block .row.list', '.row');
+      initSlick('.compilations-block .row', '.row');
+      initSlick('.services-block .row', '.row');
+    }
+
+    // Initialize slick on document ready
+    initAllSlicks();
+
+    // Re-initialize slick on window resize
+    $(window).on('resize', function(){
+      initAllSlicks();
+    });
+  });
+  </script>
+
+	
+<div class="feedback-block">
+	<div class="container-fluid">
+		{{ runSnippet('Form', {
+		formid: 'FormCallback',
+		path: '/templates/autodm3yellow/partials/forms/feedback/',
+		extension: 'twig'
+		}) | raw }}
+	</div>
+</div>
+<script type="text/javascript">
+var waitForJQuery2 = setInterval(function() {
+	if (typeof $ != 'undefined') {
+		$(function() {
+			$("#slider-range").slider({
+				range: true,
+				min: 0,
+				max: 50000,
+				values: [10000, 30000],
+				slide: function(event, ui) {
+					$("#amount").val("Цена от " + ui.values[0] + " р.");
+					$("#amount2").val("Цена до " + ui.values[1] + " р.");
+				}
+			});
+			$("#amount").val("Цена от " + $("#slider-range").slider("values", 0) + " р.");
+			$("#amount2").val("Цена до " + $("#slider-range").slider("values", 1) + " р.");
+		});
+		clearInterval(waitForJQuery2);
+	}
+}, 100);
+</script>
+{% include '/partials/advantages.twig' %}
+{% include('partials/contacts.twig') %}
+{% include('partials/banks.twig') %}
+{#% include '/partials/tradein.twig' %#}
+{#% endcache %#}
+		
+{% endblock %}
