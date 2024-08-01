@@ -5,6 +5,11 @@
 {% set photo = data['image_format'] %}
 {% set modifications = data['tv.car_modifications'] | json %}
 
+{% set price = data["tv.car-price"] %}
+{% if price is empty %}
+    {% set price = 0 %}
+{% endif %}
+
 <div class="item position-relative"><a href="{{ data['url'] }}">
         <span class="hit position-absolute py-1 px-3">HIT</span>
         <div class="image model--image" style="background-image: url('{{ photo }}')"></div>
@@ -20,15 +25,15 @@
             <div class="config_car row text-center mt-1 mb-1">
                 <div class="col-4 d-flex flex-column justify-content-start align-items-center">
                     <img src="/templates/major/img/tabler_engine.png" alt="Объём">
-                    <p>{{ modifications['Modification#0']['items']['engine_volume']['value'] }} л.</p>
+                    <p>{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}</p>
                 </div>
                 <div class="col-4 d-flex flex-column justify-content-start align-items-center">
                     <img src="/templates/major/img/fluent_transmission-24-filled.png" alt="Коробка передач">
-                    <p>{{ modifications['Modification#0']['items']['gear']['value'] }}</p>
+                    <p>{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}</p>
                 </div>
                 <div class="col-4 d-flex flex-column justify-content-start align-items-center">
                     <img src="/templates/major/img/fluent_drive-train-24-regular.png" alt="Привод">
-                    <p>{{ modifications['Modification#0']['items']['drive']['value'] }}</p>
+                    <p>{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}</p>
                 </div>
             </div>
 
@@ -37,9 +42,9 @@
                     <span class="old d-inline-block mb-1">{{ data["tv.old-car-price"] }} ₽</span>
                 {% endif %}
 
-                {% if data["tv.car-price"] %}
+                {% if price %}
                     <div class="new">
-                        {{ data["tv.car-price"] }} ₽
+                        {{ price }} ₽
                     </div>
                 {% endif %}
             </div>
@@ -54,12 +59,12 @@
                 <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
-                    data-price="{{ data["tv.car-price"] }}"
+                    data-price="{{ price }}"
                     data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] }}"
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
                     data-info="{{ modifications['Modification#0']['value'] }}"
-                    data-kred-car-price="{{ (modx.runSnippet("toInt", { value: data["tv.car-price"] }) / 82) | round | number_format(0, '.', ' ') }}">
+                    data-kred-car-price="{{ price / 82 }}">
                     В кредит
                     от {% if baseSettings.credit_rate is empty %}
                     4.9
@@ -71,12 +76,12 @@
                 <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
-                    data-price="{{ data["tv.car-price"] }}"
+                    data-price="{{ price }}"
                     data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] }}"
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
                     data-info="{{ modifications['Modification#0']['value'] }}"
-                    data-kred-car-price="{{ (modx.runSnippet("toInt", { value: data["tv.car-price"] }) / 82) | round | number_format(0, '.', ' ') }}">
+                    data-kred-car-price="{{ price / 82 }}">
                     Забронировать
                 </button>
                 <button class="w-100" onclick="location.href='{{ data.url }}';">Подробнее</button>
