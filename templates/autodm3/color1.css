@@ -209,3 +209,10 @@ div#trade-in-popup .credit-info strong{
 .footer-lg .contacts button {
   background: #b71f25;
 }
+.footer-lg .contacts button:hover {
+  background: #b71f25;
+  opacity: .8;
+}
+.footer-lg ul li a:hover {
+  color: #b71f25;
+}
