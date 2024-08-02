@@ -505,7 +505,7 @@ main {
   line-height: 56px;
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
   width: 50%;
-  
+
 }
 .index-page-slider .item .text2 {
   font-weight: 700;
@@ -1361,7 +1361,7 @@ main {
     left: 0;
     background: rgba(1, 1, 1, 0.7);
     z-index: 11;
-    display: none; 
+    display: none;
   }
   .header ul {
     position: fixed;
@@ -1444,7 +1444,7 @@ main {
     padding: 36px 0 0 0;
   }
   .bg {
-    max-width: 100%; 
+    max-width: 100%;
   }
   .detail-item {
     width: 100%;
@@ -1453,7 +1453,7 @@ main {
 }
 @media (max-width: 768px) {
   .popup .bg.formPopCred {
-    max-width: 100%; 
+    max-width: 100%;
   }
   .popup .bg.formPopCred .detail-item {
     width: 100%;
@@ -1632,4 +1632,8 @@ main {
   .menubg .header2 .phone a:nth-child(2){
     display: none;
   }
+}
+
+.item-page .top-info .text {
+    padding-left: 0;
 }
