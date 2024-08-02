@@ -66,7 +66,7 @@ outerTpl: '@CODE:<ul>
                         " href="/" class="d-inline-block"></a>
                 {% else %}
                 <a href="/">
-                <div style="width: 200px;
+                {# <div class="text-logo" style="width: 200px;
                     height: 48px;
                     font-style: normal;
                     font-weight: 400;
@@ -76,8 +76,9 @@ outerTpl: '@CODE:<ul>
                     align-items: center;
                     text-transform: uppercase;
                     justify-content: center;
-                    color: #FFFF;">{{ logo }}
-                </div>
+                    color: #FFFF;">{{ baseSettings.pagetitle }}
+                </div> #}
+                <div class="text-logo">{{ baseSettings.pagetitle }}</div>
                 </a>
                 {% endif %}
             </div>
@@ -115,7 +116,7 @@ outerTpl: '@CODE:<ul>
                         background-size: contain; background-position: center;
                         " href="/" class="d-inline-block"></a>
             {% else %}
-                <div style="width: 200px;
+                {# <div class="text-logo" style="width: 200px;
                 height: 48px;
                 font-style: normal;
                 font-weight: 400;
@@ -126,7 +127,8 @@ outerTpl: '@CODE:<ul>
                 text-transform: uppercase;
                 justify-content: center;
                 color: #D12D1E;">{{ baseSettings.pagetitle }}
-                </div>
+                </div> #}
+                <div class="text-logo">{{ baseSettings.pagetitle }}</div>
             {% endif %}
             </div>
 
@@ -178,9 +180,13 @@ outerTpl: '@CODE:<ul>
     </div>
 </div>
 <style>
+
 .header .logo{
-  background-color: #181818;
+    background-color: #181818;
+    display: flex;
+    align-items: center;
 }
+
 
 </style>
 <script>
