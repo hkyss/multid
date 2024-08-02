@@ -14,7 +14,7 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
                             background-size: cover; background-position: center;
                             " href="/" class="d-inline-block"></a>
                 {% else %}
-                    <div style="width: 200px;
+                    {# <div class="text-logo" style="width: 200px;
                 height: 48px;
                 font-style: normal;
                 font-weight: 400;
@@ -25,7 +25,8 @@ outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
                 text-transform: uppercase;
                 justify-content: center;
                 color: #D12D1E;">{{ baseSettings.pagetitle }}
-                    </div>
+                    </div> #}
+                    <div class="text-logo">{{ baseSettings.pagetitle }}</div>
                 {% endif %}
             </div>
             <div class="info_footer mt-2">

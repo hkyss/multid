@@ -442,6 +442,19 @@ main {
   width: 204px;
   height: 100%;
 }
+.text-logo{
+  width: 200px;
+  height: 48px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  justify-content: center;
+  color: #FFFFFF;
+}
 .header .logo a {
   width: 204px;
   /* height: 70px; */
@@ -471,7 +484,7 @@ main {
 .header .menu-button {
   width: 60px;
   height: 60px;
-  background: url('../templates/major/img/menu-button.svg');
+  /* background: url('../templates/major/img/menu-button.svg'); */
   display: none;
 }
 .index-page-slider .item {
@@ -1562,12 +1575,45 @@ main {
   .menubg .header2 .logo a{
     width: 110px;
     height: 100%;
+    display: flex;
+    align-items: center;
   }
   .header .logo a {
     /* width: 183px;
     height: 60px; */
     width: 110px;
     height: 100%;
+  }
+}
+@media (max-width: 416px) {
+  .text-logo {
+    width: 120px;
+    height: 48px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    justify-content: center;
+    color: #FFFFFF;
+}
+}
+@media (max-width: 335px) {
+  .text-logo {
+      width: 100px;
+      height: 41px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+      justify-content: center;
+      color: #FFFFFF;
+      padding: 3px;
   }
 }
 @media (max-width: 325px) {
