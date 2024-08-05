@@ -444,7 +444,7 @@ main {
   display: flex;
   align-items: center;
 }
-.text-logo{
+.text-logo a {
   width: 200px;
   height: 48px;
   font-style: normal;
@@ -459,7 +459,7 @@ main {
   flex-direction: column;
   padding-left: 10px;
 }
-.text-logo span{
+.text-logo a span{
   font-size: 20.16px;
   font-weight: 300;
   line-height: 24.58px;
@@ -1596,7 +1596,7 @@ main {
   }
 }
 @media (max-width: 416px) {
-  .text-logo {
+  .text-logo a {
     width: 120px;
     height: 48px;
     font-style: normal;
@@ -1611,7 +1611,7 @@ main {
     flex-direction: column;
     padding-left: 10px;
   }
-  .text-logo span{
+  .text-logo a span{
     font-size: 11.16px;
     font-weight: 300;
     line-height: 24.58px;
@@ -1625,7 +1625,7 @@ main {
     display: flex;
     align-items: center;
   }
-  .text-logo {
+  .text-logo a {
       width: 100px;
       height: 41px;
       font-style: normal;
@@ -1639,7 +1639,7 @@ main {
       color: #FFFFFF;
       padding-left: 5px;
   }
-  .text-logo span{
+  .text-logo a span{
     font-size: 9.16px;
   }
 }
