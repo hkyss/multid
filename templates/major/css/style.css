@@ -457,7 +457,7 @@ main {
   justify-content: center;
   color: #FFFFFF;
   flex-direction: column;
-  padding-left: 0 10px;
+  padding-left: 10px;
 }
 .text-logo span{
   font-size: 20.16px;
