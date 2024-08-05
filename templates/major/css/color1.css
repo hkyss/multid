@@ -1,6 +1,6 @@
-.header .logo a {
+/* .header .logo a {
   background: url('../img/logo1.svg') center / cover;
-}
+} */
 .index-page-slider .slick-dots li.slick-active button {
   border: 3px solid #667b88;
 }
