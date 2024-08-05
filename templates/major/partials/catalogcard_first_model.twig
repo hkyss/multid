@@ -1,8 +1,11 @@
 {% set configuration_id = runSnippet('DocLister', {
     id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
 
+{% set modifications = data['tv.car_modifications'] | json %}
+
 {% set photo = data['image_format'] %}
-{% set mounth_pay = data["tv.car-price"] / 82 | round %}
+
+{% set mounth_pay = data["tv.car-price"] / 82 %}
 
 
 <div class="item position-relative col-3 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}">
@@ -30,8 +33,8 @@
                                 <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
-                    data-price="{{ price }}"
-                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] }}"
+                    data-price="{{ data["tv.car-price"] }}"
+                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
                     data-info="{{ modifications['Modification#0']['value'] }}"
@@ -46,7 +49,7 @@
                 <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
-                    data-price="{{ price }}"
+                    data-price="{{ data["tv.car-price"] }}"
                     data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] }}"
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
