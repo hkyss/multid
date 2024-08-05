@@ -2,6 +2,8 @@
     id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
 
 {% set photo = data['image_format'] %}
+{% set mounth_pay = data["tv.car-price"] / 82 | round %}
+
 
 <div class="item position-relative col-3 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}">
         <span class="hit position-absolute py-1 px-3">HIT</span>
@@ -23,8 +25,35 @@
                 {% endif %}
             </div>
             <div class="buttons">
-                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
-                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button>
+                {# <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
+                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button> #}
+                                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
+                    data-image="{{ photo }}"
+                    data-price="{{ price }}"
+                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] }}"
+                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
+                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
+                    data-info="{{ modifications['Modification#0']['value'] }}"
+                    data-kred-car-price="{{ price / 82 }}">
+                    В кредит
+                    от {% if baseSettings.credit_rate is empty %}
+                    4.9
+                    {% else %}
+                        {{ baseSettings.credit_rate }}
+                    {% endif %}%
+                </button>
+                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
+                    data-image="{{ photo }}"
+                    data-price="{{ price }}"
+                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] }}"
+                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
+                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
+                    data-info="{{ modifications['Modification#0']['value'] }}"
+                    data-kred-car-price="{{ mounth_pay }}">
+                    Забронировать
+                </button>
                 <button class="w-100" onclick="location.href='{{ data.url }}';">Подробнее</button>
             </div>
         </div>
