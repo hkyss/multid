@@ -62,11 +62,18 @@
     {% set modifications_show = mod_collection | slice(0, 3) %}
     {% set modifications_hide = mod_collection | slice(3) %}
 
+    {% set mnths = ['','января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'] %}
+    {% set date_sale = "now" | date_modify("+2 day") %}
+
+    {% set sale_to_day = date_sale | date('d') %}
+    {% set sale_to_month = mnths[date_sale | date("n")] %}
+    {% set sale_to = sale_to_day ~ " " ~ sale_to_month %}
+
     {% set cars = runSnippet("DocLister", {
         api: 1,
         parents: resource.id,
         addWhereList: "c.template = 28",
-        tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,gear,year, image,mark_id,model_id',
+        tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,gear,year,image,mark_id,model_id,modification,complectation',
     }) | json %}
     {% set prices = cars | column('tv_car-price') | default([0]) %}
 
@@ -228,39 +235,53 @@
                             {% set car_photos = car_photos.fieldValue %}
                             {% set car_photo = car_photos[0]['image'] %}
 
+                            {% set car_price = car["tv_car-price"] | number_format(0, '', '') | round %}
+                            {% set credit = ( (car_price / 84) * 0.7 ) | number_format(0, '.', ' ') %}
+
                             <div class="item col-12 col-sm-3 position-relative mb-3 "><a href="{{ car['url'] }}">
                                     <span class="hit position-absolute py-1 px-3">HIT</span>
-                                    <div class="image">
-                                        <img src="{{ car_photo }}">
-                                    </div>
+                                    <div class="image model--image" style="background-image: url('{{ car_photo }}')"></div>
                                     <div class="p-3">
-                                        <a href="{{ car['url'] }}"
-                                           class="name d-block mb-2">{{ runSnippet ('DocInfo', {docid:car.parent, field:pagetitle}) | raw }} {{ car['title'] }} </a>
+                                        <a href="{{ car['url'] }}" class="name d-block mb-2">
+                                            {{ car['title'] }}
+                                        </a>
                                         <div class="row data text-center">
 
                                         </div>
+                                        <ul class="mb-3">
+                                            {% if car['tv_complectation'] %}
+                                                <li class="mb-1">- {{ car['tv_complectation'] }}</li>
+                                            {% endif %}
+
+                                            {% if car['tv_modification'] %}
+                                                <li class="mb-1">- {{ car['tv_modification'] }}</li>
+                                            {% endif %}
+
+                                            <li>- Скидка до: <strong>{{ sale_to }}</strong></li>
+                                        </ul>
                                         <div class="price mb-3">
                                             {% if car["tv_old-car-price"] | number_format(0, '', ' ') %}
                                                 <span class="old d-inline-block mb-1">
-                                                        {{ car["tv_old-car-price"] | number_format(0, '', ' ') }} ₽
-                                                    </span>
+                                                    от {{ car["tv_old-car-price"] | number_format(0, '', ' ') }} ₽
+                                                </span>
                                             {% endif %}
 
-                                            {% if car["tv_car-price"] | number_format(0, '', ' ') %}
+                                            {% if car_price %}
                                                 <div class="new">
-                                                    {{ car["tv_car-price"] | number_format(0, '', ' ') }} ₽
+                                                    от {{ car_price | number_format(0, '', ' ') }} ₽
                                                 </div>
                                             {% endif %}
                                         </div>
+                                        <p class="mb-4 text-right"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
                                         <div class="buttons">
                                             <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В
                                                 кредит от 4,9%
                                             </button>
-                                            <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">
-                                                Забронировать
-                                            </button>
-                                            <button class="w-100" onclick="location.href='{{ car.url }}';">Подробнее
-                                            </button>
+{#                                            <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">#}
+{#                                                Забронировать#}
+{#                                            </button>#}
+{#                                            <button class="w-100" onclick="location.href='{{ car.url }}';">Подробнее#}
+{#                                            </button>#}
                                         </div>
                                     </div>
                                 </a>
