@@ -8,7 +8,8 @@
     {% if not model %}
         {% set model = '' %}
     {% endif %}
-        {% set DLModels = runSnippet('DocLister', {
+
+    {% set DLModels = runSnippet('DocLister', {
         id: 'catalog',
         controller: 'catalog_filters',
         filters: 'AND(tv:mark_id:=:' ~ brand ~ ';tv:model_id:like:'~ model ~')' ,
@@ -54,6 +55,7 @@
         showParent: 1,
         prepare: "DocLister ModelsPrepare"
     }) %}
+
     {% set complectations = runSnippet('Complectations') %}
     {% set car_photos_one = "https://s3.multiauto.site/new_cars/" ~ resource.configuration_id ~ ".jpg" %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
