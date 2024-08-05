@@ -6,6 +6,7 @@
 {% set photo = data['image_format'] %}
 
 {% set mounth_pay = data["tv.car-price"] / 82 %}
+{% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
 
 
 <div class="item position-relative col-3 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}">
