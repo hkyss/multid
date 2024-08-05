@@ -78,9 +78,7 @@ outerTpl: '@CODE:<ul>
                     justify-content: center;
                     color: #FFFF;">{{ baseSettings.pagetitle }}
                 </div> #}
-                <div class="text-logo">{{ baseSettings.logo_text|raw }}
-
-                    </div>
+                <div class="text-logo">{{ baseSettings.logo_text|raw }}</div>
                 </a>
                 {% endif %}
             </div>
@@ -130,7 +128,10 @@ outerTpl: '@CODE:<ul>
                 justify-content: center;
                 color: #D12D1E;">{{ baseSettings.pagetitle }}
                 </div> #}
-                <div class="text-logo">{{ baseSettings.logo_text | raw }}
+                
+                    <div class="text-logo">
+                    <a href="/">{{ baseSettings.logo_text | raw }}</a>
+                
 
                 </div>
             {% endif %}

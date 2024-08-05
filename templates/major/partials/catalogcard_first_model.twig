@@ -6,9 +6,11 @@
 {% set photo = data['image_format'] %}
 
 {% set mounth_pay = data["tv.car-price"] / 82 %}
+{% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
 
 
-<div class="item position-relative col-3 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}">
+{# <div class="item position-relative col-3 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}"> #}
+<div class="item position-relative col-lg-3 col-md-4 col-sm-5 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}">
         <span class="hit position-absolute py-1 px-3">HIT</span>
         <div class="image model--image" style="background-image: url('{{ photo }}')"></div>
         <div class="p-3">
@@ -38,7 +40,7 @@
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
                     data-info="{{ modifications['Modification#0']['value'] }}"
-                    data-kred-car-price="{{ price / 82 }}">
+                    data-kred-car-price="{{ mounth_pay }}">
                     В кредит
                     от {% if baseSettings.credit_rate is empty %}
                     4.9
