@@ -115,7 +115,7 @@ tpl:'@CODE:[+tv.configuration_id+]'}) %}
                 {% endif %}
             </div>
             <div class="buttons">
-                <button type="button" onclick="openPopupForm(this)"
+                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
                     data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
@@ -131,7 +131,7 @@ tpl:'@CODE:[+tv.configuration_id+]'}) %}
                         {{ baseSettings.credit_rate }}
                         {% endif %}%
                 </button>
-                <button type="button" onclick="openPopupForm(this)"
+                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
                     data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
