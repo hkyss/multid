@@ -122,8 +122,8 @@ tpl:'@CODE:[+tv.configuration_id+]'}) %}
                     data-image="{{ photo }}"
                     data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
                     data-engine-volume="{{ data["tv.engine_volume"] | default("-") }}"
-                    data-gear="{{ data["gear"] | default("-") }}"
-                    data-drive="{{ data["drive"] | default("-") }}"
+                    data-gear="{{ data["tv.gear"] | default("-") }}"
+                    data-drive="{{ data["tv.drive"] | default("-") }}"
                     data-info="{{ data["tv.modification"] | default("-") }}"
                     data-kred-car-price="{{ mounth_pay }}">
                         В кредит
@@ -138,8 +138,8 @@ tpl:'@CODE:[+tv.configuration_id+]'}) %}
                     data-image="{{ photo }}"
                     data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
                     data-engine-volume="{{ data["tv.engine_volume"] | default("-") }}"
-                    data-gear="{{ data["gear"] | default("-") }}"
-                    data-drive="{{ data["drive"] | default("-") }}"
+                    data-gear="{{ data["tv.gear"] | default("-") }}"
+                    data-drive="{{ data["tv.drive"] | default("-") }}"
                     data-info="{{ data["tv.modification"] | default("-") }}"
                     data-kred-car-price="{{ mounth_pay }}">
                         Забронировать
