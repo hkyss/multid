@@ -57,6 +57,34 @@
     }) %}
 
     {% set complectations = runSnippet('Complectations') %}
+
+    {% if complectations is empty %}
+        {#        {% set car_model = runSnippet("ModelsLister", { #}
+        {#            documents: resource.parent, #}
+        {#            idType: "documents", #}
+        {#            display: 1 #}
+        {#        }) | first %} #}
+
+        {#        {% if car_model['tv_car_modifications'] %} #}
+        {#            #}
+        {#        {% endif %} #}
+
+        {% set complectations = [
+            {
+                title_group: resource['modification'],
+                items: [
+                {
+                    title: resource['modification'],
+                    price: resource['car-price'],
+                    price_old: resource['old-car-price'],
+                    drive: resource['drive'],
+                    transmission: resource['gear']
+                }
+            ]
+            }
+        ] %}
+    {% endif %}
+
     {% set car_photos_one = "https://s3.multiauto.site/new_cars/" ~ resource.configuration_id ~ ".jpg" %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     {% set modification = runSnippet('takemodels', {configuration_id: resource["configuration_id"] }) %}
@@ -191,36 +219,40 @@
                     </div> #}
                     <ul class="list-unstyled mb-3">
                         <li class="text-muted2 scroll-btn" data-target="photosBlock"><span>Фото</span></li>
-                        <li class="text-muted2 scroll-btn" data-target="configsAndPricesBlock"><span>Комплектации и цены</span></li>
-                        <li class="text-muted2 scroll-btn" data-target="discountsAndPromotionsBlock"><span>Скидки и акции</span></li>
+                        <li class="text-muted2 scroll-btn" data-target="configsAndPricesBlock">
+                            <span>Комплектации и цены</span></li>
+                        <li class="text-muted2 scroll-btn" data-target="discountsAndPromotionsBlock"><span>Скидки и акции</span>
+                        </li>
                         <li class="text-muted2 scroll-btn" data-target="creditblock"><span>Расчет кредита</span></li>
-                        <li class="text-muted2 scroll-btn" data-target="specialOffersBlock"><span>Спецпредложения</span></li>
+                        <li class="text-muted2 scroll-btn" data-target="specialOffersBlock"><span>Спецпредложения</span>
+                        </li>
                     </ul>
                     <div class="buttons row mb-2">
                         <div class="col-12">
                             {# <button class="w-100 mb-3 color1" data-fancybox="" data-src="#popupBronNew">Забронировать</button> #}
-                        <button class="w-100 mb-3 color1" type="button" onclick="openPopupForm(this)"
-                            data-title="{{ resource.pagetitle }}"
-                            data-image="{{ car_photos[0].image }}"
-                            data-price="{{ car_price|number_format(0, '.', '&nbsp;')|raw }}"
-                            data-engine-volume="{{ resource.engine_volume | default("-") }}"
-                            data-gear="{{ resource.engine_type | default("-") }}"
-                            data-drive="{{ resource.drive | default("-") }}"
-                            data-info="{{ resource.modification | default("-") }}"
-                            data-kred-car-price="{{ resource.car_monthly_payment | default(0) }}">
-                            Забронировать
-                        </button>
+                            <button class="w-100 mb-3 color1" type="button" onclick="openPopupForm(this)"
+                                    data-title="{{ resource.pagetitle }}"
+                                    data-image="{{ car_photos[0].image }}"
+                                    data-price="{{ car_price|number_format(0, '.', '&nbsp;')|raw }}"
+                                    data-engine-volume="{{ resource.engine_volume | default("-") }}"
+                                    data-gear="{{ resource.engine_type | default("-") }}"
+                                    data-drive="{{ resource.drive | default("-") }}"
+                                    data-info="{{ resource.modification | default("-") }}"
+                                    data-kred-car-price="{{ resource.car_monthly_payment | default(0) }}">
+                                Забронировать
+                            </button>
                         </div>
                         <div class="col-6">
                             <button class="w-100 color2 scroll-btn" data-target="creditblock">Рассчитать кредит</button>
                         </div>
                         <div class="col-6">
-                            <button class="w-100 color3" data-fancybox="" data-src="#popupCredNew">Предложить обмен</button>
+                            <button class="w-100 color3" data-fancybox="" data-src="#popupCredNew">Предложить обмен
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                <h3 class="mb-5 mt-3" style="font-weight: 600;">Фото</h3>
+                <div class="col-12 mb-5">
+                    <h3 class="mb-5 mt-3" style="font-weight: 600;">Фото</h3>
                     <div class="slider-nav" id="photosBlock">
                         {% if car_photos is empty %}
                             <img src="{{ car_photos_one }}">
@@ -231,13 +263,14 @@
                         {% endif %}
                     </div>
                 </div>
+
                 <div class="col-12" id="configsAndPricesBlock">
                     {% if complectations is not empty %}
                         <div class="configurations mb-5">
                             <h2 class="mb-4">Доступные комплектации</h2>
                             {% for complectation in complectations %}
                                 <div class="mb-3">
-                                    <h5 class="font-weight-bold mb-2">{{ complectation['title_group'] }}</h5>
+{#                                    <h5 class="font-weight-bold mb-2">{{ complectation['title_group'] }}</h5>#}
                                     {% for item in complectation['items'] %}
                                         <div class="card mb-2">
                                             <div class="card-header">{{ item['title'] }}</div>
@@ -305,7 +338,8 @@
                             <div class="item-name flex">
                                 <div class="name" type="button" data-toggle="collapse"
                                      data-target="#id_{{ item["complectation-id"] }}" aria-expanded="false"
-                                     aria-controls="id_{{ item["complectation-id"] }}" style="word-break: break-word;     max-width: 170px;">
+                                     aria-controls="id_{{ item["complectation-id"] }}"
+                                     style="word-break: break-word;     max-width: 170px;">
                                     {{ item["group-name"] }}
                                 </div>
                                 <div class="price">
@@ -500,8 +534,10 @@
             <div class="row">
                 <div class="col-lg-6 col-sm-12">
                     <div class="item mb-4 position-relative">
-                        <img src="../templates/major/images/back1.jpg" class="w-100 d-none d-sm-block" style="border-radius:8px;">
-                        <img src="../templates/major/images/back3.jpg" class="w-100 d-none d-block d-sm-none" style="border-radius:8px;">
+                        <img src="../templates/major/images/back1.jpg" class="w-100 d-none d-sm-block"
+                             style="border-radius:8px;">
+                        <img src="../templates/major/images/back3.jpg" class="w-100 d-none d-block d-sm-none"
+                             style="border-radius:8px;">
                         <div class="name_block position-absolute text-light w-100 p-3">
                             Выкупим Ваш <br>автомобиль
                         </div>
@@ -509,8 +545,10 @@
                 </div>
                 <div class="col-lg-6 col-sm-12">
                     <div class="item mb-4 position-relative">
-                        <img src="../templates/major/images/back2.jpg" class="w-100 d-none d-sm-block" style="border-radius:8px;">
-                        <img src="../templates/major/images/back4.jpg" class="w-100 d-block d-sm-none" style="border-radius:8px;">
+                        <img src="../templates/major/images/back2.jpg" class="w-100 d-none d-sm-block"
+                             style="border-radius:8px;">
+                        <img src="../templates/major/images/back4.jpg" class="w-100 d-block d-sm-none"
+                             style="border-radius:8px;">
                         <div class="name_block position-absolute text-light w-100 p-3">
                             Подберем автомобиль<br> под Ваш запрос
                         </div>
@@ -632,170 +670,179 @@
 
     </script>
     <script>
-    //   const buttons = document.querySelectorAll('.scroll-btn')
+      //   const buttons = document.querySelectorAll('.scroll-btn')
 
-    //   buttons.forEach(button => {
-    //     button.addEventListener('click', function () {
-    //       const creditBlock = document.getElementById('creditblock')
-    //       creditBlock.scrollIntoView({ behavior: 'smooth' })
-    //     })
-    //   })
+      //   buttons.forEach(button => {
+      //     button.addEventListener('click', function () {
+      //       const creditBlock = document.getElementById('creditblock')
+      //       creditBlock.scrollIntoView({ behavior: 'smooth' })
+      //     })
+      //   })
 
-    document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.scroll-btn');
+      document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.scroll-btn')
 
-    buttons.forEach(button => {
-        button.addEventListener('click', function () {
-            const targetId = this.getAttribute('data-target');
-            const targetBlock = document.getElementById(targetId);
+        buttons.forEach(button => {
+          button.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-target')
+            const targetBlock = document.getElementById(targetId)
             if (targetBlock) {
-                targetBlock.scrollIntoView({ behavior: 'smooth' });
+              targetBlock.scrollIntoView({ behavior: 'smooth' })
             }
-        });
-    });
-});
-
-        $('.index-catalog-block2 .list').slick({
-          speed: 300,
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          responsive: [
-            {
-              breakpoint: 992,
-              settings: {
-                slidesToShow: 3
-              }
-            },
-            {
-              breakpoint: 768,
-              settings: {
-                slidesToShow: 2
-              }
-            },
-            {
-              breakpoint: 576,
-              settings: {
-                slidesToShow: 1,
-                autoplay: true
-              }
-            }
-          ]
+          })
         })
+      })
+
+      $('.index-catalog-block2 .list').slick({
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 992,
+            settings: {
+              slidesToShow: 3
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 2
+            }
+          },
+          {
+            breakpoint: 576,
+            settings: {
+              slidesToShow: 1,
+              autoplay: true
+            }
+          }
+        ]
+      })
     </script>
-        <style>
+    <style>
 
         .list-unstyled {
             padding: 0;
             margin: 20px 0;
         }
-      .list-unstyled li {
+
+        .list-unstyled li {
             padding: 10px 0;
             font-size: 1rem;
             background: url('/templates/major/img/Arrow1.svg') no-repeat left;
             /* transition: filter 0.3s ease; */
         }
-        .list-unstyled li:hover{
+
+        .list-unstyled li:hover {
             background: url('/templates/major/img/Arrow1color.svg') no-repeat left;
             color: #007bff;
-        /* filter: invert(27%) sepia(95%) saturate(3390%) hue-rotate(202deg) brightness(106%) contrast(97%); */
-        /* filter: invert(27%) sepia(96%) saturate(7481%) hue-rotate(189deg) brightness(103%) contrast(109%); */
+            /* filter: invert(27%) sepia(95%) saturate(3390%) hue-rotate(202deg) brightness(106%) contrast(97%); */
+            /* filter: invert(27%) sepia(96%) saturate(7481%) hue-rotate(189deg) brightness(103%) contrast(109%); */
         }
-     /* .list-unstyled .text-muted2 a:hover {
-            color: #007bff;
-            text-decoration: none;
-        }
-      .list-unstyled li a:hover {
-            text-decoration: underline;
-        } */
-      .list-unstyled .text-muted2 {
+
+        /* .list-unstyled .text-muted2 a:hover {
+               color: #007bff;
+               text-decoration: none;
+           }
+         .list-unstyled li a:hover {
+               text-decoration: underline;
+           } */
+        .list-unstyled .text-muted2 {
             color: #181818;
-            font-size:16px;
+            font-size: 16px;
             font-weight: 700;
         }
 
-              .list-unstyled .text-muted2 span{
-                padding-left: 40px;
+        .list-unstyled .text-muted2 span {
+            padding-left: 40px;
 
         }
-.slick-dots {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  z-index: 1;
-  margin-top: 10px;
-}
+
+        .slick-dots {
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+        }
 
 
-.slick-dots li {
-  position: relative;
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 0 5px;
-  text-indent: -9999px;
-  cursor: pointer;
-  border-radius: 50%;
-  background-color: #bbb;
-}
+        .slick-dots li {
+            position: relative;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            text-indent: -9999px;
+            cursor: pointer;
+            border-radius: 50%;
+            background-color: #bbb;
+        }
 
 
-.slick-dots li.slick-active {
-    background-color: #3B80CC;
-    width: 17px;
-    height: 17px;
-    border: solid 4px #bbb;
-    border-radius: 50%;
-}
+        .slick-dots li.slick-active {
+            background-color: #3B80CC;
+            width: 17px;
+            height: 17px;
+            border: solid 4px #bbb;
+            border-radius: 50%;
+        }
 
-.slick-dots li:hover {
-  background-color: #555;
-}
+        .slick-dots li:hover {
+            background-color: #555;
+        }
 
-.slider-nav .slick-prev,
-.slider-nav .slick-next {
-  position: absolute;
-  padding: 0;
-  font-size: 0;
-  z-index: 2;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  top: -73px;
-}
-.slider-nav .slick-next {
-  right: 17px;
-  background: #f4f4f4 url('/templates/major/img/next.svg') no-repeat center;
-}
-.slider-nav .slick-next:hover {
-  right: 17px;
-  background: #f4f4f4 url('/templates/major/img/next-hover.svg') no-repeat center;
-}
-.slider-nav .slick-prev {
-  right: 70px;
-  background: #f4f4f4 url('/templates/major/img/prev.svg') no-repeat center;
-}
-.slider-nav .slick-prev:hover {
-  right: 70px;
-  background: #f4f4f4 url('/templates/major/img/prev-hover.svg') no-repeat center;
-}
-.slider-for .slick-slide img {
-    display: block;
-    height: 510px;
-    object-fit: cover;
-}
+        .slider-nav .slick-prev,
+        .slider-nav .slick-next {
+            position: absolute;
+            padding: 0;
+            font-size: 0;
+            z-index: 2;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            top: -73px;
+        }
 
-@media (max-width: 575px) {
-    .slider-for .slick-slide img {
-    display: block;
-    height: auto;
-    object-fit: contain;
-}
-}
+        .slider-nav .slick-next {
+            right: 17px;
+            background: #f4f4f4 url('/templates/major/img/next.svg') no-repeat center;
+        }
+
+        .slider-nav .slick-next:hover {
+            right: 17px;
+            background: #f4f4f4 url('/templates/major/img/next-hover.svg') no-repeat center;
+        }
+
+        .slider-nav .slick-prev {
+            right: 70px;
+            background: #f4f4f4 url('/templates/major/img/prev.svg') no-repeat center;
+        }
+
+        .slider-nav .slick-prev:hover {
+            right: 70px;
+            background: #f4f4f4 url('/templates/major/img/prev-hover.svg') no-repeat center;
+        }
+
+        .slider-for .slick-slide img {
+            display: block;
+            height: 510px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 575px) {
+            .slider-for .slick-slide img {
+                display: block;
+                height: auto;
+                object-fit: contain;
+            }
+        }
     </style>
 {% endblock %}
