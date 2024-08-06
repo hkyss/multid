@@ -155,11 +155,11 @@
                                     <button type="button" onclick="openPopupForm(this)"
                                         data-title="{{ runSnippet ('DocInfo', {docid: resource.parent, field:pagetitle}) |raw }} {{ resource.pagetitle }}"
                                         data-image="{{ photo | raw }}"
-                                        data-price="{{ modification.price }}"
+                                        data-price="{{ (modx.runSnippet("toInt", { value: modification.price })) | number_format(0, '.', ' ') }}"
                                         data-engine-volume="{{ modification.engine_volume | default("-") }}"
                                         data-gear="{{ modifications.gear | default("-") }}"
                                         data-drive="{{ modifications.drive | default("-") }}"
-                                        data-info="{{ modification.title | default("-") }}"
+                                        data-info="{{ modificationTitle | default("-") }}"
                                         data-kred-car-price="{{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}">
                                         Забронировать
                                     </button>
