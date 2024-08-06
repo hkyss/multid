@@ -149,7 +149,18 @@
                                     </button>
                                     <button data-fancybox="" data-src="#popupCredNew">Trade-in
                                     </button>
-                                    <button data-fancybox="" data-src="#popupCredNew">
+                                    {# <button data-fancybox="" data-src="#popupCredNew">
+                                        Забронировать
+                                    </button> #}
+                                    <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                                        data-title="{{ runSnippet ('DocInfo', {docid: resource.parent, field:pagetitle}) |raw }} {{ resource.pagetitle }}"
+                                        data-image="{{ photo | raw }}"
+                                        data-price="{{ modification.price }}"
+                                        data-engine-volume="{{ modification.engine_volume | default("-") }}"
+                                        data-gear="{{ modifications.gear | default("-") }}"
+                                        data-drive="{{ modifications.drive | default("-") }}"
+                                        data-info="{{ modification.complectTitle | default("-") }}"
+                                        data-kred-car-price="{{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}">
                                         Забронировать
                                     </button>
                                 </div>
