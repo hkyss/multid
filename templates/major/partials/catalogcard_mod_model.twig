@@ -4,12 +4,12 @@
 
 {% set modifications = data['tv.car_modifications'] | json %}
 
-
+{% set price = data["tv.car-price"] %}
 {% if price is empty %}
     {% set price = 0 %}
     {% set mounth_pay = 0 %}
 {% else %}
-    {% set price = data["tv.car-price"] %}
+    {# {% set price = data["tv.car-price"] %} #}
     {% set mounth_pay = data["tv.car-price"] / 82 %}
     {% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
 {% endif %}
