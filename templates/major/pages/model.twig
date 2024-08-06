@@ -28,6 +28,8 @@
         {% endif %}
 
         {% set modificationDriveform = modification['items']['drive']['value'] %}
+        {% set modificationGearform = modification['items']['gear']['value'] %}
+        {% set modificationEngVolform = modification['items']['engine_volume']['value'] %}
 
         {% for modificationItemKey, modificationItem in modification['items'] %}
             {% if "ModificationItem" in modificationItemKey %}
@@ -36,6 +38,8 @@
                 {% set modificationItemTitle = modificationTitle ~ ": " ~ modificationItem['value'] %}
                 {% set modificationInfo = modificationTitle %}
                 {% set modificationDriveform = modificationDriveform %}
+                {% set modificationGearform = modificationGearform %}
+                {% set modificationEngVolform = modificationEngVolform %}
 
                 {% for modificationItemOptionKey, modificationItemOption in modificationItem['items'] %}
                     {% if "ModificationItemOption" in modificationItemOptionKey %}
@@ -53,7 +57,9 @@
                     {
                         title: modificationItemTitle,
                         info: modificationInfo,
+                        gear: modificationGearform,
                         drive: modificationDriveform,
+                        engine: modificationEngVolform,
                         key: modificationKey,
                         complectTitle: modificationItem['value'],
                         price: modificationItem['items']['price']['value'],
@@ -162,8 +168,8 @@
                                         data-title="{{ runSnippet ('DocInfo', {docid: resource.parent, field:pagetitle}) |raw }} {{ resource.pagetitle }}"
                                         data-image="{{ photo | raw }}"
                                         data-price="{{ (modx.runSnippet("toInt", { value: modification.price })) | number_format(0, '.', ' ') }}"
-                                        data-engine-volume="{{ modification.engine_volume | default("-") }}"
-                                        data-gear="{{ modifications.gear | default("-") }}"
+                                        data-engine-volume="{{ modification.engine | default("-") }}"
+                                        data-gear="{{ modification.gear | default("-") }}"
                                         data-drive="{{ modification.drive | default("-") }}"
                                         data-info="{{ modification.info | default("-") }}"
                                         data-kred-car-price="{{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}">
