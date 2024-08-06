@@ -35,7 +35,7 @@
                 {% set modificationKey = modificationKey ~ "-" ~ modificationItemKey | replace({'#': "-"}) %}
                 {% set modificationItemTitle = modificationTitle ~ ": " ~ modificationItem['value'] %}
 
-                {% set modificationInfo = modificationTitle ~ %}
+                {% set modificationInfo = modificationTitle %}
 
                 {% for modificationItemOptionKey, modificationItemOption in modificationItem['items'] %}
                     {% if "ModificationItemOption" in modificationItemOptionKey %}
