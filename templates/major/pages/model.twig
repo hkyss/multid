@@ -34,8 +34,8 @@
                 {% set options = [] %}
                 {% set modificationKey = modificationKey ~ "-" ~ modificationItemKey | replace({'#': "-"}) %}
                 {% set modificationItemTitle = modificationTitle ~ ": " ~ modificationItem['value'] %}
-
                 {% set modificationInfo = modificationTitle %}
+                {% set modificationDriveform = modificationDriveform %}
 
                 {% for modificationItemOptionKey, modificationItemOption in modificationItem['items'] %}
                     {% if "ModificationItemOption" in modificationItemOptionKey %}
@@ -53,6 +53,7 @@
                     {
                         title: modificationItemTitle,
                         info: modificationInfo,
+                        drive: modificationDriveform,
                         key: modificationKey,
                         complectTitle: modificationItem['value'],
                         price: modificationItem['items']['price']['value'],
@@ -163,7 +164,7 @@
                                         data-price="{{ (modx.runSnippet("toInt", { value: modification.price })) | number_format(0, '.', ' ') }}"
                                         data-engine-volume="{{ modification.engine_volume | default("-") }}"
                                         data-gear="{{ modifications.gear | default("-") }}"
-                                        data-drive="{{ modifications.drive | default("-") }}"
+                                        data-drive="{{ modification.drive | default("-") }}"
                                         data-info="{{ modification.info | default("-") }}"
                                         data-kred-car-price="{{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}">
                                         Забронировать
