@@ -8,8 +8,6 @@
 {% set price = data["tv.car-price"] %}
 {% if price is empty %}
     {% set price = 0 %}
-{% else %}
-    {% set price = price|number_format(0, '.', '&nbsp;')|raw %}
 {% endif %}
 
 {% set mounth_pay = price / 82 %}
@@ -49,7 +47,8 @@
 
                 {% if price %}
                     <div class="new">
-                        {{ price }} ₽
+                    {{ price|number_format(0, '.', '&nbsp;')|raw }}
+                        {# {{ price }} ₽ #}
                     </div>
                 {% endif %}
             </div>
