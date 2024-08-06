@@ -58,6 +58,22 @@
 
     {% set complectations = runSnippet('Complectations') %}
 
+    {% set price_format = resource['car-price'] %}
+    {% if price_format is not empty and price_format != 0 %}
+        {% set price_format = price_format | number_format(0, "", " ") %}
+        {% set price_format = price_format ~ " ₽" %}
+    {% else %}
+        {% set price_format = "-" %}
+    {% endif %}
+
+    {% set price_old_format = resource['old-car-price'] %}
+    {% if price_old_format is not empty and price_old_format != 0 %}
+        {% set price_old_format = price_old_format | number_format(0, "", " ") %}
+        {% set price_old_format = price_old_format ~ " ₽" %}
+    {% else %}
+        {% set price_old_format = "-" %}
+    {% endif %}
+
     {% if complectations is empty %}
         {#        {% set car_model = runSnippet("ModelsLister", { #}
         {#            documents: resource.parent, #}
@@ -75,8 +91,8 @@
                 items: [
                 {
                     title: resource['modification'],
-                    price: resource['car-price'],
-                    price_old: resource['old-car-price'],
+                    price: price_format,
+                    price_old: price_old_format,
                     drive: resource['drive'],
                     transmission: resource['gear']
                 }
@@ -286,10 +302,10 @@
                                                     <tbody>
                                                     <tr>
                                                         <td>{{ item['title'] }}</td>
-                                                        <td>{{ item['price'] }}</td>
-                                                        <td>{{ item['price_old'] }}</td>
-                                                        <td>{{ item['drive'] }}</td>
-                                                        <td>{{ item['transmission'] }}</td>
+                                                        <td>{{ item['price'] | default("-") }}</td>
+                                                        <td>{{ item['price_old'] | default("-") }}</td>
+                                                        <td>{{ item['drive'] | default("-") }}</td>
+                                                        <td>{{ item['transmission'] | default("-") }}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
