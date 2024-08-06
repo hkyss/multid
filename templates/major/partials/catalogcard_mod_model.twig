@@ -14,7 +14,27 @@
     {% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
 {% endif %}
 
+{% set engine_volume = modifications['Modification#0']['items']['engine_volume']['value'] %}
+{% set gear = modifications['Modification#0']['items']['gear']['value'] %}
 {% set drive = modifications['Modification#0']['items']['drive']['value'] | default("Передний") %}
+
+{% set car = runSnippet("CarsLister", {
+    parents: data['id'],
+    orderBy: "car-price ASC",
+    display: 1,
+}) | first %}
+
+{% if engine_volume is empty %}
+    {% set engine_volume = car['tv_engine_volume'] %}
+{% endif %}
+
+{% if gear is empty %}
+    {% set gear = car['tv_gear'] %}
+{% endif %}
+
+{% if engine_volume %}
+    {% set engine_volume = engine_volume ~ " л." %}
+{% endif %}
 
 {# { data | dump } #}
 {# <div class="item col-12 col-sm-3 position-relative mb-3 "><a href="{{ data['url'] }}"> #}
@@ -30,11 +50,11 @@
             <div class="config_car row text-center mt-1 mb-1">
                 <div class="col-4 d-flex flex-column justify-content-start align-items-center">
                     <img src="/templates/major/img/tabler_engine.png" alt="Объём">
-                    <p>{{ modifications['Modification#0']['items']['engine_volume']['value'] }} л.</p>
+                    <p>{{ engine_volume }}</p>
                 </div>
                 <div class="col-4 d-flex flex-column justify-content-start align-items-center">
                     <img src="/templates/major/img/fluent_transmission-24-filled.png" alt="Коробка передач">
-                    <p>{{ modifications['Modification#0']['items']['gear']['value'] }}</p>
+                    <p>{{ gear }}</p>
                 </div>
                 <div class="col-4 d-flex flex-column justify-content-start align-items-center">
                     <img src="/templates/major/img/fluent_drive-train-24-regular.png" alt="Привод">
