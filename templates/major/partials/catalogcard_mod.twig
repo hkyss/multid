@@ -105,7 +105,9 @@ tpl:'@CODE:[+tv.configuration_id+]'}) %}
 
             </div>
             <div class="price mb-3">
+            {% if data["tv.old-car-price"] %}
                 <span class="old d-inline-block mb-1">{# { DLdata|first['tv_old-car-price'] } #}{{ data["tv.old-car-price"] }} ₽</span>
+            {% endif %}
 
                 {% if data["tv.car-price"] %}
                     <div class="new">
@@ -122,7 +124,7 @@ tpl:'@CODE:[+tv.configuration_id+]'}) %}
                     data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
-                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
+                    data-info="{{ data["tv.modification"] | default("-") }}"
                     data-kred-car-price="{{ mounth_pay }}">
                         В кредит
                         от {% if baseSettings.credit_rate is empty %}
@@ -138,7 +140,7 @@ tpl:'@CODE:[+tv.configuration_id+]'}) %}
                     data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
-                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
+                    data-info="{{ data["tv.modification"] | default("-") }}"
                     data-kred-car-price="{{ mounth_pay }}">
                         Забронировать
                 </button>
