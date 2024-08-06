@@ -164,7 +164,7 @@
                                         data-engine-volume="{{ modification.engine_volume | default("-") }}"
                                         data-gear="{{ modifications.gear | default("-") }}"
                                         data-drive="{{ modifications.drive | default("-") }}"
-                                        data-info="{{ modificationInfo | default("-") }}"
+                                        data-info="{{ modification.info | default("-") }}"
                                         data-kred-car-price="{{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}">
                                         Забронировать
                                     </button>
