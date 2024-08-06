@@ -2385,6 +2385,8 @@ right: -58px;
   .footer .logo {
     width: 100%;
     text-align: center;
+    justify-content: center;
+    display: flex;
   }
   .footer .copy {
     width: 100%;
