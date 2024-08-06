@@ -169,7 +169,8 @@
                     <h1 class="mb-3">{{ resource.pagetitle }}</h1>
                     <div class="price mb-3">
                         {% if resource["car-price"] %}
-                            <span class="new mr-2">{{ resource["car-price"] }}₽</span>
+                            {# <span class="new mr-2">{{ resource["car-price"] }}₽</span> #}
+                            <span class="new mr-2">{{ car_price|number_format(0, '.', '&nbsp;')|raw }}₽</span>
                         {% endif %}
 
                         {% if resource["old-car-price"] %}
@@ -197,7 +198,18 @@
                     </ul>
                     <div class="buttons row mb-2">
                         <div class="col-12">
-                            <button class="w-100 mb-3 color1" data-fancybox="" data-src="#popupBronNew">Забронировать</button>
+                            {# <button class="w-100 mb-3 color1" data-fancybox="" data-src="#popupBronNew">Забронировать</button> #}
+                        <button class="w-100 mb-3 color1" type="button" onclick="openPopupForm(this)"
+                            data-title="{{ resource.pagetitle }}"
+                            data-image="{{ image[0].image }}"
+                            data-price="{{ car_price|number_format(0, '.', '&nbsp;')|raw }}"
+                            data-engine-volume="{{ resource.engine_volume | default("-") }}"
+                            data-gear="{{ resource.engine_type | default("-") }}"
+                            data-drive="{{ resource.drive | default("-") }}"
+                            data-info="{{ resource.modification | default("-") }}"
+                            data-kred-car-price="{{ resource.car_monthly_payment | default(0) }}">
+                            Забронировать
+                        </button>
                         </div>
                         <div class="col-6">
                             <button class="w-100 color2 scroll-btn" data-target="creditblock">Рассчитать кредит</button>
