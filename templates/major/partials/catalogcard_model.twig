@@ -47,7 +47,7 @@
 
                 {% if price %}
                     <div class="new">
-                    {{ price|number_format(0, '.', '&nbsp;')|raw }}
+                    {{ price|number_format(0, '.', '&nbsp;')|raw }} ₽
                         {# {{ price }} ₽ #}
                     </div>
                 {% endif %}
@@ -80,7 +80,7 @@
                 <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
-                    data-price="{{ price }}"
+                    data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
                     data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] }}"
                     data-gear="{{ modifications['Modification#0']['items']['gear']['value'] }}"
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] }}"
