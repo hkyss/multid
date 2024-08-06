@@ -201,7 +201,7 @@
                             {# <button class="w-100 mb-3 color1" data-fancybox="" data-src="#popupBronNew">Забронировать</button> #}
                         <button class="w-100 mb-3 color1" type="button" onclick="openPopupForm(this)"
                             data-title="{{ resource.pagetitle }}"
-                            data-image="{{ image[0].image }}"
+                            data-image="{{ car_photos[0].image }}"
                             data-price="{{ car_price|number_format(0, '.', '&nbsp;')|raw }}"
                             data-engine-volume="{{ resource.engine_volume | default("-") }}"
                             data-gear="{{ resource.engine_type | default("-") }}"
