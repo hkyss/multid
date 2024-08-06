@@ -46,8 +46,8 @@
 
                 {% if data["tv.car-price"] %}
                     <div class="new">
-                        {# {{ price|number_format(0, '.', '&nbsp;')|raw }} ₽ #}
-                        {{ data["tv.car-price"] }} ₽
+                        {{ price|number_format(0, '.', '&nbsp;')|raw }} ₽
+                        {# {{ data["tv.car-price"] }} ₽ #}
                     </div>
                 {% endif %}
             </div>
