@@ -4,6 +4,15 @@
 
 {% set modifications = data['tv.car_modifications'] | json %}
 
+{% set price = data["tv.car-price"] %}
+{% set mounth_pay = data["tv.car-price"] / 82 %}
+{% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
+
+{% if price is empty %}
+    {% set price = 0 %}
+    {% set mounth_pay = 0 %}
+{% endif %}
+
 {# { data | dump } #}
 {# <div class="item col-12 col-sm-3 position-relative mb-3 "><a href="{{ data['url'] }}"> #}
 <div class="item col-12 col-lg-3 col-sm-5 position-relative mb-3 "><a href="{{ data['url'] }}">
@@ -36,13 +45,41 @@
 
                 {% if data["tv.car-price"] %}
                     <div class="new">
-                        {{ data["tv.car-price"] }} ₽
+                        {{ data["tv.car-price"]|number_format(0, '.', '&nbsp;')|raw }} ₽
+                        {# {{ data["tv.car-price"] }} ₽ #}
                     </div>
                 {% endif %}
             </div>
             <div class="buttons">
-                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
-                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button>
+                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
+                    data-image="{{ photo }}"
+                    data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
+                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"
+                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"
+                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
+                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
+                    data-kred-car-price="{{ mounth_pay }}">
+                    В кредит
+                    от {% if baseSettings.credit_rate is empty %}
+                    4.9
+                    {% else %}
+                        {{ baseSettings.credit_rate }}
+                    {% endif %}%
+                </button>
+                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
+                    data-image="{{ photo }}"
+                    data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
+                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"
+                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"
+                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
+                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
+                    data-kred-car-price="{{ mounth_pay }}">
+                    Забронировать
+                </button>
+                {# <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
+                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button> #}
                                                 
                 <button class="w-100" onclick="location.href='{{ data.url }}';">Подробнее</button>
             </div>
