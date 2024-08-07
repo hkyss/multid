@@ -56,9 +56,12 @@
         prepare: "DocLister ModelsPrepare"
     }) %}
 
+    {% set car_price = resource['car-price'] | round %}
+    {% set car_price_old = runSnippet('helpers', {caroldprice: car_price, action:'caroldprice'}) | round %}
+
     {% set complectations = runSnippet('Complectations') %}
 
-    {% set price_format = resource['car-price'] %}
+    {% set price_format = car_price %}
     {% if price_format is not empty and price_format != 0 %}
         {% set price_format = price_format | number_format(0, "", " ") %}
         {% set price_format = price_format ~ " ₽" %}
@@ -66,7 +69,7 @@
         {% set price_format = "-" %}
     {% endif %}
 
-    {% set price_old_format = resource['old-car-price'] %}
+    {% set price_old_format = car_price_old %}
     {% if price_old_format is not empty and price_old_format != 0 %}
         {% set price_old_format = price_old_format | number_format(0, "", " ") %}
         {% set price_old_format = price_old_format ~ " ₽" %}
@@ -107,10 +110,7 @@
     {% set car_photos = resource.car_photos | json %}
     {% set car_photos = car_photos.fieldValue %}
 
-    {% set car_price = resource["car-price"] %}
-    {% if resource["car-price"] is empty %}
-        {% set car_price = 0 %}
-    {% endif %}
+    {% set credit = car_price / 72 %}
 
     {# {% include('partials/crumbs.twig') %} #}
 
@@ -183,6 +183,9 @@
         </div>
     </div>
 </div> #}
+
+    {% include '/partials/crumbs.twig' %}
+
     <div class="item-page pb-3 mt-3">
         <div class="container">
             <div class="row">
@@ -212,17 +215,17 @@
                 <div class="col-lg-5">
                     <h1 class="mb-3">{{ resource.pagetitle }}</h1>
                     <div class="price mb-3">
-                        {% if resource["car-price"] %}
+                        {% if car_price %}
                             {# <span class="new mr-2">{{ resource["car-price"] }}₽</span> #}
                             <span class="new mr-2">{{ car_price|number_format(0, '.', '&nbsp;')|raw }}₽</span>
                         {% endif %}
 
-                        {% if resource["old-car-price"] %}
-                            <span class="old">{{ resource["old-car-price"] }}₽</span>
+                        {% if car_price_old %}
+                            <span class="old">{{ car_price_old | number_format(0, '.', ' ') }}₽</span>
                         {% endif %}
                     </div>
                     <div class="credit mb-4">
-                        В кредит от {{ (car_price / 72) | default(0) | number_format(0, '.', ' ') | round }} ₽/мес <span
+                        В кредит от {{ credit | default(0) | number_format(0, '.', ' ') }} ₽/мес <span
                                 class="d-inline-block py-2 px-3 ml-sm-3">Ставка от {% if baseSettings.credit_rate is empty %}
     4.9
 {% else %}

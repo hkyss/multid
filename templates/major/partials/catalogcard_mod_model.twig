@@ -14,26 +14,33 @@
     {% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
 {% endif %}
 
-{% set engine_volume = modifications['Modification#0']['items']['engine_volume']['value'] %}
-{% set gear = modifications['Modification#0']['items']['gear']['value'] %}
-{% set drive = modifications['Modification#0']['items']['drive']['value'] | default("Передний") %}
-
 {% set car = runSnippet("CarsLister", {
     parents: data['id'],
     orderBy: "car-price ASC",
     display: 1,
 }) | first %}
 
-{% if engine_volume is empty %}
-    {% set engine_volume = car['tv_engine_volume'] %}
+{% if price == 0 %}
+    {% set price = runSnippet("toInt", {value: car['price']}) | round %}
 {% endif %}
 
-{% if gear is empty %}
-    {% set gear = car['tv_gear'] %}
+{% set credit = ( (price / 84) * 0.7 ) | number_format(0, '.', ' ') %}
+
+{% set mnths = ['','января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'] %}
+{% set date_sale = "now" | date_modify("+2 day") %}
+
+{% set sale_to_day = date_sale | date('d') %}
+{% set sale_to_month = mnths[date_sale | date("n")] %}
+{% set sale_to = sale_to_day ~ " " ~ sale_to_month %}
+
+{% set complectation = modifications['Modification#0']['items']['ModificationItem#0']['value'] %}
+{% if complectation is empty %}
+    {% set complectation = car['tv_complectation'] %}
 {% endif %}
 
-{% if engine_volume %}
-    {% set engine_volume = engine_volume ~ " л." %}
+{% set modification = modifications['Modification#0']['value'] %}
+{% if modification is empty %}
+    {% set modification = car['tv_modification'] %}
 {% endif %}
 
 {# { data | dump } #}
@@ -47,32 +54,30 @@
             <div class="row data text-center">
 
             </div>
-            <div class="config_car row text-center mt-1 mb-1">
-                <div class="col-4 d-flex flex-column justify-content-start align-items-center">
-                    <img src="/templates/major/img/tabler_engine.png" alt="Объём">
-                    <p>{{ engine_volume }}</p>
-                </div>
-                <div class="col-4 d-flex flex-column justify-content-start align-items-center">
-                    <img src="/templates/major/img/fluent_transmission-24-filled.png" alt="Коробка передач">
-                    <p>{{ gear }}</p>
-                </div>
-                <div class="col-4 d-flex flex-column justify-content-start align-items-center">
-                    <img src="/templates/major/img/fluent_drive-train-24-regular.png" alt="Привод">
-                    <p>{{ drive }}</p>
-                </div>
-            </div>
+            <ul class="mb-3">
+                {% if complectation %}
+                    <li class="mb-1">- {{ complectation }}</li>
+                {% endif %}
+
+                {% if modification %}
+                    <li class="mb-1">- {{ modification }}</li>
+                {% endif %}
+
+                <li>- Скидка до: <strong>{{ sale_to }}</strong></li>
+            </ul>
             <div class="price mb-3">
                 {% if data["tv.old-car-price"] %}
                     <span class="old d-inline-block mb-1">{{ data["tv.old-car-price"] }} ₽</span>
                 {% endif %}
 
-                {% if data["tv.car-price"] %}
+                {% if price %}
                     <div class="new">
-                        {{ price|number_format(0, '.', '&nbsp;')|raw }} ₽
+                        от {{ price|number_format(0, '.', '&nbsp;')|raw }} ₽
                         {# {{ data["tv.car-price"] }} ₽ #}
                     </div>
                 {% endif %}
             </div>
+            <p class="mb-4 text-right"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
             <div class="buttons">
                 <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
@@ -90,21 +95,21 @@
                         {{ baseSettings.credit_rate }}
                     {% endif %}%
                 </button>
-                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
-                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
-                    data-image="{{ photo }}"
-                    data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
-                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"
-                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"
-                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
-                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
-                    data-kred-car-price="{{ mounth_pay }}">
-                    Забронировать
-                </button>
+{#                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"#}
+{#                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"#}
+{#                    data-image="{{ photo }}"#}
+{#                    data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"#}
+{#                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"#}
+{#                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"#}
+{#                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"#}
+{#                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"#}
+{#                    data-kred-car-price="{{ mounth_pay }}">#}
+{#                    Забронировать#}
+{#                </button>#}
                 {# <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
                 <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button> #}
 
-                <button class="w-100" onclick="location.href='{{ data.url }}';">Подробнее</button>
+{#                <button class="w-100" onclick="location.href='{{ data.url }}';">Подробнее</button>#}
             </div>
         </div>
     </a>
