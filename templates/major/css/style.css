@@ -1674,3 +1674,25 @@ a .text-logo span{
 .item-page .top-info .text {
     padding-left: 0;
 }
+
+.car-specs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+}
+.car-specs-list li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.slider-car__specs li span {
+    display: block;
+}
+.slider-car__specs li {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(176, 176, 176, 0.6);
+}

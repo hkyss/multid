@@ -232,20 +232,88 @@
     {{ baseSettings.credit_rate }}
                             {% endif %}%</span>
                     </div>
-                    {# <div class="vin mb-3 flex">
-                        <div><img src="/templates/major/img/vin1.svg"> <span>ПТС:</span> Оригинал</div>
-                        <div><img src="/templates/major/img/vin2.svg"> Проверенный <span>VIN-номер</span></div>
-                    </div> #}
-                    <ul class="list-unstyled mb-3">
-                        <li class="text-muted2 scroll-btn" data-target="photosBlock"><span>Фото</span></li>
-                        <li class="text-muted2 scroll-btn" data-target="configsAndPricesBlock">
-                            <span>Комплектации и цены</span></li>
-                        <li class="text-muted2 scroll-btn" data-target="discountsAndPromotionsBlock"><span>Скидки и акции</span>
-                        </li>
-                        <li class="text-muted2 scroll-btn" data-target="creditblock"><span>Расчет кредита</span></li>
-                        <li class="text-muted2 scroll-btn" data-target="specialOffersBlock"><span>Спецпредложения</span>
-                        </li>
-                    </ul>
+{#                    <ul class="list-unstyled mb-3">#}
+{#                        <li class="text-muted2 scroll-btn" data-target="photosBlock"><span>Фото</span></li>#}
+{#                        <li class="text-muted2 scroll-btn" data-target="configsAndPricesBlock">#}
+{#                            <span>Комплектации и цены</span></li>#}
+{#                        <li class="text-muted2 scroll-btn" data-target="discountsAndPromotionsBlock"><span>Скидки и акции</span>#}
+{#                        </li>#}
+{#                        <li class="text-muted2 scroll-btn" data-target="creditblock"><span>Расчет кредита</span></li>#}
+{#                        <li class="text-muted2 scroll-btn" data-target="specialOffersBlock"><span>Спецпредложения</span>#}
+{#                        </li>#}
+{#                    </ul>#}
+
+                    <div class="row align-items-center mt-3 justify-content-between mb-4">
+                        <div class="col-lg-4">
+                            <ul class="car-specs-list">
+                                {% if resource['engine_power'] %}
+                                    <li>
+                                        <img src="/templates/major/images/engine-gray.svg" alt="">
+                                        {{ resource['engine_power'] }} л.с.
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['fuel_consumption'] %}
+                                    <li>
+                                        <img src="/templates/major/images/road-gray.svg" alt="">
+                                        {{ resource['fuel_consumption'] }} л/100 км
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['maximum_speed'] %}
+                                    <li>
+                                        <img src="/templates/major/images/speedo-meter-gray.svg" alt="">
+                                        {{ resource['maximum_speed'] }} км/ч
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['acceleration'] %}
+                                    <li>
+                                        <img src="/templates/major/images/timer-gray.svg" alt="">
+                                        {{ resource['acceleration'] }} сек.
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="col-lg-8">
+                            <ul class="slider-car__specs">
+                                {% if resource['car_color'] %}
+                                    <li>
+                                        <span class="car-specs__name">цвет</span>
+                                        <span class="car-specs__value">{{ resource['car_color'] }}</span>
+                                    </li>
+                                {% endif %}
+
+                                <li>
+                                    <span class="car-specs__name">статус</span>
+                                    <span class="car-specs__value">В наличии</span>
+
+                                </li>
+
+                                {% if resource['modification'] %}
+                                    <li>
+                                        <span class="car-specs__name">модификация</span>
+                                        <span class="car-specs__value">{{ resource['modification'] }}</span>
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['complectation'] %}
+                                    <li>
+                                        <span class="car-specs__name">комплектация</span>
+                                        <span class="car-specs__value">{{ resource['complectation'] }}</span>
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['guarantee'] %}
+                                    <li>
+                                        <span class="car-specs__name">гарантия</span>
+                                        <span class="car-specs__value">{{ resource['guarantee'] }}</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="buttons row mb-2">
                         <div class="col-12">
                             {# <button class="w-100 mb-3 color1" data-fancybox="" data-src="#popupBronNew">Забронировать</button> #}
