@@ -119,43 +119,85 @@ tpl:'@T_CODE: <div class="gift__item">
                             Один
                             {% endif %}</div>
                     </div>
-                    <div class="item clearfix mb-4 position-relative">
-                        <p class="d-inline-block pr-3 position-relative">Год выпуска</p>
-                        <div class="float-end pl-3 position-relative"> {{resource.year}}</div>
-                    </div>
-                    <div class="item clearfix mb-4 position-relative">
-                        <p class="d-inline-block pr-3 position-relative">Пробег</p>
-                        <div class="float-end pl-3 position-relative"> {{resource.run}} км</div>
-                    </div>
+
+                    {% if resource.year %}
+                        <div class="item clearfix mb-4 position-relative">
+                            <p class="d-inline-block pr-3 position-relative">Год выпуска</p>
+                            <div class="float-end pl-3 position-relative"> {{resource.year}}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if resource.run %}
+                        <div class="item clearfix mb-4 position-relative">
+                            <p class="d-inline-block pr-3 position-relative">Пробег</p>
+                            <div class="float-end pl-3 position-relative"> {{ resource.run | number_format(0, "", " ") }} км</div>
+                        </div>
+                    {% endif %}
                     {# <div class="item clearfix mb-4 position-relative">
                         <p class="d-inline-block pr-3 position-relative">Двигатель</p>
                         <div class="float-end pl-3 position-relative">2.0 л / {{resource.engine_power}} л. с. / {{resource.fuel}}</div>
                     </div> #}
                     <div class="item clearfix mb-4 position-relative">
-                        <p class="d-inline-block pr-3 position-relative">Двигатель</p>
+                        <p class="d-inline-block pr-3 position-relative">Объём двигателя</p>
                         <div class="float-end pl-3 position-relative">
-                        {% if resource.engine_volume %}
-                            {{resource.engine_volume}}
-                        {% else %}
-                            1.6
-                        {% endif %} л  / {{resource.engine_power}} л. с. / {{resource.fuel}}</div>
+                            {% if resource.engine_volume %}
+                                {{ resource.engine_volume | number_format(0, "", " ") }} см3
+                            {% else %}
+                                1.6 л
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="item clearfix mb-4 position-relative">
-                        <p class="d-inline-block pr-3 position-relative">Коробка передач</p>
-                        <div class="float-end pl-3 position-relative"> {{resource.gear}}</div>
-                    </div>
-                    <div class="item clearfix mb-4 position-relative">
-                        <p class="d-inline-block pr-3 position-relative">Привод</p>
-                        <div class="float-end pl-3 position-relative"> {{resource.drive}}</div>
-                    </div>
-                    <div class="item clearfix mb-4 position-relative">
-                        <p class="d-inline-block pr-3 position-relative">Руль</p>
-                        <div class="float-end pl-3 position-relative"> {{resource.wheel}}</div>
-                    </div>
-                    <div class="item clearfix mb-4 position-relative">
-                        <p class="d-inline-block pr-3 position-relative">Кузов</p>
-                        <div class="float-end pl-3 position-relative"> {{resource.body_type}}</div>
-                    </div>
+
+                    {% if resource.engine_power %}
+                        <div class="item clearfix mb-4 position-relative">
+                            <p class="d-inline-block pr-3 position-relative">Мощность двигателя</p>
+                            <div class="float-end pl-3 position-relative">
+                                {{ resource.engine_power }} л. с.
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if resource.gear %}
+                        <div class="item clearfix mb-4 position-relative">
+                            <p class="d-inline-block pr-3 position-relative">Коробка передач</p>
+                            <div class="float-end pl-3 position-relative"> {{resource.gear}}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if resource.drive %}
+                        <div class="item clearfix mb-4 position-relative">
+                            <p class="d-inline-block pr-3 position-relative">Привод</p>
+                            <div class="float-end pl-3 position-relative"> {{resource.drive}}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if resource.wheel %}
+                        <div class="item clearfix mb-4 position-relative">
+                            <p class="d-inline-block pr-3 position-relative">Руль</p>
+                            <div class="float-end pl-3 position-relative"> {{resource.wheel}}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if resource.body_type %}
+                        <div class="item clearfix mb-4 position-relative">
+                            <p class="d-inline-block pr-3 position-relative">Кузов</p>
+                            <div class="float-end pl-3 position-relative"> {{resource.body_type}}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if resource.modification %}
+                        <div class="item clearfix mb-4 position-relative">
+                            <p class="d-inline-block pr-3 position-relative">Комплектация</p>
+                            <div class="float-end pl-3 position-relative"> {{resource.modification}}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if resource.car_color %}
+                        <div class="item clearfix mb-4 position-relative">
+                            <p class="d-inline-block pr-3 position-relative">Цвет</p>
+                            <div class="float-end pl-3 position-relative"> {{resource.car_color}}</div>
+                        </div>
+                    {% endif %}
                     {# <div class="item clearfix position-relative">
                         <p class="d-inline-block pr-3 position-relative">Цвет</p>
                         <div class="float-end pl-3 position-relative"> {{resource.car_color}}</div>
