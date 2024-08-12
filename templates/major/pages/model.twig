@@ -85,7 +85,7 @@
         api: 1,
         parents: resource.id,
         addWhereList: "c.template = 28",
-        tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,engine_volume,car_monthly_payment,gear,year,image,mark_id,model_id,modification,complectation',
+        tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,engine_volume,car_monthly_payment,gear,drive,year,image,mark_id,model_id,modification,complectation',
     }) | json %}
     {% set prices = cars | column('tv_car-price') | default([0]) %}
 
@@ -278,7 +278,7 @@
                                     <div class="image model--image" style="background-image: url('{{ car_photo }}')"></div>
                                     <div class="p-3">
                                         <a href="{{ car['url'] }}" class="name d-block mb-2">
-                                            {{ car['title'] }}
+                                            {{ car['title'] }},{{ car['year'] }}
                                         </a>
                                         <div class="row data text-center">
 
@@ -316,7 +316,7 @@
                                         data-title="{{ car['title'] }}"
                                         data-image="{{ car_photo }}"
                                         data-price="{{ car_price | number_format(0, '', ' ') }}"
-                                        data-engine-volume="{{ car['tv_engine_volume'] | default("-") }}"
+                                        data-engine-volume="{{ car['tv_year'] | default("-") }}г."
                                         data-gear="{{ car['tv_gear'] | default("-") }}"
                                         data-drive="{{ car['tv_drive'] | default("-") }}"
                                         data-info="{{ car['tv_modification'] | default("-") }}"
