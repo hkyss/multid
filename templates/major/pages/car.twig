@@ -213,7 +213,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <h1 class="mb-3">{{ resource.pagetitle }}{{ resource.year }}</h1>
+                    <h1 class="mb-3">{{ resource.pagetitle }}{% if resource.year is not empty %}-{{ resource.year }}г{% endif %}</h1>
                     <div class="price mb-3">
                         {% if car_price %}
                             {# <span class="new mr-2">{{ resource["car-price"] }}₽</span> #}
