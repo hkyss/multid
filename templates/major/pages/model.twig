@@ -278,7 +278,8 @@
                                     <div class="image model--image" style="background-image: url('{{ car_photo }}')"></div>
                                     <div class="p-3">
                                         <a href="{{ car['url'] }}" class="name d-block mb-2">
-                                            {{ car['title'] }},{{ car['tv_year'] }}г.
+                                            {{ car['title'] }},
+                                            {% if car['tv_year'] %}{{ car['tv_year'] }}г.{% endif %}
                                         </a>
                                         <div class="row data text-center">
 
