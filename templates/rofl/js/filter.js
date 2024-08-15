@@ -1,16 +1,18 @@
-// Ion.RangeSlider, 2.3.1, © Denis Ineshin, 2010 - 2019, IonDen.com, Build date: 2019-12-19 16:56:44
-//
-//
-
 $(function() {
 	function numberWithCommas(x) {
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-		}
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+	}
+
 	var Filter = {
 		el: document.querySelector('.extrafilter'),
 		range_separator: ':',
 		values_separator: '&',
 		init: function() {
+			if (!this.el) {
+				console.warn('Element .extrafilter not found. Initialization aborted.');
+				return;
+			}
+
 			let sliders = $('.filter-range-slider');
 			if (sliders.length) {
 				sliders.ionRangeSlider({
@@ -19,7 +21,7 @@ $(function() {
 					from_shadow: true,
 					to_shadow: true,
 					input_values_separator: Filter.range_separator,
-					onFinish: Filter.build(false),
+					onFinish: function(data) { Filter.build(false); },
 					onStart: Filter.updateInputs,
 					onChange: Filter.updateInputs
 				});
@@ -27,14 +29,14 @@ $(function() {
 
 			$(document).on('click', '.extrafilter .filterbutton', function(e) {
 				e.preventDefault();
-				Filter.build()
+				Filter.build();
 				window.location.href = $(this).attr('href');
 			});
 
 			$(document).on('change', '.choicesCar', function(e) {
 				e.preventDefault();
 				if ($(this).attr('id') == 'formModel42') {
-					Filter.build()
+					Filter.build();
 				}
 			});
 
@@ -45,10 +47,12 @@ $(function() {
 
 				$('.filter-range-slider').each(function() {
 					var slider = $(this).data('ionRangeSlider');
-					slider.update({
-						from: slider.result.min,
-						to: slider.result.max
-					});
+					if (slider) {
+						slider.update({
+							from: slider.result.min,
+							to: slider.result.max
+						});
+					}
 				});
 
 				Filter.build();
@@ -85,7 +89,7 @@ $(function() {
 			});
 
 			data = Object.values(data).filter(function(el) {
-				[name, value] = el.split('=');
+				let [name, value] = el.split('=');
 				if (value === '' || value.replace(/\|/g, '') === '') {
 					return false;
 				}
@@ -100,28 +104,26 @@ $(function() {
 			}
 
 			let filterButton = $('.extrafilter .filterbutton');
-			filterButton.attr('href', buttonUrl);
-
-			//console.log('start load')
+			if (filterButton.length) {
+				filterButton.attr('href', buttonUrl);
+			}
 
 			if (reload) {
 				Filter.load(data);
 			}
 		},
-		
-		// остальной код...
-
 		updateInputs: function(data) {
 			console.log(data);
-			let from = numberWithCommas(data.from); // Используем функцию для форматирования числа
-			let to = numberWithCommas(data.to); // Используем функцию для форматирования числа
-			$(data.input).parent().siblings('.price-range-group').find('.range-min').val(from);
-			$(data.input).parent().siblings('.price-range-group').find('.range-max').val(to);
+			let from = numberWithCommas(data.from);
+			let to = numberWithCommas(data.to);
+			let input = $(data.input);
+			let rangeGroup = input.parent().siblings('.price-range-group');
+
+			if (rangeGroup.length) {
+				rangeGroup.find('.range-min').val(from);
+				rangeGroup.find('.range-max').val(to);
+			}
 		},
-
-		// остально
-
-
 		load: function(data) {
 			$.ajax({
 				url: location.pathname,
@@ -145,7 +147,10 @@ $(function() {
 				}
 			});
 		},
-
 	};
-	Filter.init();
+
+	// Ensure the DOM is fully loaded before initializing
+	document.addEventListener('DOMContentLoaded', function() {
+		Filter.init();
+	});
 });
