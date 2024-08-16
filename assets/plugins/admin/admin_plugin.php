@@ -74,6 +74,7 @@ switch($eventName) {
 			$path = isset($_POST['path']) ? $_POST['path'] : 'site/tpl/forms/';
 
 			if(!empty($_POST['modal'])) {
+                $_POST['noemail'] = 1;
 				echo $modx->runSnippet('Form', $_POST);
 				die();
 			}
@@ -82,7 +83,6 @@ switch($eventName) {
 			$to = !empty($modx->getConfig('client_email_to')) ? $modx->getConfig('client_email_to') : $modx->getConfig('client_company_email');
 			$from = !empty($modx->getConfig('client_smtp_username')) ? $modx->getConfig('client_smtp_username') : $modx->getConfig('client_company_email');
 			$subject = 'Форма с сайта ' . $modx->getConfig('site_name');
-
 
 			if(file_exists(MODX_BASE_PATH . $path.$formid.'.'.$extension)) {
 				$formTpl = file_get_contents(MODX_BASE_PATH . $path.$formid.'.'.$extension);
@@ -148,6 +148,7 @@ switch($eventName) {
                         $_params['ccSender'] = 1;
                     }
 
+                    $_params['noemail'] = 1;
                     $result = $modx->runSnippet('FormLister', $_params);
 				}
 
