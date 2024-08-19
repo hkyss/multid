@@ -95,7 +95,7 @@ class CoreController
                 FROM {$table_tv_values} AS tv_value
                 LEFT JOIN {$table_tvs} AS tv
                 ON tv.id = tv_value.tmplvarid
-                WHERE tv_value.contentid in ({$item_ids}) {$whereItems}
+                WHERE tv_value.contentid in ({$item_ids}) and tv_value.tmplvarid not in (54,57) {$whereItems}
             ")
         );
 
