@@ -24,8 +24,8 @@
         _filters: 'AND(tv:price:>:0;tv:region:=:' ~ plh.activeLangAlias ~ ')',
         display: 8,
         parents: baseSettings['catalog_number'],
-        depth: 2,
-        addWhereList: 'c.template=20',
+        depth: 1,
+        addWhereList: 'c.template=8',
         orderBy: 'car-price',
         order: 'RAND()',
         tvSortType: 'SIGNED',
@@ -166,7 +166,7 @@
                     <div class="col-xl-3 col-lg-4 col-6">
                         <div class="item mb-3 py-1 px-2">
                             <div class="pr-3">2456</div>
-                            <div>Предложений на атомобили</div>
+                            <div>Предложений на автомобили</div>
                         </div>
                     </div>
                 </div>
