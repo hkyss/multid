@@ -1,0 +1,73 @@
+{% set configuration_id = runSnippet('DocLister', {
+    id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
+
+{% set modifications = data['tv.car_modifications'] | json %}
+
+{% set photo = data['image_format'] %}
+
+{% set price = data["tv.car-price"] %}
+{% set mounth_pay = data["tv.car-price"] / 82 %}
+{% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
+
+{% if price is empty %}
+    {% set price = 0 %}
+    {% set mounth_pay = 0 %}
+{% endif %}
+
+
+{# <div class="item position-relative col-3 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}"> #}
+<div class="item position-relative col-lg-3 col-md-4 col-sm-5 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}">
+        <span class="hit position-absolute py-1 px-3">HIT</span>
+        <div class="image model--image" style="background-image: url('{{ photo }}')"></div>
+        <div class="p-3">
+            <a href="{{ data.url }}"
+               class="name d-block mb-2 model--title">{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }} </a>
+            <div class="row data text-center">
+            </div>
+            <div class="price mb-3">
+                {% if data["tv.old-car-price"] %}
+                    <span class="old d-inline-block mb-1">{{ data["tv.old-car-price"] }} ₽</span>
+                {% endif %}
+
+                {% if data["tv.car-price"] %}
+                    <div class="new">
+                    {{ price|number_format(0, '.', '&nbsp;')|raw }} ₽
+                        {# {{ data["tv.car-price"] }} ₽ #}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="buttons">
+                {# <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
+                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button> #}
+                                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
+                    data-image="{{ photo }}"
+                    data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
+                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"
+                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"
+                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
+                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
+                    data-kred-car-price="{{ mounth_pay }}">
+                    В кредит
+                    от {% if baseSettings.credit_rate is empty %}
+                    4.9
+                    {% else %}
+                        {{ baseSettings.credit_rate }}
+                    {% endif %}%
+                </button>
+                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
+                    data-image="{{ photo }}"
+                    data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
+                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"
+                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"
+                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
+                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
+                    data-kred-car-price="{{ mounth_pay }}">
+                    Забронировать
+                </button>
+                <button class="w-100" onclick="location.href='{{ data.url }}';">Подробнее</button>
+            </div>
+        </div>
+    </a>
+</div>

@@ -1,0 +1,935 @@
+{% extends 'app.twig' %}
+{% block MAIN %}
+    {% set brand = _GET.brand %}
+    {% if not brand %}
+        {% set brand = 'renault' %}
+    {% endif %}
+    {% set model = _GET.model %}
+    {% if not model %}
+        {% set model = '' %}
+    {% endif %}
+
+    {% set DLModels = runSnippet('DocLister', {
+        id: 'catalog',
+        controller: 'catalog_filters',
+        filters: 'AND(tv:mark_id:=:' ~ brand ~ ';tv:model_id:like:'~ model ~')' ,
+        _filters: 'AND(tv:price:>:0;tv:region:=:' ~ plh.activeLangAlias ~ ')',
+        display: 8,
+        parents: baseSettings['catalog_number'],
+        depth: 2,
+        addWhereList: 'c.template=20',
+        orderBy: 'car-price',
+        order: 'RAND()',
+        tvSortType: 'SIGNED',
+        tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,gear,year, image,mark_id,model_id,colors_list,car_modifications',
+        ownerTPL: '@T_FILE:partials/wrap',
+        tpl:'@T_FILE:partials/catalogcard_model',
+        paginate:'pages',
+        TplNextP:'',
+        TplPrevP:'',
+        TplPage:'@CODE:<li class="page-item"><a class="page-link" href="[+link+]">[+num+]</a></li>',
+        TplCurrentPage:'@CODE: <li class="page-item active" aria-current="page"><span class="page-link">[+num+]</span></li>',
+        TplWrapPaginate:'@CODE:<ul class="pagination">[+wrap+]</ul>',
+        filter: 'filters',
+        filterRangeSeparator: ':',
+        filterValuesSeparator: '|',
+        filterDelimiter: '||',
+        __filterPriceId: 14,
+        filterList: '42,43,19',
+        _filterList: '19:checkbox,20:checkbox,42:checkbox,43:checkbox',
+        filterTpl: '@T_FILE:partials/filters/tpl',
+        filterOwnerRange: '@T_FILE:partials/filters/ownerRange',
+        filterTplRange: '@T_FILE:partials/filters/tplRange',
+        filterOwnerCheckbox: '@T_FILE:partials/filters/ownerCheckbox',
+        filterTplCheckbox: '@T_FILE:partials/filters/tplCheckbox',
+        tvSortType: 'UNSIGNED',
+        api: 0,
+        debug:0,
+        noneTPL:'@CODE: <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте немного изменить условия поиска</h1>
+                </div>
+            </div>
+        </div>',
+        showParent: 1,
+        prepare: "DocLister ModelsPrepare"
+    }) %}
+
+    {% set car_price = resource['car-price'] | round %}
+    {% set car_price_old = runSnippet('helpers', {caroldprice: car_price, action:'caroldprice'}) | round %}
+
+    {% set complectations = runSnippet('Complectations') %}
+
+    {% set price_format = car_price %}
+    {% if price_format is not empty and price_format != 0 %}
+        {% set price_format = price_format | number_format(0, "", " ") %}
+        {% set price_format = price_format ~ " ₽" %}
+    {% else %}
+        {% set price_format = "-" %}
+    {% endif %}
+
+    {% set price_old_format = car_price_old %}
+    {% if price_old_format is not empty and price_old_format != 0 %}
+        {% set price_old_format = price_old_format | number_format(0, "", " ") %}
+        {% set price_old_format = price_old_format ~ " ₽" %}
+    {% else %}
+        {% set price_old_format = "-" %}
+    {% endif %}
+
+    {% if complectations is empty %}
+        {#        {% set car_model = runSnippet("ModelsLister", { #}
+        {#            documents: resource.parent, #}
+        {#            idType: "documents", #}
+        {#            display: 1 #}
+        {#        }) | first %} #}
+
+        {#        {% if car_model['tv_car_modifications'] %} #}
+        {#            #}
+        {#        {% endif %} #}
+
+        {% set complectations = [
+            {
+                title_group: resource['modification'],
+                items: [
+                {
+                    title: resource['modification'],
+                    price: price_format,
+                    price_old: price_old_format,
+                    drive: resource['drive'],
+                    transmission: resource['gear']
+                }
+            ]
+            }
+        ] %}
+    {% endif %}
+
+    {% set car_photos_one = "https://s3.multiauto.site/new_cars/" ~ resource.configuration_id ~ ".jpg" %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    {% set modification = runSnippet('takemodels', {configuration_id: resource["configuration_id"] }) %}
+    {% set car_photos = resource.car_photos | json %}
+    {% set car_photos = car_photos.fieldValue %}
+
+    {% set credit = car_price / 72 %}
+
+    {# {% include('partials/crumbs.twig') %} #}
+
+    {# <div class="item-page2 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="photos mb-5">
+                    <div class="slider-for">
+                        {% if car_photos != NULL %}
+                        {% for image in car_photos %}
+                        <div class="item"><img src="{{image.image}}"></div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="item"><img src="{{car_photos_one}}"></div>
+                        {% endif %}
+                        <div class="item"><img src="{{car_photos}}"></div>
+                    </div>
+                    <div class="slider-nav">
+                {% if car_photos and count(car_photos)>0 %}
+                {% for image in car_photos  %}
+                <div class="item"><img src="{{image.image}}"></div>
+                {% endfor %}
+                {% else %}
+                <div class="item"><img src="{{car_photos_one}}"></div>
+                {% endif %}
+                <div class="item"><img src="{{car_photos_one}}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="info p-4 mb-5">
+                    <div class="name mb-2">
+                        {{resource.pagetitle}}
+                    </div>
+                    <div class="top-text mb-4">
+                        <span class="d-inline-block py-1 px-2"><i></i> В наличии</span>
+                    </div>
+                    <div class="price mb-4">
+                        {{resource["car-price"]}}₽
+                    </div>
+                    <input type="checkbox" class="checkbox" id="option1">
+                    <label for="option1" class="mb-3">
+                        <div><img src="../templates/major/img/option3.svg"></div>
+                        <div>
+                            Trade-in
+                            <a data-fancybox="" data-src="#popupCredNew" href="javascript:;" class="d-block mt-2">Оценить автомобиль</a>
+                        </div>
+                        <div class="discount position-absolute">-60 000₽</div>
+                    </label>
+                    <input type="checkbox" class="checkbox" id="option2">
+                    <label for="option2" class="mb-3">
+                        <div><img src="../templates/major/img/option4.svg"></div>
+                        <div>
+                            Кредит
+                            <a data-fancybox="popup2" data-src="#popupcred" href="javascript:;" class="d-block mt-2">Рассчитать кредит</a>
+                        </div>
+                        <div class="discount position-absolute">-60 000₽</div>
+                    </label>
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-danger w-100" data-fancybox="" data-src="#popupCredNew">Заказать звонок</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-danger w-100" data-fancybox="" data-src="#popupcred">Калькулятор кредита</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> #}
+
+    {% include '/partials/crumbs.twig' %}
+
+    <div class="item-page pb-3 mt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="photo mb-sm-5 mb-4">
+                        <div class="slider-for">
+                            {% if car_photos is empty %}
+                                <img src="{{ car_photos_one }}" style="border-radius: 18px;">
+                            {% else %}
+                                {% for image in car_photos %}
+                                    <div class="item"><img src="{{ image.image }}" style="border-radius: 18px;"></div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        {# <div class="slider-nav" id="photosBlock">
+                            {% if car_photos is empty %}
+                                <img src="{{ car_photos_one }}">
+                            {% else %}
+                                {% for image in car_photos %}
+                                    <div class="item"><img src="{{ image.image }}"></div>
+                                {% endfor %}
+                            {% endif %}
+                        </div> #}
+
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <h1 class="mb-3">{{ resource.pagetitle }}{% if resource.year is not empty %}-{{ resource.year }}г{% endif %}</h1>
+                    <div class="price mb-3">
+                        {% if car_price %}
+                            {# <span class="new mr-2">{{ resource["car-price"] }}₽</span> #}
+                            <span class="new mr-2">{{ car_price|number_format(0, '.', '&nbsp;')|raw }}₽</span>
+                        {% endif %}
+
+                        {% if car_price_old %}
+                            <span class="old">{{ car_price_old | number_format(0, '.', ' ') }}₽</span>
+                        {% endif %}
+                    </div>
+                    <div class="credit mb-4">
+                        В кредит от {{ credit | default(0) | number_format(0, '.', ' ') }} ₽/мес <span
+                                class="d-inline-block py-2 px-3 ml-sm-3">Ставка от {% if baseSettings.credit_rate is empty %}
+    4.9
+{% else %}
+    {{ baseSettings.credit_rate }}
+                            {% endif %}%</span>
+                    </div>
+{#                    <ul class="list-unstyled mb-3">#}
+{#                        <li class="text-muted2 scroll-btn" data-target="photosBlock"><span>Фото</span></li>#}
+{#                        <li class="text-muted2 scroll-btn" data-target="configsAndPricesBlock">#}
+{#                            <span>Комплектации и цены</span></li>#}
+{#                        <li class="text-muted2 scroll-btn" data-target="discountsAndPromotionsBlock"><span>Скидки и акции</span>#}
+{#                        </li>#}
+{#                        <li class="text-muted2 scroll-btn" data-target="creditblock"><span>Расчет кредита</span></li>#}
+{#                        <li class="text-muted2 scroll-btn" data-target="specialOffersBlock"><span>Спецпредложения</span>#}
+{#                        </li>#}
+{#                    </ul>#}
+
+                    <div class="row align-items-center mt-3 justify-content-between mb-4">
+                        <div class="col-lg-4">
+                            <ul class="car-specs-list">
+                                {% if resource['engine_power'] %}
+                                    <li>
+                                        <img src="/templates/major/images/engine-gray.svg" alt="">
+                                        {{ resource['engine_power'] }} л.с.
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['fuel_consumption'] %}
+                                    <li>
+                                        <img src="/templates/major/images/road-gray.svg" alt="">
+                                        {{ resource['fuel_consumption'] }} л/100 км
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['maximum_speed'] %}
+                                    <li>
+                                        <img src="/templates/major/images/speedo-meter-gray.svg" alt="">
+                                        {{ resource['maximum_speed'] }} км/ч
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['acceleration'] %}
+                                    <li>
+                                        <img src="/templates/major/images/timer-gray.svg" alt="">
+                                        {{ resource['acceleration'] }} сек.
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="col-lg-8">
+                            <ul class="slider-car__specs">
+                                {% if resource['car_color'] %}
+                                    <li>
+                                        <span class="car-specs__name">цвет</span>
+                                        <span class="car-specs__value">{{ resource['car_color'] }}</span>
+                                    </li>
+                                {% endif %}
+
+                                <li>
+                                    <span class="car-specs__name">статус</span>
+                                    <span class="car-specs__value">В наличии</span>
+
+                                </li>
+
+                                {% if resource['modification'] %}
+                                    <li>
+                                        <span class="car-specs__name">модификация</span>
+                                        <span class="car-specs__value">{{ resource['modification'] }}</span>
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['complectation'] %}
+                                    <li>
+                                        <span class="car-specs__name">комплектация</span>
+                                        <span class="car-specs__value">{{ resource['complectation'] }}</span>
+                                    </li>
+                                {% endif %}
+
+                                {% if resource['guarantee'] %}
+                                    <li>
+                                        <span class="car-specs__name">гарантия</span>
+                                        <span class="car-specs__value">{{ resource['guarantee'] }}</span>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="buttons row mb-2">
+                        <div class="col-12">
+                            {# <button class="w-100 mb-3 color1" data-fancybox="" data-src="#popupBronNew">Забронировать</button> #}
+                            <button class="w-100 mb-3 color1" type="button" onclick="openPopupForm(this)"
+                                    data-title="{{ resource.pagetitle }}"
+                                    data-image="{{ car_photos[0].image }}"
+                                    data-price="{{ car_price|number_format(0, '.', '&nbsp;')|raw }}"
+                                    data-engine-volume="{{ resource.year | default("-") }}"
+                                    data-gear="{{ resource.engine_type | default("-") }}"
+                                    data-drive="{{ resource.drive | default("-") }}"
+                                    data-info="{{ resource.modification | default("-") }}"
+                                    data-kred-car-price="{{ resource.car_monthly_payment | default(0) }}">
+                                Забронировать
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="w-100 color2 scroll-btn" data-target="creditblock">Рассчитать кредит</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="w-100 color3" data-fancybox="" data-src="#popupCredNew">Предложить обмен
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-5">
+                    <h3 class="mb-5 mt-3" style="font-weight: 600;">Фото</h3>
+                    <div class="slider-nav" id="photosBlock">
+                        {% if car_photos is empty %}
+                            <img src="{{ car_photos_one }}">
+                        {% else %}
+                            {% for image in car_photos %}
+                                <div class="item"><img src="{{ image.image }}"></div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-12" id="configsAndPricesBlock">
+                    {% if complectations is not empty %}
+                        <div class="configurations mb-5">
+                            <h2 class="mb-4">Доступные комплектации</h2>
+                            {% for complectation in complectations %}
+                                <div class="mb-3">
+{#                                    <h5 class="font-weight-bold mb-2">{{ complectation['title_group'] }}</h5>#}
+                                    {% for item in complectation['items'] %}
+                                        <div class="card mb-2">
+                                            <div class="card-header">{{ item['title'] }}</div>
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <th>Наименование</th>
+                                                    <th>Цена</th>
+                                                    <th>Старая цена</th>
+                                                    <th>Привод</th>
+                                                    <th>Коробка передач</th>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>{{ item['title'] }}</td>
+                                                        <td>{{ item['price'] | default("-") }}</td>
+                                                        <td>{{ item['price_old'] | default("-") }}</td>
+                                                        <td>{{ item['drive'] | default("-") }}</td>
+                                                        <td>{{ item['transmission'] | default("-") }}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                {% if item['description'] is not empty %}
+                                                    <div class="font-weight-bold">Описание</div>
+                                                    <div>{{ item['description'] }}</div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-form-block mb-5">
+        <div class="container">
+            {# {{ runSnippet('Form', {
+                formid: 'FormCallback',
+                path: '/templates/major/partials/forms/feedback/',
+                extension: 'twig'
+            }) | raw }} #}
+        </div>
+    </div>
+    <div class="item-page pb-5">
+        <div class="container">
+            <div class="modifications-block pb-2">
+                {% for item in modification %}
+                    {% if item["group-name"] is not empty %}
+                        {% if item['offers-price-to'] is empty %}
+                            {% set offer_price_to = 0 %}
+                        {% endif %}
+
+                        {% if item['offers-price-from'] is empty %}
+                            {% set offer_price_from = 0 %}
+                        {% endif %}
+
+                        <h3 class="mb-3">{{ item["group-name"] }} {{ item["Объем двигателя"] }}
+                            см³, {{ item["Тип двигателя"] }}, КП {{ item["Трансмиссия"] }}, {{ item["Привод"] }}
+                            привод</h3>
+                        <div class="item mb-2">
+                            <div class="item-name flex">
+                                <div class="name" type="button" data-toggle="collapse"
+                                     data-target="#id_{{ item["complectation-id"] }}" aria-expanded="false"
+                                     aria-controls="id_{{ item["complectation-id"] }}"
+                                     style="word-break: break-word;     max-width: 170px;">
+                                    {{ item["group-name"] }}
+                                </div>
+                                <div class="price">
+                        <span class="old">
+                            {{ offer_price_to|number_format(0, '.', ' ') }} ₽
+                        </span>
+                                    <span class="new">
+                            {{ offer_price_from|number_format(0, '.', ' ') }} ₽
+                        </span>
+                                </div>
+                                <div class="buttons">
+                                    <button class="scroll-btn" data-target="creditblock">В кредит
+                                        за {{ (offer_price_from / 82) | default(0) | number_format(0, '.', ' ') | round }}
+                                         ₽/мес.
+                                    </button>
+                                    <button data-fancybox="" data-src="#popupTradeIn">Trade-in</button>
+                                    <button data-fancybox="" data-src="#popupBronNew">Забронировать</button>
+                                </div>
+                            </div>
+                            <div class="item-content collapse" id="id_{{ item['complectation-id'] }}">
+                                <select class="select" id="select">
+                                    <option value="val-1">Характеристики</option>
+                                    <option value="val-2">Комплектация</option>
+                                </select>
+                                <div class="tabs">
+                                    <ul class="tabNavigation" data-sel='[".select"]'>
+                                        <li><a href="#t1_{{ item["complectation-id"] }}" class="js-val-1-btn active"
+                                               data-val='["val-1"]'>Характеристики</a></li>
+                                        <li><a href="#t2_{{ item["complectation-id"] }}" class="js-val-2-btn"
+                                               data-val='["val-2"]'>Комплектация</a></li>
+                                    </ul>
+                                    <div id="t1_{{ item['complectation-id'] }}" class="tab-content active">
+                                        {% set displayItems = {} %}
+                                        {% for key, value in item %}
+                                            {% if key not in ['complectation-id', 'offers-price-from', 'offers-price-to', 'group-name', 'configuration_id', 'ID комплектации'] and value|length > 0 %}
+                                                {% set displayItems = displayItems|merge({(key): value}) %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% set halfway = (displayItems|length / 2) | default(0) | number_format(0, '.', ' ') | round %}
+                                        {% set firstHalf = displayItems|slice(0, halfway) %}
+                                        {% set secondHalf = displayItems|slice(halfway) %}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <table>
+                                                    {% for key, value in firstHalf %}
+                                                        <tr>
+                                                            <td>{{ key }}</td>
+                                                            <td>{{ value }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <table>
+                                                    {% for key, value in secondHalf %}
+                                                        <tr>
+                                                            <td>{{ key }}</td>
+                                                            <td>{{ value }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% set displayItems = [] %} <!-- Очищаем displayItems здесь -->
+
+                                    {% set options = runSnippet ('takeoptions', { complectation_id: item["complectation-id"], }) %}
+                                    {% for item in options %}
+                                        {% for key, value in item %}
+                                            {% if key not in ['complectation_id (идентификатор комплектации)'] and value|length > 0 %}
+                                                {% set row = {'key': key, 'value': value} %}
+                                                {% set displayItems = displayItems|merge([row]) %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {% set halfway = (displayItems|length / 2)| default(0) | number_format(0, '.', ' ') | round %}
+                                    {% set firstHalf = displayItems|slice(0, halfway) %}
+                                    {% set secondHalf = displayItems|slice(halfway) %}
+                                    <div id="t2_{{ item['complectation-id'] }}" class="tab-content">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <table>
+                                                    {% for row in firstHalf %}
+                                                        <tr>
+                                                            <td>{{ row.key }}</td>
+                                                            {% if row.value == 1 %}
+                                                                <td>Есть</td>
+                                                            {% elseif row.value > 1 %}
+                                                                <td>{{ row.value }} руб.</td>
+                                                            {% else %}
+                                                                <td>{{ row.value }}</td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <table>
+                                                    {% for row in secondHalf %}
+                                                        <tr>
+                                                            <td>{{ row.key }}</td>
+                                                            {% if row.value == 1 %}
+                                                                <td>Есть</td>
+                                                            {% elseif row.value > 1 %}
+                                                                <td>{{ row.value }} руб.</td>
+                                                            {% else %}
+                                                                <td>{{ row.value }}</td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {# <div class="main-info pb-3">
+            <div class="block-name mb-4">
+                Основная информация
+            </div>
+            <div class="item py-3 px-4">
+                <div><img src="../templates/major/img/item-icon7.svg"></div>
+                <div>
+                    <span class="d-block">Цвет</span>
+                    Черный сапфир металлик
+                </div>
+            </div>
+            <div class="item py-3 px-4">
+                <div> </div>
+                <div>
+                    <span class="d-block">Привод</span>
+                    Полный
+                </div>
+            </div>
+            <div class="item py-3 px-4">
+                <div><img src="../templates/major/img/item-icon9.svg"></div>
+                <div>
+                    <span class="d-block">Кузов</span>
+                    Седан
+                </div>
+            </div>
+            <div class="item py-3 px-4">
+                <div><img src="../templates/major/img/item-icon10.svg"></div>
+                <div>
+                    <span class="d-block">Салон</span>
+                    Центральная часть сидений черная с синими и серыми элементами, боковины сидений черные, черная панель приборов, черное ковровое покрытие, серый потолок
+                </div>
+            </div>
+            <div class="item py-3 px-4">
+                <div><img src="../templates/major/img/item-icon11.svg"></div>
+                <div>
+                    <span class="d-block">Двигатель</span>
+                    Бензин
+                </div>
+            </div>
+            <div class="item py-3 px-4">
+                <div><img src="../templates/major/img/item-icon12.svg"></div>
+                <div>
+                    <span class="d-block">Коробка</span>
+                    АКПП
+                </div>
+            </div>
+        </div> #}
+        </div>
+    </div>
+    <div id="discountsAndPromotionsBlock">
+        {% include '/partials/actions.twig' %}
+    </div>
+    <div class="container py-5" id="creditblock">
+        <div class="row">
+            {{ runSnippet('Form', {
+                formid: 'FormCredit',
+                path: '/templates/major/partials/forms/credit/',
+                extension: 'twig'
+            }) | raw }}
+        </div>
+    </div>
+    <div class="index-catalog-block2 pb-5" id="specialOffersBlock">
+        <div class="container">
+            <h2 class="h2 mb-5">Специальное предложение</h2>
+            <div class="list" id="catalog">
+                {{ DLModels |raw }}
+            </div>
+        </div>
+    </div>
+    <div class="index-catalog-block2 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="item mb-4 position-relative">
+                        <img src="../templates/major/images/back1.jpg" class="w-100 d-none d-sm-block"
+                             style="border-radius:8px;">
+                        <img src="../templates/major/images/back3.jpg" class="w-100 d-none d-block d-sm-none"
+                             style="border-radius:8px;">
+                        <div class="name_block position-absolute text-light w-100 p-3">
+                            Выкупим Ваш <br>автомобиль
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="item mb-4 position-relative">
+                        <img src="../templates/major/images/back2.jpg" class="w-100 d-none d-sm-block"
+                             style="border-radius:8px;">
+                        <img src="../templates/major/images/back4.jpg" class="w-100 d-block d-sm-none"
+                             style="border-radius:8px;">
+                        <div class="name_block position-absolute text-light w-100 p-3">
+                            Подберем автомобиль<br> под Ваш запрос
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include '/partials/not-found-block.twig' %}
+    <script>
+      function scrollToCreditForm () {
+        const creditForm = document.getElementById('creditform')
+        creditForm.scrollIntoView({ behavior: 'smooth' })
+      }
+
+    </script>
+{% endblock %}
+{% block SCRIPTS %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        let tabs = document.querySelectorAll('.tabNavigation li a')
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', function (e) {
+            e.preventDefault()
+
+            // Убираем активный класс со всех табов
+            tabs.forEach(function (innerTab) {
+              innerTab.classList.remove('active')
+            })
+
+            // Добавляем активный класс к кликнутому табу
+            tab.classList.add('active')
+
+            let target = tab.getAttribute('href')
+            let tabContents = document.querySelectorAll('.tab-content')
+
+            // Скрываем все содержимое табов
+            tabContents.forEach(function (tabContent) {
+              tabContent.style.display = 'none'
+            })
+
+            // Показываем содержимое активного таба
+            document.querySelector(target).style.display = 'block'
+          })
+        })
+      })
+
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        function updateResults () {
+          const creditAmount = $('#slider-range-max3').slider('value')
+          const downPayment = $('#slider-range-max').slider('value')
+          const term = $('#slider-range-max2').slider('value')
+          const creditRate = 0.1
+          const monthlyPayment = (creditAmount - downPayment) * (creditRate / 12) / (1 - Math.pow(1 + creditRate / 12, -term))
+
+          $('.tbl1 tr:nth-child(1) td:nth-child(2)').text(creditAmount.toLocaleString() + ' ₽')
+          $('.tbl1 tr:nth-child(2) td:nth-child(2)').text(downPayment.toLocaleString() + ' ₽')
+          $('.tbl1 tr:nth-child(3) td:nth-child(2)').text(term + ' месяцев')
+          $('.tbl2 tr:nth-child(1) td:nth-child(2)').text(Math.round(monthlyPayment).toLocaleString() + ' ₽/мес.')
+        }
+
+        function updateDownPaymentSlider (creditAmount) {
+          const minDownPayment = 0.1 * creditAmount
+          const maxDownPayment = 0.9 * creditAmount
+          let currentDownPayment = $('#slider-range-max').slider('value')
+
+          if (currentDownPayment < minDownPayment) {
+            currentDownPayment = minDownPayment
+          } else if (currentDownPayment > maxDownPayment) {
+            currentDownPayment = maxDownPayment
+          }
+
+          $('#slider-range-max').slider('option', 'min', minDownPayment)
+          $('#slider-range-max').slider('option', 'max', maxDownPayment)
+          $('#slider-range-max').slider('value', currentDownPayment)
+
+          $('#amount').val(currentDownPayment.toLocaleString() + ' ₽')
+        }
+
+        $('#slider-range-max3').slider({
+          range: 'max',
+          min: 100000,
+          max: 1000000,
+          value: 500000,
+          slide: function (event, ui) {
+            $('#amount3').val(ui.value.toLocaleString() + ' ₽')
+            updateDownPaymentSlider(ui.value)
+            updateResults()
+          }
+        })
+
+        $('#slider-range-max').slider({
+          range: 'max',
+          min: 10000,
+          max: 900000,
+          value: 250000,
+          slide: function (event, ui) {
+            $('#amount').val(ui.value + ' ₽')
+            updateResults()
+          }
+        })
+
+        $('#slider-range-max2').slider({
+          range: 'max',
+          min: 12,
+          max: 60,
+          value: 12,
+          slide: function (event, ui) {
+            $('#amount2').val(ui.value + (ui.value > 12 && ui.value < 60 ? ' месяца' : ' месяцев'))
+            updateResults()
+          }
+        })
+
+        updateResults()
+      })
+
+    </script>
+    <script>
+      //   const buttons = document.querySelectorAll('.scroll-btn')
+
+      //   buttons.forEach(button => {
+      //     button.addEventListener('click', function () {
+      //       const creditBlock = document.getElementById('creditblock')
+      //       creditBlock.scrollIntoView({ behavior: 'smooth' })
+      //     })
+      //   })
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.scroll-btn')
+
+        buttons.forEach(button => {
+          button.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-target')
+            const targetBlock = document.getElementById(targetId)
+            if (targetBlock) {
+              targetBlock.scrollIntoView({ behavior: 'smooth' })
+            }
+          })
+        })
+      })
+
+      $('.index-catalog-block2 .list').slick({
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 992,
+            settings: {
+              slidesToShow: 3
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 2
+            }
+          },
+          {
+            breakpoint: 576,
+            settings: {
+              slidesToShow: 1,
+              autoplay: true
+            }
+          }
+        ]
+      })
+    </script>
+    <style>
+
+        .list-unstyled {
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .list-unstyled li {
+            padding: 10px 0;
+            font-size: 1rem;
+            background: url('/templates/major/img/Arrow1.svg') no-repeat left;
+            /* transition: filter 0.3s ease; */
+        }
+
+        .list-unstyled li:hover {
+            background: url('/templates/major/img/Arrow1color.svg') no-repeat left;
+            color: #007bff;
+            /* filter: invert(27%) sepia(95%) saturate(3390%) hue-rotate(202deg) brightness(106%) contrast(97%); */
+            /* filter: invert(27%) sepia(96%) saturate(7481%) hue-rotate(189deg) brightness(103%) contrast(109%); */
+        }
+
+        /* .list-unstyled .text-muted2 a:hover {
+               color: #007bff;
+               text-decoration: none;
+           }
+         .list-unstyled li a:hover {
+               text-decoration: underline;
+           } */
+        .list-unstyled .text-muted2 {
+            color: #181818;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .list-unstyled .text-muted2 span {
+            padding-left: 40px;
+
+        }
+
+        .slick-dots {
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+        }
+
+
+        .slick-dots li {
+            position: relative;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            text-indent: -9999px;
+            cursor: pointer;
+            border-radius: 50%;
+            background-color: #bbb;
+        }
+
+
+        .slick-dots li.slick-active {
+            background-color: #3B80CC;
+            width: 17px;
+            height: 17px;
+            border: solid 4px #bbb;
+            border-radius: 50%;
+        }
+
+        .slick-dots li:hover {
+            background-color: #555;
+        }
+
+        .slider-nav .slick-prev,
+        .slider-nav .slick-next {
+            position: absolute;
+            padding: 0;
+            font-size: 0;
+            z-index: 2;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            top: -73px;
+        }
+
+        .slider-nav .slick-next {
+            right: 17px;
+            background: #f4f4f4 url('/templates/major/img/next.svg') no-repeat center;
+        }
+
+        .slider-nav .slick-next:hover {
+            right: 17px;
+            background: #f4f4f4 url('/templates/major/img/next-hover.svg') no-repeat center;
+        }
+
+        .slider-nav .slick-prev {
+            right: 70px;
+            background: #f4f4f4 url('/templates/major/img/prev.svg') no-repeat center;
+        }
+
+        .slider-nav .slick-prev:hover {
+            right: 70px;
+            background: #f4f4f4 url('/templates/major/img/prev-hover.svg') no-repeat center;
+        }
+
+        .slider-for .slick-slide img {
+            display: block;
+            height: 510px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 575px) {
+            .slider-for .slick-slide img {
+                display: block;
+                height: auto;
+                object-fit: contain;
+            }
+        }
+    </style>
+{% endblock %}
