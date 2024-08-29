@@ -1,0 +1,508 @@
+{% set menu = runSnippet('DLMenu', {
+parents: baseSettings["id"],
+tvList: 'image',
+rowTpl: '@CODE:<li class="d-inline-block"><a href="[+url+]" class="text-light">[+pagetitle+]</a></li>',
+outerTpl: '@CODE:<ul class="pt-4 mt-1 mb-4">
+    [+wrap+]</ul>'}) %}
+
+<footer class="footer py-4 text-light">
+    <div class="container">
+        <div class="flex">
+            <div class="logo mb-4">
+                {% if baseSettings["logo"] %}
+                    <a style="background: url({{ baseSettings["logo"] }}) no-repeat;
+                            background-size: cover; background-position: center;
+                            " href="/" class="d-inline-block"></a>
+                {% else %}
+                    {# <div class="text-logo" style="width: 200px;
+                height: 48px;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 24px;
+                display: flex;
+                align-items: center;
+                text-transform: uppercase;
+                justify-content: center;
+                color: #D12D1E;">{{ baseSettings.pagetitle }}
+                    </div> #}
+                    <a href="/"><div class="text-logo">{{ baseSettings.logo_text | raw }}</div></a>
+                {% endif %}
+            </div>
+            <div class="info_footer mt-2">
+                <div class="mb-1">
+                    {{baseSettings.salon_location}}
+                </div>
+                <div class="mb-1" style="color: #667B88;font-weight: 600;">
+                    с 9.00 до 21.00
+                </div>
+                <div class="mb-1">
+                {{ runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1', class:"phone mt-3 pt-2"}) | raw}}
+                </div>
+            </div>
+            {# <ul class="pt-4 mt-1 mb-4">
+                <li class="d-inline-block"><a href="#" class="text-light">Автомобили в продаже</a></li>
+                <li class="d-inline-block"><a href="#" class="text-light">Услуги</a></li>
+                <li class="d-inline-block"><a href="#" class="text-light">О компании</a></li>
+                <li class="d-inline-block"><a href="#" class="text-light">Контакты</a></li>
+            </ul> #}
+            {{menu|raw}}
+        </div>
+        {# <div class="line mb-3"></div> #}
+        <div class="info_footer_bottom flex">
+            <div class="copy mt-3 pt-2">
+                {{baseSettings.footer |raw}}
+            </div>
+             
+            {# {{ runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1', class:"phone mt-3 pt-2"}) | raw}} #}
+            <div class="info_footer_bottom_elem">
+                © {{baseSettings["pagetitle"]}},2023. Все права защищены
+            </div>
+            <div class="info_footer_bottom_elem">
+                 Политика конфиденциальности
+            </div>
+        </div>
+    </div>
+</footer>
+{#
+<footer class="footer position-relative py-4">
+    <a href="#top" class="totop position-absolute"></a>
+    <div class="container d-flex">
+        <div class="logo">
+            <a href="/"><img src="{{  runSnippet('phpthumb', {input: baseSettings["logo"], options: 'w=120,h=50,far=C,f=png,q=1'}) }}"> <span class="align-middle pl-2 ml-2 text-light">{{city}}</span></a>
+        </div>
+        <ul class="pt-2">
+            <li class="d-inline-block"><a href="/avtomobili-s-probegom" class="text-light">Каталог</a></li>
+            <li class="d-inline-block"><a href="/akcii2" class="text-light">Акции</a></li>
+            <li class="d-inline-block"><a href="/kontakty" class="text-light">Контакты</a></li>
+        </ul>
+        <a href="#" class="phone pt-2 text-light">{{ runSnippet('formatPhone', {number: baseSettings["salon-phone"], format: '+7 (xxx) xxx-xx-xx', link: '1', class: 'phone'}) | raw}} </a>
+    </div>
+</footer>
+<div class="copyright-block text-center py-2">
+    <div class="container">
+        © {{baseSettings["pagetitle"]}}, 2023. Все права защищены
+    </div>
+</div>#}
+<div class="popup" id="popupcred" style="display: none; width: 100%; max-width: 965px;">
+    {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/major/partials/forms/feedback_modal/',
+        extension: 'twig'
+        }) | raw }}
+
+</div>
+
+<div class="popup" id="popup" style="display: none; width: 100%; max-width: 500px;">
+    {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/major/partials/forms/feedback/',
+        extension: 'twig'
+        }) | raw }}
+</div>
+<div class="popup" id="popupBronNew" style="display: none; width: 100%; max-width: 500px;">
+    {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/major/partials/forms/bronNew/',
+        extension: 'twig'
+        }) | raw }}
+</div>
+<div class="popup" id="popupCredNew" style="display: none; width: 100%; max-width: 500px;">
+    {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/major/partials/forms/creditNew/',
+        extension: 'twig'
+        }) | raw }}
+</div>
+<div class="popup" id="popupTradeIn" style="display: none; width: 100%; max-width: 580px;">
+    {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/major/partials/forms/newTradeIn/',
+        extension: 'twig'
+        }) | raw }}
+</div>
+<div class="popup" id="popupcred2" style="display: none; width: 100%; max-width: 580px;">
+        
+            {{ runSnippet('Form', {
+            formid: 'FormCallback',
+            path: '/templates/major/partials/forms/credNew/',
+            extension: 'twig'
+            }) | raw }}
+</div>
+{# <div class="popup" id="popupCredNew2" style="display: none; width: 100%; max-width: 1165px;">
+    <div class="modal-body">
+       <div class="application-form-car">
+      
+            <div class="form-container row">
+                <div class="form-header-mob mb-1">
+                    <h2>Оставить заявку на</h2>
+                    <h1 id="modal-car-title">Skoda Octavia 2018 год, 2.7, АТ</h1>
+                </div>
+                <div class="col-md-5 col-12">
+                    <img src ="https://s2.server.multiauto.site/blurred/1117192101-026bc551/0ed43c2b5464e62d80caa73022504186.webp" alt="Volkswagen Multivan 2022" id="car-image" style="border-radius: 10px;">
+                </div>
+                <div class="col-md-7 col-12">
+                    <div class="form-header">
+                        <h2>Оставить заявку на</h2>
+                        <h1 id="modal-car-title">Skoda Octavia 2018 год, 2.7, АТ</h1>
+                    </div>
+                    <div class="price-block mt-3">
+                        <div class="price-f mr-2">
+                            <span>1 000 000 ₽</span>
+                        </div>
+                        <div class="credit-info">
+                            <span>В кредит от 22 800 ₽/мес</span>
+                            <span class="stavka">Ставка от 4,9%</span>
+                        </div>
+                    </div>
+                    <div class="details row mt-2">
+                        <div class="row ml-1 mt-1 col-md-4 col-6">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop1.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p class="text-left conf-text">Привод:</p>
+                                <p id="modal-engine-volume" class="text-left conf-data pt-1">Передний</p>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-1 col-md-4 col-6 p-0">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop2.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p id="modal-gear" class="text-left conf-text">Мощность:</p>
+                                <p id="modal-engine-volume" class="text-left conf-data pt-1">2,7/150 л.с./145 Нм</p>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-1 col-md-4 col-6">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop3.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p id="modal-engine-power" class="text-left conf-text">КПП:</p>
+                                <p id="modal-engine-volume" class="text-left conf-data pt-1">Автомат</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/major/partials/forms/creditPrewCar/',
+        extension: 'twig'
+        }) | raw }}
+</div> #}
+
+<div class="popup" id="popupCredNew2" style="display: none; width: 100%; max-width: 1165px;">
+    <div class="modal-body">
+        <div class="application-form-car">
+            <div class="form-container row">
+                <div class="form-header-mob mb-1">
+                    <h2>Оставить заявку на</h2>
+                    <h1 id="modal-car-title">Skoda Octavia 2018 год, 2.7, АТ</h1>
+                </div>
+                <div class="col-md-5 col-12">
+                    <img src="" alt="" id="car-image" style="border-radius: 10px;">
+                </div>
+                <div class="col-md-7 col-12">
+                    <div class="form-header">
+                        <h2>Оставить заявку на</h2>
+                        <h1 id="modal-car-titleDecs">Skoda Octavia 2018 год, 2.7, АТ</h1>
+                    </div>
+                    <div class="price-block mt-3">
+                        <div class="price-f mr-2">
+                            <span id="car-price"></span>
+                        </div>
+                        <div class="credit-info">
+                            <span id="credit-price">В кредит от 1 ₽/мес</span>
+                            <span class="stavka">Ставка от 4,9%</span>
+                        </div>
+                    </div>
+                    <div class="details row mt-2">
+                        <div class="row ml-1 mt-1 col-xl-4 col-6">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop1.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p class="text-left conf-text">Привод:</p>
+                                <p id="modal-drive" class="text-left conf-data pt-1">Передний</p>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-1 col-xl-4 col-6 p-0">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop2.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p class="text-left conf-text">Мощность:</p>
+                                <p id="modal-data-info" class="text-left conf-data pt-1">150 л.с.</p>
+                            </div>
+                        </div>
+                        <div class="row ml-1 mt-1 col-xl-4 col-6">
+                            <div class="d-flex align-items-start justify-content-center">
+                                <img src="/templates/major/img/imgpop3.svg" alt="">
+                            </div>
+                            <div class="p-0 pl-1 pt-1">
+                                <p class="text-left conf-text">КПП:</p>
+                                <p id="modal-gear" class="text-left conf-data pt-1">Автомат</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/major/partials/forms/creditPrewCar/',
+        extension: 'twig'
+        }) | raw }}
+</div>
+
+
+ <script type="text/javascript">
+// $(document).on('change', '.calc-input', function() {
+//   var loanAmount = parseFloat($('#loan-amount').val());
+//   var initialPaymentPercent = parseFloat($('#initial-payment-percent').val());
+//   var loanTerm = parseFloat($('#loan-term').val());
+//   var initialPayment = loanAmount * initialPaymentPercent / 100;
+//   var monthlyPayment = (loanAmount - initialPayment) / loanTerm;
+//   console.log('loanAmount: ', loanAmount);
+//   console.log('initialPaymentPercent: ', initialPaymentPercent);
+//   console.log('loanTerm: ', loanTerm);
+//   console.log('initialPayment: ', initialPayment);
+//   console.log('monthlyPayment: ', monthlyPayment);
+//   $('#initial-payment-amount').val(initialPayment.toFixed(2));
+//   $('#monthly-payment-amount').text(monthlyPayment.toFixed(2));
+// });
+
+function openPopupForm(button) {
+    // Получаем данные из атрибутов кнопки
+    var title = button.getAttribute('data-title');
+    var image = button.getAttribute('data-image');
+    var price = button.getAttribute('data-price');
+    var engineVolume = button.getAttribute('data-engine-volume');
+    var gear = button.getAttribute('data-gear');
+    var drive = button.getAttribute('data-drive');
+    var info = button.getAttribute('data-info');
+    var cred = button.getAttribute('data-kred-car-price');
+    
+   
+
+    // Находим элементы формы и заполняем их данными
+    document.getElementById('modal-car-title').textContent = title + ',' + engineVolume;
+    document.getElementById('modal-car-titleDecs').textContent = title + ',' + engineVolume;
+    document.getElementById('car-image').src = image;
+    document.getElementById('car-price').textContent = price + ' ₽';
+    document.getElementById('credit-price').textContent = 'В кредит от '+ cred + ' ₽/мес';
+    // document.getElementById('modal-engine-volume').textContent = engineVolume;
+    document.getElementById('modal-gear').textContent = gear;
+    document.getElementById('modal-drive').textContent = drive;
+    document.getElementById('modal-data-info').textContent = info;
+
+    // Отображаем попап
+    $.fancybox.open({
+        src: '#popupCredNew2',
+        type: 'inline'
+    });
+}
+
+ </script>
+
+   <style>
+.popup .modal-body .application-form-car {
+    padding: 2rem;
+}
+.popup .modal-body .application-form-car .form-header-mob{
+  display: none;
+}
+.popup .modal-body .application-form-car .form-header{
+  display: block;
+}
+.popup .modal-body .application-form-car .form-header h1{
+  font-size: 46px;
+  font-weight: 500;
+}
+.popup .modal-body .application-form-car .form-header h2{
+  font-size: 34px;
+  color: #98AEC3;
+  font-weight: 400;
+}
+.popup .modal-body .application-form-car .form-header-mob h1{
+  font-size: 30px;
+}
+.popup .modal-body .application-form-car .form-header-mob h2{
+  font-size: 30px;
+  color: #98AEC3;
+  font-weight: 500;
+}
+.popup .modal-body .application-form-car .price-block .price-f span{
+        font-size: 27px;
+        font-weight: 700;
+        line-height: 32.91px;
+        text-align: center;
+        color: #252638;
+}
+.popup .modal-body .application-form-car .credit-info {
+    display: flex;
+    flex-direction: row;
+}
+.popup .modal-body .application-form-car .credit-info .stavka{
+    padding: 8px;
+    border-radius: 8px;
+    background: #D02E25;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12.65px;
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0 15px;
+    margin-top: auto;
+    }
+    .popup .modal-body .application-form-car .credit-info span{
+    color: #98AEC3;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17.07px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin: 0 15px;
+}
+.popup .modal-body .application-form-car .details .row .conf-text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.07px;
+    text-align: left;
+    color: #98AEC3;
+}
+.popup .modal-body .application-form-car .details .row .conf-data {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17.07px;
+    text-align: left;
+    color: #35374E;
+}
+.popup .modal-body .application-form-car .price-block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.popup .bg.formPopCredNew .credit-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 34.13px;
+    text-align: left;
+    color: #F2F3F7;
+    margin-top: 0px;
+}
+.popup .bg.formPopCredNew .credit-cont {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.38px;
+    text-align: left;
+    color: #F2F3F7;
+}
+.popup .bg.formPopCredNew .application label{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17.07px;
+    text-align: left;
+    color: #BDBDBD;
+}
+.popup .bg.formPopCredNew .application input[type='text'] {
+    height: 51px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #E6E6E6;
+    background: #FFF;
+}
+.popup .bg.formPopCredNew button{
+    background: #3B80CC;
+        border: 1px solid #3B80CC;
+        height: 51px;
+}
+.popup .bg.formPopCredNew button:hover{
+    background: #D12D1E;
+    border: 1px solid #D12D1E;
+}
+.popup .bg.formPopCredNew .personal-text{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.20000000298023224px;
+    text-align: left;
+    color: #F2F3F7;
+}
+
+.popup .bg.formPopCredNew .personal-text a {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.20000000298023224px;
+    text-align: left; 
+    color: #3B80CC;
+}
+.popup .bg.formPopCredNew {
+    background: linear-gradient(#0F1723 0%, #25344B 100%);
+    border-radius: 0px 0px 6px;
+}
+
+@media (max-width: 1037px) {
+    .popup .modal-body .application-form-car .price-block {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+}
+@media (max-width: 760px) {
+.popup .modal-body .application-form-car .price-block .price-f span{
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 32.91px;
+    text-align: center;
+
+}
+  .popup .modal-body .application-form-car .form-header-mob{
+    display: block;
+  }
+  .popup .modal-body .application-form-car .form-header{
+    display: none;
+    }
+
+.popup .modal-body .application-form-car .credit-info span {
+    margin: 0;
+}
+
+}
+@media (max-width: 575px) {
+
+    .popup .modal-body .application-form-car .credit-info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.popup .modal-body .application-form-car .credit-info span {
+    margin: 0 0px;
+}
+.popup .modal-body .application-form-car .credit-info .stavka {
+
+    margin: 0 0px;
+    max-width: 61%;
+    margin-top: 6px;
+}
+.popup .modal-body .application-form-car {
+    padding: 5px;
+}
+.popup .bg.formPopCredNew .credit-title {
+    font-size: 26px;
+    margin-top: 20px;
+}
+.popup .bg.formPopCredNew .credit-cont {
+    font-size: 14px;
+}
+}
+   </style> 
+

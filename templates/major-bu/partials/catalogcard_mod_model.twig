@@ -1,0 +1,116 @@
+{% set configuration_id = runSnippet('DocLister', {
+    id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
+{% set photo = data['image_format'] %}
+
+{% set modifications = data['tv.car_modifications'] | json %}
+
+{% set price = data["tv.car-price"] %}
+{% if price is empty %}
+    {% set price = 0 %}
+    {% set mounth_pay = 0 %}
+{% else %}
+    {# {% set price = data["tv.car-price"] %} #}
+    {% set mounth_pay = data["tv.car-price"] / 82 %}
+    {% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
+{% endif %}
+
+{% set car = runSnippet("CarsLister", {
+    parents: data['id'],
+    orderBy: "car-price ASC",
+    display: 1,
+}) | first %}
+
+{% if price == 0 %}
+    {% set price = runSnippet("toInt", {value: car['price']}) | round %}
+{% endif %}
+
+{% set credit = ( (price / 84) * 0.7 ) | number_format(0, '.', ' ') %}
+
+{% set mnths = ['','января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'] %}
+{% set date_sale = "now" | date_modify("+2 day") %}
+
+{% set sale_to_day = date_sale | date('d') %}
+{% set sale_to_month = mnths[date_sale | date("n")] %}
+{% set sale_to = sale_to_day ~ " " ~ sale_to_month %}
+
+{% set complectation = modifications['Modification#0']['items']['ModificationItem#0']['value'] %}
+{% if complectation is empty %}
+    {% set complectation = car['tv_complectation'] %}
+{% endif %}
+
+{% set modification = modifications['Modification#0']['value'] %}
+{% if modification is empty %}
+    {% set modification = car['tv_modification'] %}
+{% endif %}
+
+{# { data | dump } #}
+{# <div class="item col-12 col-sm-3 position-relative mb-3 "><a href="{{ data['url'] }}"> #}
+<div class="item col-12 col-lg-3 col-sm-5 position-relative mb-3 "><a href="{{ data['url'] }}">
+        <span class="hit position-absolute py-1 px-3">HIT</span>
+        <div class="image model--image" style="background-image: url('{{ photo }}')"></div>
+        <div class="p-3">
+            <a href="{{ data.url }}"
+               class="name d-block mb-2 model--title">{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }} </a>
+            <div class="row data text-center">
+
+            </div>
+            <ul class="mb-3">
+                {% if complectation %}
+                    <li class="mb-1">- {{ complectation }}</li>
+                {% endif %}
+
+                {% if modification %}
+                    <li class="mb-1">- {{ modification }}</li>
+                {% endif %}
+
+                <li>- Скидка до: <strong>{{ sale_to }}</strong></li>
+            </ul>
+            <div class="price mb-3">
+                {% if data["tv.old-car-price"] %}
+                    <span class="old d-inline-block mb-1">{{ data["tv.old-car-price"] }} ₽</span>
+                {% endif %}
+
+                {% if price %}
+                    <div class="new">
+                        от {{ price|number_format(0, '.', '&nbsp;')|raw }} ₽
+                        {# {{ data["tv.car-price"] }} ₽ #}
+                    </div>
+                {% endif %}
+            </div>
+            <p class="mb-4 text-right"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
+            <div class="buttons">
+                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
+                    data-image="{{ photo }}"
+                    data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
+                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"
+                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"
+                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
+                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
+                    data-kred-car-price="{{ mounth_pay }}">
+                    В кредит
+                    от {% if baseSettings.credit_rate is empty %}
+                    4.9
+                    {% else %}
+                        {{ baseSettings.credit_rate }}
+                    {% endif %}%
+                </button>
+{#                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"#}
+{#                    data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"#}
+{#                    data-image="{{ photo }}"#}
+{#                    data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"#}
+{#                    data-engine-volume="{{ modifications['Modification#0']['items']['engine_volume']['value'] | default("-") }}"#}
+{#                    data-gear="{{ modifications['Modification#0']['items']['gear']['value'] | default("-") }}"#}
+{#                    data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"#}
+{#                    data-info="{{ modifications['Modification#0']['value'] | default("-") }}"#}
+{#                    data-kred-car-price="{{ mounth_pay }}">#}
+{#                    Забронировать#}
+{#                </button>#}
+                {# <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
+                <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button> #}
+
+{#                <button class="w-100" onclick="location.href='{{ data.url }}';">Подробнее</button>#}
+            </div>
+        </div>
+    </a>
+</div>

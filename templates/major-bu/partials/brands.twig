@@ -1,0 +1,30 @@
+{% set brands2 = runSnippet('DocLister', {
+    parents: baseSettings['catalog_number'],
+    depth: 0,
+    orderBy: 'menuindex',
+    order: 'ASC',
+    tvList: 'mark_image',
+    ownerTPL: '@CODE:[+dl.wrap+]',
+    tpl:'@CODE:
+    <a href="[+url+]" class="brand-item">
+        <div class="brand-logo" style="background-image: url(\'[+tv.mark_image+]\')"></div>
+        <span class="brand-title">[+pagetitle+]</span>
+        <span class="brand-count">[+count+]</span>
+    </a>',
+    api: 0,
+    addWhereList: 'isfolder=1',
+    noneTPL:'@CODE: <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте немного изменить условия поиска</h1>
+            </div>
+        </div>
+    </div>',
+    prepare: 'DocLister BrandsPrepare'
+}) %}
+
+<div class="brands-container">
+    {{ brands2 | raw }}
+    <button id="show-all-brands" class="show-all-brands"> Показать ещё</button>
+</div>
+

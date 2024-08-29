@@ -1,0 +1,71 @@
+{% extends 'app.twig' %}
+{% block MAIN %}
+    {# {% set catalog = runSnippet('DocLister', { #}
+    {# display: 20, #}
+    {# parents: resource.id, #}
+    {# depth: 1, #}
+    {# tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,gear,year, image,mark_id,model_id', #}
+    {# ownerTPL: '@T_FILE:partials/wrap', #}
+    {# tpl: "@T_FILE:partials/catalogcard_mod", #}
+    {# debug: 0, #}
+    {# addWhereList: 'c.template=28', #}
+    {# }) %} #}
+
+    {% set DLModels = runSnippet('DocLister', {
+        id: 'catalog',
+        parents: resource.id,
+        depth: 2,
+        addWhereList: 'c.template=20',
+        orderBy: 'car-price',
+        order: 'RAND()',
+        tvSortType: 'SIGNED',
+        tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,gear,year, image,mark_id,model_id,colors_list,car_modifications',
+        ownerTPL: '@T_FILE:partials/wrap',
+        tpl:'@T_FILE:partials/catalogcard_mod_model',
+        paginate:'pages',
+        TplNextP:'',
+        TplPrevP:'',
+        TplPage:'@CODE:<li class="page-item"><a class="page-link" href="[+link+]">[+num+]</a></li>',
+        TplCurrentPage:'@CODE: <li class="page-item active" aria-current="page"><span class="page-link">[+num+]</span></li>',
+        TplWrapPaginate:'@CODE:<ul class="pagination">[+wrap+]</ul>',
+        tvSortType: 'UNSIGNED',
+        noneTPL:'@CODE: <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте немного изменить условия поиска</h1>
+                </div>
+            </div>
+        </div>',
+        showParent: 1,
+        prepare: "DocLister ModelsPrepare"
+    }) %}
+
+    <main>
+        <div class="index-catalog-block2 pb-5">
+            <div class="container">
+                {% include('partials/crumbs.twig') %}
+                <h2 class="h2 m-5">Лучшие предложения на {{ resource.pagetitle }} <br>в наличии</h2>
+                <div class="list row d-flex justify-content-center" id="catalog">
+                    {{ DLModels |raw }}
+                </div>
+                {{ plh['catalog.pages'] | raw }}
+            </div>
+        </div>
+        <div class="container p-4 py-5">
+            <div class="row">
+                {{ runSnippet('Form', {
+                    formid: 'FormCredit',
+                    path: '/templates/major/partials/forms/credit/',
+                    extension: 'twig'
+                }) | raw }}
+            </div>
+        </div>
+    </main>
+
+    {% include '/partials/not-found-block.twig' %}
+    {% include '/partials/advantages_block.twig' %}
+{% endblock %}
+{% block SCRIPTS %}
+    <script src="static/js/choices.min.js"></script>
+    <script src="static/js/select2.js"></script>
+{% endblock %}

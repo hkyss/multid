@@ -1,0 +1,459 @@
+{% extends 'app.twig' %}
+{% block MAIN %}
+    {# % cache 'main' ~ resource.id % #}
+    {% set filters = "" %}
+
+    {% if _GET.brand %}
+        {% set filters = 'tv:mark_id:=:' ~ _GET.brand %}
+    {% endif %}
+
+    {% if _GET.model %}
+        {% set filters = filters ~ ';tv:model_id:like:' ~ _GET.model %}
+    {% endif %}
+
+    {% if filters %}
+        {% set filters = 'AND(' ~ filters ~ ')' %}
+    {% else %}
+        {% set filters = 'tv:car-price:>:0' %}
+    {% endif %}
+
+    {% set DLModels = runSnippet('DocLister', {
+        id: 'catalog',
+        controller: 'catalog_filters',
+        filters: filters ,
+        _filters: 'AND(tv:price:>:0;tv:region:=:' ~ plh.activeLangAlias ~ ')',
+        display: 8,
+        parents: baseSettings['catalog_number'],
+        depth: 2,
+        addWhereList: 'c.template=20',
+        orderBy: 'car-price',
+        order: 'RAND()',
+        tvSortType: 'SIGNED',
+        tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,gear,year, image,mark_id,model_id,colors_list,car_modifications',
+        ownerTPL: '@T_FILE:partials/wrap',
+        tpl:'@T_FILE:partials/catalogcard_model',
+        paginate:'pages',
+        TplNextP:'',
+        TplPrevP:'',
+        TplPage:'@CODE:<li class="page-item"><a class="page-link" href="[+link+]">[+num+]</a></li>',
+        TplCurrentPage:'@CODE: <li class="page-item active" aria-current="page"><span class="page-link">[+num+]</span></li>',
+        TplWrapPaginate:'@CODE:<ul class="pagination">[+wrap+]</ul>',
+        filter: 'filters',
+        filterRangeSeparator: ':',
+        filterValuesSeparator: '|',
+        filterDelimiter: '||',
+        __filterPriceId: 14,
+        filterList: '42,43,19',
+        _filterList: '19:checkbox,20:checkbox,42:checkbox,43:checkbox',
+        filterTpl: '@T_FILE:partials/filters/tpl',
+        filterOwnerRange: '@T_FILE:partials/filters/ownerRange',
+        filterTplRange: '@T_FILE:partials/filters/tplRange',
+        filterOwnerCheckbox: '@T_FILE:partials/filters/ownerCheckbox',
+        filterTplCheckbox: '@T_FILE:partials/filters/tplCheckbox',
+        tvSortType: 'UNSIGNED',
+        api: 0,
+        debug:0,
+        noneTPL:'@CODE: <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте немного изменить условия поиска</h1>
+                </div>
+            </div>
+        </div>',
+        showParent: 1,
+        prepare: "DocLister ModelsPrepare"
+    }) %}
+
+    {% set models = runSnippet('DocLister', {
+        id: 'catalog',
+        filters: 'AND(tv:mark_id:=:' ~ brand ~ ')' ,
+        _filters: 'AND(tv:price:>:0;tv:region:=:' ~ plh.activeLangAlias ~ ')',
+        parents: baseSettings['catalog_number'],
+        depth: 1,
+        addWhereList: 'isfolder=1 AND c.template=20',
+        orderBy: 'car-price',
+        order: 'RAND()',
+        tvSortType: 'SIGNED',
+        tvList:'car-price,old-car-price,car_photos,run,engine_power,gear,year, image,mark_id,model_id',
+        api: 1,
+        debug:0,
+        noneTPL:'@CODE: <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте немного изменить условия поиска</h1>
+                </div>
+            </div>
+        </div>',
+    }) | json %}
+
+    {% set banner = runSnippet('multiTV', {tvName: 's-vigoda-pulkovo1', docid: 'id', display:'all',
+        rowTpl:'@CODE:
+        <div class="item" style="background: url([+image+]) center/cover;">
+            <div class="container">
+                <div class="text">
+                    <div class="top-text mb-3">
+                    </div>
+                    <div class="text mb-3">
+                        [+title+]
+                    </div>
+                    <div class="text2 mb-2">
+                        [+vigoda+]
+                    </div>
+                    <div class="text3">
+                        [+text+]
+                    </div>
+                    <button class="mt-2" data-src="#popupCredNew" data-fancybox="">Оставить заявку</button>
+                </div>
+            </div>
+        </div>'}) %}
+
+    {% set bannermob = runSnippet('multiTV', {tvName: 's-vigoda-pulkovo1', docid: 'id', display:'all',
+        rowTpl:'@CODE:
+            <div class="container">
+                <div class="text">
+                    <div class="top-text mb-3">
+                    </div>
+                    <div class="text mb-3">
+                        [+title+]
+                    </div>
+                    <div class="text2 mb-2">
+                        [+vigoda+]
+                    </div>
+                    <div class="text3">
+                        [+text+]
+                    </div>
+                    <button class="mt-2" data-src="#popupCredNew" data-fancybox="">Оставить заявку</button>
+                </div>
+        </div>'
+    }) %}
+
+    <main>
+        <div class="index-page-slider text-light d-none d-sm-block">
+            {{ banner |raw }}
+        </div>
+        {% if baseSettings['mob_banner'] is not empty %}
+            <div class="index-page-slider text-light d-block d-sm-none">
+                <div class="item" style="background: url('{{ baseSettings['mob_banner'] }}') center/cover;">
+                    {{ bannermob |raw }}
+                </div>
+            </div>
+        {% else %}
+            <div class="index-page-slider text-light d-block d-sm-none">
+                {{ banner |raw }}
+            </div>
+        {% endif %}
+        <div class="index-top-counts pt-3 text-light mb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-6">
+                        <div class="item first mb-3 py-1 px-2">
+                            <div class="pr-3">3678</div>
+                            <div>Новых автомобилей</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-6">
+                        <div class="item mb-3 py-1 px-2">
+                            <div class="pr-3">4678</div>
+                            <div>Автомобилей по акции</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-6">
+                        <div class="item mb-3 py-1 px-2">
+                            <div class="pr-3">435</div>
+                            <div>Автомобилей со скидкой в кредит</div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-6">
+                        <div class="item mb-3 py-1 px-2">
+                            <div class="pr-3">2456</div>
+                            <div>Предложений на атомобили</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="index-top-form pb-4">
+            <div class="container flex">
+                <div class="fields mb-3">
+                    <div class="row">
+                        <div class="col-6 col-md-3">
+                            <p class="mb-2">Марка</p>
+                            <select class="w-100 px-3 select-box" id="marks">
+                                <option>Выбрать...</option>
+                                {% for item in marks %}
+                                    <option>{{ item.pagetitle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <p class="mb-2">Модель</p>
+                            <select class="w-100 px-3 select-box" id="models">
+                                <option>Выбрать...</option>
+                                {% for item in models %}
+                                    <option>{{ item.pagetitle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <p class="mb-2">Фильтровать </p>
+                            <button id="filterbutton" class="w-100 px-3 select-box btn btn-danger">Показать</button>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <p class="mb-2">Уточните выбор: </p>
+                            <button class="w-100 px-3 select-box btn btn-danger"
+                                    onclick="location.href='{{ modx.makeUrl(baseSettings['catalog_number']) }}podborka-po-parametram'">
+                                Больше
+                                фильтров
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dealers-block pb-5">
+            <div class="container">
+                <div class="block-name mb-4 pb-2">
+                    30 марок авто в наличии
+                </div>
+                {# <div class="row"> #}
+                {% include('partials/brands.twig') %}
+                {# </div> #}
+            </div>
+        </div>
+        </div>
+        <section class="index-credit-block2 container my-4">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <a href="#" data-src="#popupCredNew" data-fancybox>
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title">Купить в кредит</h3>
+                                <p class="card-text flex-grow-1">Оставьте заявку и мы подберем для вас самое выгодное
+                                    кредитное предложение сотрудничаем с 14 банками 98% одобрений по кредиту</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <a href="#" data-src="#popupTradeIn" data-fancybox>
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title">Купить по трейд-ин</h3>
+                                <p class="card-text flex-grow-1">Заполните форму на оценку вашего авто и мы подберем
+                                    новый автомобиль в замен вашего</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <a href="#" data-src="#popupcred2" data-fancybox>
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h3 class="card-title">Купить в авто рассрочку</h3>
+                                <p class="card-text flex-grow-1">0% на полгода на проверенные автомобили. Оставьте
+                                    заявку на рассрочку и мы сделаем вам предложение от которого вы не сможете
+                                    отказаться</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <div class="index-catalog-block2 pb-5">
+            <div class="container">
+                <h2 class="h2 mb-5">Предложение дня</h2>
+                <div class="list" id="catalog">
+                    {{ DLModels |raw }}
+                </div>
+            </div>
+        </div>
+        {# {% include '/partials/credit.twig' %} #}
+        <div class="container py-5" id="creditblock">
+            <div class="row">
+                {{ runSnippet('Form', {
+                    formid: 'FormCredit',
+                    path: '/templates/major/partials/forms/credit_home/',
+                    extension: 'twig'
+                }) | raw }}
+            </div>
+        </div>
+
+
+        <div class="index-catalog-block2 pb-4">
+            <div class="container">
+                <div class="block-name mb-5">
+                    Подборки по кузову
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6">
+                        <a href="/katalog-grand-one-1/podborka-po-parametram?body=Седан">
+                            <div class="item mb-4 position-relative">
+                                <img src="../templates/major/images/item252.jpg" class="w-100">
+                                <div class="number position-absolute bg-light pl-3 pr-3 pb-1 pt-1">
+                                    647
+                                </div>
+                                <div class="name position-absolute text-light w-100 p-3">
+                                    Седаны
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a href="/katalog-grand-one-1/podborka-po-parametram?body=универсал">
+                            <div class="item mb-4 position-relative">
+                                <img src="../templates/major/images/item262.jpg" class="w-100">
+                                <div class="number position-absolute bg-light pl-3 pr-3 pb-1 pt-1">
+                                    142
+                                </div>
+                                <div class="name position-absolute text-light w-100 p-3">
+                                    Универсалы
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a href="/katalog-grand-one-1/podborka-po-parametram?body=хэтчбек">
+                            <div class="item mb-4 position-relative">
+                                <img src="../templates/major/images/item232.jpg" class="w-100">
+                                <div class="number position-absolute bg-light pl-3 pr-3 pb-1 pt-1">
+                                    764
+                                </div>
+                                <div class="name position-absolute text-light w-100 p-3">
+                                    Хэтчбэк
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a href="/katalog-grand-one-1/podborka-po-parametram?body=внедорожник">
+                            <div class="item mb-4 position-relative">
+                                <img src="../templates/major/images/item212.jpg" class="w-100">
+                                <div class="number position-absolute bg-light pl-3 pr-3 pb-1 pt-1">
+                                    892
+                                </div>
+                                <div class="name position-absolute text-light w-100 p-3">
+                                    Внедорожники
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a href="/katalog-grand-one-1/podborka-po-parametram?body=лифтбек">
+                            <div class="item mb-4 position-relative">
+                                <img src="../templates/major/images/item242.jpg" class="w-100">
+                                <div class="number position-absolute bg-light pl-3 pr-3 pb-1 pt-1">
+                                    182
+                                </div>
+                                <div class="name position-absolute text-light w-100 p-3">
+                                    Лифтбек
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a href="/katalog-grand-one-1/podborka-po-parametram?body=купе">
+                            <div class="item mb-4 position-relative">
+                                <img src="../templates/major/images/item222.jpg" class="w-100">
+                                <div class="number position-absolute bg-light pl-3 pr-3 pb-1 pt-1">
+                                    68
+                                </div>
+                                <div class="name position-absolute text-light w-100 p-3">
+                                    Купе
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% include '/partials/banks.twig' %}
+            {% include '/partials/actions.twig' %}
+            {% include '/partials/advantages.twig' %}
+            {% include '/partials/not-found-block.twig' %}
+            {% include '/partials/advantages_block.twig' %}
+            {% include '/partials/contacts.twig' %}
+
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const marksSelect = document.querySelector('#marks')
+        const modelsSelect = document.querySelector('#models')
+        const filterButton = document.querySelector('#filterbutton')
+
+        const updateFilterUrl = () => {
+          const brand = marksSelect.value
+          const model = modelsSelect.value
+
+          let url = '{{ modx.makeUrl(baseSettings['catalog_number']) }}?'
+          if (brand && brand !== 'Выбрать...') {
+            url += `brand=${brand}&`
+          }
+
+          if (model && model !== 'Выбрать...') {
+            url += `model=${model}&`
+          }
+
+          filterButton.disabled = false
+          filterButton.onclick = function () {
+            window.location.href = url.slice(0, -1)
+          }
+        }
+
+        const updateModels = () => {
+          const brand = marksSelect.value
+
+          if (brand && brand !== 'Выбрать...') {
+            const url = `{{ modx.makeUrl(baseSettings['catalog_number']) }}?brand=${brand}`
+            $.ajax({
+              url: url,
+              method: 'GET',
+              dataType: 'html'
+            })
+              .done(function (data) {
+                const modelsHtml = $(data).find('#models').html()
+                $('#models').html(modelsHtml)
+              })
+              .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error(errorThrown)
+              })
+          }
+        }
+
+        marksSelect.addEventListener('change', function () {
+          updateModels()
+          updateFilterUrl()
+        })
+        modelsSelect.addEventListener('change', updateFilterUrl)
+
+        filterButton.disabled = true
+
+        $('.index-catalog-block2 .list').slick({
+          speed: 300,
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          responsive: [
+            {
+              breakpoint: 992,
+              settings: {
+                slidesToShow: 3
+              }
+            },
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 2
+              }
+            },
+            {
+              breakpoint: 576,
+              settings: {
+                slidesToShow: 1,
+                autoplay: true
+              }
+            }
+          ]
+        })
+      })
+
+    </script>
+{% endblock %}

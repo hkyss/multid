@@ -1,0 +1,371 @@
+{% extends 'app.twig' %}
+{% block MAIN %}
+    {% set price = resource['car-price'] | number_format %}
+    {% set oldprice = runSnippet('helpers', {caroldprice: price,
+        action:'caroldprice'}) %}
+    {% set vigoda = oldprice - price %}
+    {% set configuration_id = runSnippet('DocLister', {
+        id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
+
+    {% set photos = resource['colors_list'] | json %}
+
+    {% set photo = "" %}
+    {% for i in 0..10 %}
+        {% if not photo and photos['Color#' ~ i]['items']['image']['value'] %}
+            {% set photo = photos['Color#' ~ i]['items']['image']['value'] %}
+        {% endif %}
+    {% endfor %}
+
+    {% set mod_collection = [] %}
+    {% set modifications = resource['car_modifications'] | json %}
+
+    {% for modificationKey, modification in modifications %}
+        {% set modificationKey = modificationKey | replace({'#': "-"}) %}
+
+        {% set modificationTitle = modification["value"] %}
+        {% if modificationTitle is empty %}
+            {% set modificationTitle = "Мод. " ~ loop.index %}
+        {% endif %}
+
+        {% set modificationDriveform = modification['items']['drive']['value'] %}
+        {% set modificationGearform = modification['items']['gear']['value'] %}
+        {% set modificationEngVolform = modification['items']['engine_volume']['value'] %}
+
+        {% for modificationItemKey, modificationItem in modification['items'] %}
+            {% if "ModificationItem" in modificationItemKey %}
+                {% set options = [] %}
+                {% set modificationKey = modificationKey ~ "-" ~ modificationItemKey | replace({'#': "-"}) %}
+                {% set modificationItemTitle = modificationTitle ~ ": " ~ modificationItem['value'] %}
+                {% set modificationInfo = modificationTitle %}
+                {% set modificationDriveform = modificationDriveform %}
+                {% set modificationGearform = modificationGearform %}
+                {% set modificationEngVolform = modificationEngVolform %}
+
+                {% for modificationItemOptionKey, modificationItemOption in modificationItem['items'] %}
+                    {% if "ModificationItemOption" in modificationItemOptionKey %}
+                        {% set options = options | merge([
+                            {
+                                title: modificationItemOption['value'],
+                                key: modificationItemOptionKey,
+                                content: modificationItemOption['items']['content']['value']
+                            }
+                        ]) %}
+                    {% endif %}
+                {% endfor %}
+
+                {% set mod_collection = mod_collection | merge([
+                    {
+                        title: modificationItemTitle,
+                        info: modificationInfo,
+                        gear: modificationGearform,
+                        drive: modificationDriveform,
+                        engine: modificationEngVolform,
+                        key: modificationKey,
+                        complectTitle: modificationItem['value'],
+                        price: modificationItem['items']['price']['value'],
+                        options: options
+                    }
+                ]) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    {% set mod_collection = mod_collection | sort((a, b) => a.price <=> b.price) %}
+
+    {% set modifications_show = mod_collection | slice(0, 3) %}
+    {% set modifications_hide = mod_collection | slice(3) %}
+
+    {% set mnths = ['','января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'] %}
+    {% set date_sale = "now" | date_modify("+2 day") %}
+
+    {% set sale_to_day = date_sale | date('d') %}
+    {% set sale_to_month = mnths[date_sale | date("n")] %}
+    {% set sale_to = sale_to_day ~ " " ~ sale_to_month %}
+
+    {% set cars = runSnippet("DocLister", {
+        api: 1,
+        parents: resource.id,
+        addWhereList: "c.template = 28",
+        tvList:'car-price,old-car-price,car_photos,run,configuration_id,engine_power,engine_volume,car_monthly_payment,gear,drive,year,image,mark_id,model_id,modification,complectation',
+    }) | json %}
+    {% set prices = cars | column('tv_car-price') | default([0]) %}
+
+    {% if photo %}
+        <div class="index-page-slider text-light">
+            <div class="item other"
+                 style="background-image: url('{{ photo }}');background-position: center;background-repeat: no-repeat;background-size: contain;width: 100%;">
+                <div class="container">
+                    <div class="top-text mt-3 mb-3">
+                    </div>
+                    <div class="text model__header--title">
+                        {{ runSnippet ('DocInfo', {docid: resource.parent, field:pagetitle}) |raw }} {{ resource.pagetitle }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% include '/partials/crumbs.twig' %}
+    <div class="item-page pb-5 mt-4">
+        <div class="container position-relative">
+            <img style="width: 300px; height: auto" src="" class="logo position-absolute">
+            <h1 class="mb-2"> {{ runSnippet ('DocInfo', {docid: resource.parent, field:pagetitle}) |raw }} {{ resource.pagetitle }}
+            </h1>
+            <div class="top-text mb-4">
+                Успешная модель, которая стала еще лучше
+            </div>
+            <div class="top-info mb-4 w-100">
+                {% if photo %}
+                    <div class="image text-center" style="margin-right: 64px;">
+                        <img src="{{ photo | raw }}">
+                    </div>
+                    <div style="width: 12px;"></div>
+                {% endif %}
+                <div class="text">
+                    <div class="name mb-3">
+                        {{ runSnippet ('DocInfo', {docid: resource.parent, field:pagetitle}) |raw }} {{ resource.pagetitle }}
+                    </div>
+                    <span class="items text-light mb-3 py-2 px-3 d-inline-block bg-dark">Автомобилей: {{ cars | count }}</span>
+                    <br/>
+
+                    {% if min(prices) %}
+                        <span class="price d-inline-block py-2 px-3">от {{ min(prices) | number_format(0, '', ' ') }} ₽</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if modifications_show %}
+                <div class="modifications-block pb-2 mb-3">
+                    {% for modification in modifications_show %}
+                        <h3 class="mb-3">{{ modification.title }}</h3>
+                        <div class="item mb-2">
+                            <div class="item-name flex">
+                                <div class="name" type="button" data-toggle="collapse"
+                                     data-target="#id_{{ modification.key }}" aria-expanded="false"
+                                     aria-controls="id_{{ modification.key }}" style="word-break: break-word;     max-width: 170px;
+    ">
+                                    {{ modification.complectTitle }}
+                                </div>
+                                <div class="price">
+                                    <span class="old">
+                                        -
+                                    </span>
+                                    <span class="new">
+                                        {{ modification.price }}
+                                    </span>
+                                </div>
+                                <div class="buttons">
+                                    <button class="scroll-btn" data-fancybox=""
+                                            data-src="#popupCredNew">В кредит
+                                        за {{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}
+                                         ₽/мес.
+                                    </button>
+                                    <button data-fancybox="" data-src="#popupCredNew">Trade-in
+                                    </button>
+                                    {# <button data-fancybox="" data-src="#popupCredNew">
+                                        Забронировать
+                                    </button> #}
+                                    <button type="button" onclick="openPopupForm(this)"
+                                        data-title="{{ runSnippet ('DocInfo', {docid: resource.parent, field:pagetitle}) |raw }} {{ resource.pagetitle }}"
+                                        data-image="{{ photo | raw }}"
+                                        data-price="{{ (modx.runSnippet("toInt", { value: modification.price })) | number_format(0, '.', ' ') }}"
+                                        data-engine-volume="{{ modification.engine | default("-") }}"
+                                        data-gear="{{ modification.gear | default("-") }}"
+                                        data-drive="{{ modification.drive | default("-") }}"
+                                        data-info="{{ modification.info | default("-") }}"
+                                        data-kred-car-price="{{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}">
+                                        Забронировать
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="item-content collapse" id="id_{{ modification.key }}">
+                                {% for option in modification.options %}
+                                    <div class="card-header">{{ option.title }}</div>
+                                    <div class="card-body">
+                                        {{ option.content | raw }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if modifications_hide %}
+                <div class="modifications-block pb-2 mb-3 accordion" id="accordionModelOptions">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Показать больше модификаций
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionModelOptions">
+                            <div class="card-body">
+                                {% for modification in modifications_hide %}
+                                    <h3 class="mb-3">{{ modification.title }}</h3>
+                                    <div class="item mb-2">
+                                        <div class="item-name flex">
+                                            <div class="name" type="button" data-toggle="collapse"
+                                                 data-target="#id_{{ modification.key }}" aria-expanded="false"
+                                                 aria-controls="id_{{ modification.key }}" style="word-break: break-word;     max-width: 170px;
+    ">
+                                                {{ modification.complectTitle }}
+                                            </div>
+                                            <div class="price">
+                                    <span class="old">
+                                        -
+                                    </span>
+                                                <span class="new">
+                                        {{ modification.price }}
+                                    </span>
+                                            </div>
+                                            <div class="buttons">
+                                                <button class="scroll-btn" data-fancybox=""
+                                                        data-src="#popupCredNew">В кредит
+                                                    за {{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}
+                                                     ₽/мес.
+                                                </button>
+                                                <button data-fancybox="" data-src="#popupCredNew">Trade-in
+                                                </button>
+                                                                                    <button type="button" onclick="openPopupForm(this)"
+                                        data-title="{{ runSnippet ('DocInfo', {docid: resource.parent, field:pagetitle}) |raw }} {{ resource.pagetitle }}"
+                                        data-image="{{ photo | raw }}"
+                                        data-price="{{ (modx.runSnippet("toInt", { value: modification.price })) | number_format(0, '.', ' ') }}"
+                                        data-engine-volume="{{ modification.engine | default("-") }}"
+                                        data-gear="{{ modification.gear | default("-") }}"
+                                        data-drive="{{ modification.drive | default("-") }}"
+                                        data-info="{{ modification.info | default("-") }}"
+                                        data-kred-car-price="{{ (modx.runSnippet("toInt", { value: modification.price }) / 82) | round | number_format(0, '.', ' ') }}">
+                                        Забронировать
+                                    </button>
+                                                {# <button data-fancybox="" data-src="#popupCredNew">
+                                                    Забронировать
+                                                </button> #}
+                                            </div>
+                                        </div>
+                                        <div class="item-content collapse" id="id_{{ modification.key }}">
+                                            {% for option in modification.options %}
+                                                <div class="card-header">{{ option.title }}</div>
+                                                <div class="card-body">
+                                                    {{ option.content | raw }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="index-catalog-block2 pb-5">
+                <div class="list row" id="catalog">
+                    {% if cars %}
+                        {% for car in cars %}
+                            {% set car_photos = car['tv_car_photos'] | json %}
+                            {% set car_photos = car_photos.fieldValue %}
+                            {% set car_photo = car_photos[0]['image'] %}
+
+                            {% set car_price = car["tv_car-price"] | number_format(0, '', '') | round %}
+                            {% set car_price_old = runSnippet('helpers', {caroldprice: car_price, action:'caroldprice'}) | round %}
+                            {% set credit = ( (car_price / 84) * 0.7 ) | number_format(0, '.', ' ') %}
+
+                            <div class="item col-12 col-sm-3 position-relative mb-3 "><a href="{{ car['url'] }}">
+                                    <span class="hit position-absolute py-1 px-3">HIT</span>
+                                    <div class="image model--image" style="background-image: url('{{ car_photo }}')"></div>
+                                    <div class="p-3">
+                                        <a href="{{ car['url'] }}" class="name d-block mb-2">
+                                            {{ car['title'] }},
+                                            {% if car['tv_year'] %}{{ car['tv_year'] }}г.{% endif %}
+                                        </a>
+                                        <div class="row data text-center">
+
+                                        </div>
+                                        <ul class="mb-3">
+                                            {% if car['tv_complectation'] %}
+                                                <li class="mb-1">- {{ car['tv_complectation'] }}</li>
+                                            {% endif %}
+
+                                            {% if car['tv_modification'] %}
+                                                <li class="mb-1">- {{ car['tv_modification'] }}</li>
+                                            {% endif %}
+
+                                            <li>- Скидка до: <strong>{{ sale_to }}</strong></li>
+                                        </ul>
+                                        <div class="price mb-3">
+                                            {% if car_price_old %}
+                                                <span class="old d-inline-block mb-1">
+                                                    от {{ car_price_old | number_format(0, '', ' ') }} ₽
+                                                </span>
+                                            {% endif %}
+
+                                            {% if car_price %}
+                                                <div class="new">
+                                                    от {{ car_price | number_format(0, '', ' ') }} ₽
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <p class="mb-4 text-right"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
+                                        <div class="buttons">
+                                            {# <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В
+                                                кредит от 4,9%
+                                            </button> #}
+                                        <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                                        data-title="{{ car['title'] }}"
+                                        data-image="{{ car_photo }}"
+                                        data-price="{{ car_price | number_format(0, '', ' ') }}"
+                                        data-engine-volume="{{ car['tv_year'] | default("-") }}г."
+                                        data-gear="{{ car['tv_gear'] | default("-") }}"
+                                        data-drive="{{ car['tv_drive'] | default("-") }}"
+                                        data-info="{{ car['tv_modification'] | default("-") }}"
+                                        data-kred-car-price="{{ car['tv_car_monthly_payment'] | default("-") }}">
+                                         кредит от 4,9%
+                                    </button>
+{#                                            <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">#}
+{#                                                Забронировать#}
+{#                                            </button>#}
+{#                                            <button class="w-100" onclick="location.href='{{ car.url }}';">Подробнее#}
+{#                                            </button>#}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <h2 class="display-4 catalog-block h2">По вашим критериям А/М не найдены, попробуйте
+                                        немного изменить условия поиска</h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-form-block mb-5">
+        <div class="container">
+            {{ runSnippet('Form', {
+                formid: 'FormCallback',
+                path: '/templates/major/partials/forms/feedback/',
+                extension: 'twig'
+            }) | raw }}
+        </div>
+    </div>
+
+    <script>
+      function scrollToForm () {
+        var form = document.getElementById('FormCallback')
+        form.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
+      }
+
+    </script>
+    {{ runSnippet('takemodels', {configuration_id: resource['configuration_id'] }) }}
+    {% set minam = price / 10 %}
+    {% set maxam = price %}
+{% endblock %}
