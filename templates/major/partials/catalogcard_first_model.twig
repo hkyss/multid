@@ -38,7 +38,7 @@ debug: 0
                class="name d-block mb-2 model--title">{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }} </a>
             <div class="row data text-center">
             </div>
-            <div class="price mb-3">
+            <div class="price mb-1">
                 {% if data["tv.old-car-price"] %}
                     <span class="old d-inline-block mb-1">{{ data["tv.old-car-price"] }} ₽</span>
                 {% endif %}
@@ -51,7 +51,7 @@ debug: 0
                 {% endif %}
             </div>
             <div class="child-count">
-            <p class="pb-1"> В наличии: {{ childCount }} автомобилей </p>
+            <p class="pb-3"> В наличии: {{ childCount }} автомобилей </p>
             </div>
             <div class="buttons">
                 {# <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
