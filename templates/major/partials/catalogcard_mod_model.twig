@@ -1,9 +1,35 @@
+{% set childCount = runSnippet('DocLister', {
+api: 1,
+parents: data.id,
+depth: 2,
+showParent: -1,
+addWhereList: 'c.template=28',
+display: all,
+countOnly: 1,
+debug: 0
+}) %}
+{% macro pluralize(count, one, few, many) %}
+    {% if count % 10 == 1 and count % 100 != 11 %}
+        {{ one }}
+    {% elseif count % 10 >= 2 and count % 10 <= 4 and (count % 100 < 10 or count % 100>= 20) %}
+        {{ few }}
+    {% else %}
+        {{ many }}
+    {% endif %}
+{% endmacro %}
+
+{% import _self as forms %}
+<div class="d-none">{{childCount}}</div>
+{% set childrenArray = childCount | json %}
+{% set childCount = childrenArray | length %}
+
+
 {% set configuration_id = runSnippet('DocLister', {
     id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
 {% set photo = data['image_format'] %}
 
 {% set modifications = data['tv.car_modifications'] | json %}
-
+ 
 {% set price = data["tv.car-price"] %}
 {% if price is empty %}
     {% set price = 0 %}
@@ -76,6 +102,11 @@
                         {# {{ data["tv.car-price"] }} ₽ #}
                     </div>
                 {% endif %}
+            </div>
+            <div class="child-count">
+                <p class="p1-3"> В наличии: {{ childCount }} {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля',
+                    'автомобилей')
+                    }}</p>
             </div>
             <p class="mb-4 text-right"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
             <div class="buttons">
