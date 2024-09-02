@@ -1,6 +1,6 @@
 {% set childCount = runSnippet('DocLister', {
 api: 1,
-parents: resource.id,
+parents: data.parent,
 depth: 2,
 showParent: -1,
 addWhereList: 'c.template=28',
