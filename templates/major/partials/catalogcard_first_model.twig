@@ -4,9 +4,12 @@ parents: data.id,
 depth: 1,
 showParent: -1,
 addWhereList: 'c.template=28',
-display: 1, 
+display: 1,
+countOnly: 1,
 debug: 0
 }) %}
+{% set childrenArray = childCount | json_decode %}
+{% set childCount = childrenArray | length %}
 
 {% set configuration_id = runSnippet('DocLister', {
     id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
