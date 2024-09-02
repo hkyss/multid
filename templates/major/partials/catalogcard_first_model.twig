@@ -50,10 +50,13 @@ debug: 0
                     </div>
                 {% endif %}
             </div>
+            <div class="child-count">
+                Количество дочерних ресурсов: {{ childCount }}
+            </div>
             <div class="buttons">
                 {# <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
                 <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">Забронировать</button> #}
-                                <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
+                            <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
                     data-image="{{ photo }}"
                     data-price="{{ price|number_format(0, '.', '&nbsp;')|raw }}"
@@ -62,9 +65,7 @@ debug: 0
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
                     data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
                     data-kred-car-price="{{ mounth_pay }}">
-                    <div class="child-count">
-                        Количество дочерних ресурсов: {{ childCount }}
-                    </div>
+
 
                     В кредит
                     от {% if baseSettings.credit_rate is empty %}
