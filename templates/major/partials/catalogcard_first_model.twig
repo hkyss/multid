@@ -8,6 +8,17 @@ display: all,
 countOnly: 1,
 debug: 0
 }) %}
+{% macro pluralize(count, one, few, many) %}
+{% if count % 10 == 1 and count % 100 != 11 %}
+{{ one }}
+{% elseif count % 10 >= 2 and count % 10 <= 4 and (count % 100 < 10 or count % 100>= 20) %}
+    {{ few }}
+    {% else %}
+    {{ many }}
+    {% endif %}
+    {% endmacro %}
+
+    {% import _self as forms %}
 <div class="d-none">{{childCount}}</div>
 {% set childrenArray = childCount | json %}
 {% set childCount = childrenArray | length %}
@@ -51,7 +62,8 @@ debug: 0
                 {% endif %}
             </div>
             <div class="child-count">
-            <p class="pb-3"> В наличии: {{ childCount }} автомобилей </p>
+            <p class="pb-3"> В наличии: {{ childCount }} {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля', 'автомобилей')
+                }}</p>
             </div>
             <div class="buttons">
                 {# <button data-fancybox="" data-src="#popupCredNew" class="w-100 mb-2">В кредит от 4,9%</button>
