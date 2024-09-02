@@ -8,7 +8,7 @@ display: 1,
 countOnly: 1,
 debug: 0
 }) %}
-{% set childrenArray = childCount | json_decode %}
+{% set childrenArray = childCount | json %}
 {% set childCount = childrenArray | length %}
 
 {% set configuration_id = runSnippet('DocLister', {
