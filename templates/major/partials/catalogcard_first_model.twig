@@ -1,3 +1,13 @@
+{% set childCount = runSnippet('DocLister', {
+api: 1,
+parents: data.id, // ID текущего ресурса
+depth: 1,
+showParent: -1,
+addWhereList: 'c.template=28',
+display: 1, // Не отображать результаты, только получать их количество
+debug: 0
+}) %}
+
 {% set configuration_id = runSnippet('DocLister', {
     id: resource.id, tvList: 'configuration_id', display: 1, tpl: '@CODE:[+tv.configuration_id+]'} ) %}
 
@@ -14,7 +24,7 @@
     {% set mounth_pay = 0 %}
 {% endif %}
 
-
+ 
 {# <div class="item position-relative col-3 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}"> #}
 <div class="item position-relative col-lg-3 col-md-4 col-sm-5 pb-3 pt-3 mt-3"><a href="{{ data['url'] }}">
         <span class="hit position-absolute py-1 px-3">HIT</span>
@@ -48,6 +58,10 @@
                     data-drive="{{ modifications['Modification#0']['items']['drive']['value'] | default("-") }}"
                     data-info="{{ modifications['Modification#0']['value'] | default("-") }}"
                     data-kred-car-price="{{ mounth_pay }}">
+                    <div class="child-count">
+                        Количество дочерних ресурсов: {{ childCount }}
+                    </div>
+
                     В кредит
                     от {% if baseSettings.credit_rate is empty %}
                     4.9
