@@ -8,6 +8,7 @@ display: 1,
 countOnly: 1,
 debug: 0
 }) %}
+<div class="d-none">{{childCount}}</div>
 {% set childrenArray = childCount | json %}
 {% set childCount = childrenArray | length %}
 
