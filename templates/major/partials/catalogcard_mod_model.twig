@@ -71,9 +71,10 @@ debug: 0
 
 {# { data | dump } #}
 {# <div class="item col-12 col-sm-3 position-relative mb-3 "><a href="{{ data['url'] }}"> #}
-<div class="item col-12 col-lg-3 col-sm-5 position-relative mb-3 "><a href="{{ data['url'] }}">
-        <span class="hit position-absolute py-1 px-3">HIT</span>
-        <div class="image model--image" style="background-image: url('{{ photo }}')"></div>
+{# <div class="item col-12 col-lg-3 col-sm-5 position-relative mb-3 "><a href="{{ data['url'] }}"> #}
+<div class="item col-12 col-xl-3 col-lg-4 col-md-5 col-sm-9 position-relative mb-3 "><a href="{{ data['url'] }}">
+    <span class="hit position-absolute py-1 px-3">HIT</span>
+    <div class="image model--image" style="background-image: url('{{ photo }}')"></div>
         <div class="p-3">
             <a href="{{ data.url }}"
                class="name d-block mb-2 model--title">{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }} </a>
@@ -104,7 +105,7 @@ debug: 0
                 {% endif %}
             </div>
             <div class="child-count">
-                <p class="p1-3"> В наличии: {{ childCount }} {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля',
+                <p class="p1-3 mb-1"> В наличии: <strong>{{ childCount }}</strong> {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля',
                     'автомобилей')
                     }}</p>
             </div>
