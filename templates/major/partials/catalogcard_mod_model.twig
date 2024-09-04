@@ -104,12 +104,20 @@ debug: 0
                     </div>
                 {% endif %}
             </div>
-            <div class="child-count">
+            {# <div class="child-count">
                 <p class="p1-3 mb-1"> В наличии: <strong>{{ childCount }}</strong> {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля',
                     'автомобилей')
                     }}</p>
             </div>
-            <p class="mb-4 text-right"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
+            <p class="mb-4 text-right"><strong>Кредит от {{ credit }} ₽/мес.</strong></p> #}
+            <button class="w-100 mb-2" type="button" onclick="window.location.href='{{ data.url }}';">
+                <div class="child-count">
+                    <p class="mb-1"> 
+                        В наличии: <strong>{{ childCount }}</strong> {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля', 'автомобилей') }}
+                    </p>
+                </div>
+                <p class="mb-4 text-center"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
+            </button>
             <div class="buttons">
                 <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
                     data-title="{{ runSnippet ('DocInfo', {docid:data.parent, field:pagetitle}) |raw }} {{ data['title'] }}"
