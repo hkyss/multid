@@ -110,13 +110,15 @@ debug: 0
                     }}</p>
             </div>
             <p class="mb-4 text-right"><strong>Кредит от {{ credit }} ₽/мес.</strong></p> #}
-            <button class="w-100 mb-2" type="button" onclick="window.location.href='{{ data.url }}';">
-                <div class="child-count">
-                    <p class="mb-1"> 
-                        В наличии: <strong>{{ childCount }}</strong> {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля', 'автомобилей') }}
-                    </p>
+            <button class="w-100 mb-2 but-child" type="button" onclick="window.location.href='{{ data.url }}';">
+                <div class="mt-1">
+                    <div class="child-count">
+                        <p class="mb-1"> 
+                            В наличии: <strong>{{ childCount }}</strong> {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля', 'автомобилей') }}
+                        </p>
+                    </div>
+                    <p class="mb-4 text-center"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
                 </div>
-                <p class="mb-4 text-center"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
             </button>
             <div class="buttons">
                 <button class="w-100 mb-2" type="button" onclick="openPopupForm(this)"
@@ -154,3 +156,18 @@ debug: 0
         </div>
     </a>
 </div>
+<style>
+.but-child {
+    background: none;
+    border: 1px solid #3B80CC;
+    color: #3B80CC;
+    height: 48px;
+    font-weight: 500;
+    border-radius: 6px;
+}
+.but-child:hover{
+    background: #3B80CC;
+    border: 1px solid #3B80CC;
+    color: #fff;
+}
+</style>
