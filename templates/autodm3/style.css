@@ -1783,6 +1783,7 @@ header .contacts button{
   font-size: 16px;
   margin-top: 20px;
   box-shadow: none;
+  height: 48px;
 }
 
 .item-page .calc button:hover {
