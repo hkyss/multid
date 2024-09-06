@@ -89,6 +89,17 @@
 .item-page .buttons button:nth-child(2) {
   color: #2f80ed;
   background: rgba(47, 128, 237, 0.31);
+margin-bottom: 10px;
+}
+.item-page .buttons button:nth-child(3) {
+  color: #2f80ed;
+  background: #FFF;
+  border: 1px solid #2f80ed;
+}
+.item-page .buttons button:nth-child(3):hover {
+  color: #FFF;
+  background: #2f80ed;
+  border: 1px solid #2f80ed;
 }
 .item-page .counts .item .line span {
   background: #2f80ed;
