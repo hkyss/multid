@@ -96,6 +96,17 @@
 .item-page .buttons button:nth-child(2) {
   color: #b71f25;
   background: #F8CCCE;
+ margin-bottom: 10px;
+}
+.item-page .buttons button:nth-child(3) {
+  color: #b71f25;
+  background: #FFF;
+  border: 1px solid #b71f25;
+}
+.item-page .buttons button:nth-child(3):hover {
+  color: #FFF;
+  background: #b71f25;
+  border: 1px solid #b71f25;
 }
 .item-page .counts .item .line span {
   background: #b71f25;
