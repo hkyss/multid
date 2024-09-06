@@ -16,6 +16,9 @@
         {% endif %}
     {% endfor %}
 
+    {% set car_photos = resource.car_photos | json %}
+    {% set car_photos = car_photos.fieldValue %}
+
     {% set mod_collection = [] %}
     {% set modifications = resource['car_modifications'] | json %}
 
@@ -119,9 +122,9 @@
                         <img src="{{ photo | raw }}">
                     </div>
                     <div style="width: 12px;"></div>
-                {% else %} 
+                {% elseif car_photos is defined and car_photos[0].image is defined %}
                     <div class="image text-center" style="margin-right: 64px;">
-                        <img src="{{ resource['image_format'] | raw }}">
+                        <img src="{{ car_photos[0].image }}">
                     </div>
                     <div style="width: 12px;"></div> 
                 {% endif %}
