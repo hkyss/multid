@@ -111,13 +111,11 @@ debug: 0
             </div>
             <p class="mb-4 text-right"><strong>Кредит от {{ credit }} ₽/мес.</strong></p> #}
             <button class="w-100 mb-2 but-child" type="button" onclick="window.location.href='{{ data.url }}';">
-                <div class="mt-1">
-                    <div class="child-count">
-                        <p class="mb-1"> 
-                            В наличии: <strong>{{ childCount }}</strong> {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля', 'автомобилей') }}
-                        </p>
-                    </div>
-                    <p class="mb-4 text-center"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
+                <div class="child-count">
+                    <p class="mb-1"> 
+                        В наличии: <strong>{{ childCount }}</strong> {{ forms.pluralize(childCount, 'автомобиль', 'автомобиля', 'автомобилей') }}
+                        <p class="text-center"><strong>Кредит от {{ credit }} ₽/мес.</strong></p>
+                    </p>
                 </div>
             </button>
             <div class="buttons">
@@ -164,6 +162,7 @@ debug: 0
     height: 48px;
     font-weight: 500;
     border-radius: 6px;
+    font-size: 13px;
 }
 .but-child:hover{
     background: #3B80CC;
