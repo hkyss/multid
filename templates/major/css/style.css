@@ -869,6 +869,19 @@ a .text-logo span{
 .item-page .top-info .image img {
   vertical-align: middle;
 }
+.item-page .top-info .image-new {
+  display: table-cell;
+  vertical-align: middle;
+  width: 400px;
+  height: 226px;
+  background: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 8px;
+  line-height: 226px;
+}
+.item-page .top-info .image-new img {
+  vertical-align: middle;
+}
 .item-page .top-info .text {
   display: table-cell;
   vertical-align: middle;
@@ -1450,6 +1463,10 @@ a .text-logo span{
   .item-page .top-info .image {
     display: block;
     width: auto;
+  }
+  .item-page .top-info .image-new {
+    display: block;
+    /* width: auto; */
   }
   .item-page .top-info .text {
     display: block;
