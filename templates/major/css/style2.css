@@ -2513,6 +2513,12 @@ right: -58px;
   .index-page-slider .item .text3 {
     width: 95%;
   }
+  .index-catalog-block2 .list .item .price .new {
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 29px;
+    color: #3B80CC;
+}
 }
 @media (max-width: 575px) {
   /* .header .logo {
@@ -2680,6 +2686,12 @@ right: -58px;
     width: 100%;
     position: relative;
   }
+  .index-catalog-block2 .list .item .price .new {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #3B80CC;
+}
 }
 @media (max-width: 430px) {
   .credit-block-home .content .top{
