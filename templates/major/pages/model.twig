@@ -13,8 +13,6 @@
     {% for i in 0..10 %}
         {% if not photo and photos['Color#' ~ i]['items']['image']['value'] %}
             {% set photo = photos['Color#' ~ i]['items']['image']['value'] %}
-        {% else %}
-            {% set photo = resource['image_format'] %}
         {% endif %}
     {% endfor %}
 
