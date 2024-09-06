@@ -119,6 +119,11 @@
                         <img src="{{ photo | raw }}">
                     </div>
                     <div style="width: 12px;"></div>
+                {% else %} 
+                    <div class="image text-center" style="margin-right: 64px;">
+                        <img src="{{ resource['image_format'] | raw }}">
+                    </div>
+                    <div style="width: 12px;"></div> 
                 {% endif %}
                 <div class="text">
                     <div class="name mb-3">
