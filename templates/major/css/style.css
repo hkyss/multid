@@ -1466,7 +1466,8 @@ a .text-logo span{
   }
   .item-page .top-info .image-new {
     display: block;
-    /* width: auto; */
+    width: auto;
+    height: 293px;
   }
   .item-page .top-info .text {
     display: block;
