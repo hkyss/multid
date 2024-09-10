@@ -2877,3 +2877,7 @@ right: -58px;
 .slick-slide > img {
     padding: 0 5px;
 }
+.ui-slider-handle {
+  transition: left 0.3s ease; /* плавное перемещение ползунка */
+}
+
