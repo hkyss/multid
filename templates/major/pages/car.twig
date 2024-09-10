@@ -596,6 +596,14 @@
         </div> #}
         </div>
     </div>
+    <div class="index-catalog-block2 pb-5" id="specialOffersBlock">
+        <div class="container">
+            <h2 class="h2 mb-5">Специальное предложение</h2>
+            <div class="list" id="catalog">
+                {{ DLModels |raw }}
+            </div>
+        </div>
+    </div>
     <div id="discountsAndPromotionsBlock">
         {% include '/partials/actions.twig' %}
     </div>
@@ -608,14 +616,14 @@
             }) | raw }}
         </div>
     </div>
-    <div class="index-catalog-block2 pb-5" id="specialOffersBlock">
+    {# <div class="index-catalog-block2 pb-5" id="specialOffersBlock">
         <div class="container">
             <h2 class="h2 mb-5">Специальное предложение</h2>
             <div class="list" id="catalog">
                 {{ DLModels |raw }}
             </div>
         </div>
-    </div>
+    </div> #}
     <div class="index-catalog-block2 pb-4">
         <div class="container">
             <div class="row">
