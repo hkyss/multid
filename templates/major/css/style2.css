@@ -905,7 +905,7 @@ right: -58px;
   font-weight: 500;
   border-radius: 6px;
 }
-.index-catalog-block2 .list .item .buttons button:nth-child(1) {
+/* .index-catalog-block2 .list .item .buttons button:nth-child(1) {
   background: none;
   border: 1px solid #E05241;
   color: #E05241;
@@ -914,12 +914,26 @@ right: -58px;
   background: none;
   border: 1px solid #3B80CC;
   color: #3B80CC;
+} */
+.index-catalog-block2 .list .item .buttons button:nth-child(1) {
+  background: #E05241;
+  border: 1px solid #E05241;
+  color: #fff;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+.index-catalog-block2 .list .item .buttons button:nth-child(2) {
+  background: #3B80CC;
+  border: 1px solid #3B80CC;
+  color: #fff;
+  cursor: pointer;
+  transition: filter 0.3s ease;
 }
 .index-catalog-block2 .list .item .buttons button:nth-child(3) {
   background: #3B80CC;
   color: #fff;
 }
-.index-catalog-block2 .list .item .buttons button:nth-child(1):hover {
+/* .index-catalog-block2 .list .item .buttons button:nth-child(1):hover {
   background: #D12D1E;
   border: 1px solid #D12D1E;
   color: #fff;
@@ -928,6 +942,18 @@ right: -58px;
   background: #3B80CC;
   border: 1px solid #3B80CC;
   color: #fff;
+} */
+.index-catalog-block2 .list .item .buttons button:nth-child(1):hover {
+  background: #D12D1E;
+  border: 1px solid #D12D1E;
+  color: #fff;
+  filter: brightness(0.8);
+}
+.index-catalog-block2 .list .item .buttons button:nth-child(2):hover {
+  background: #3B80CC;
+  border: 1px solid #3B80CC;
+  color: #fff;
+  filter: brightness(0.8);
 }
 .index-catalog-block2 .list .item .buttons button:nth-child(3):hover {
   background: #D12D1E;

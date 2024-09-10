@@ -92,7 +92,7 @@
     }) | json %}
     {% set prices = cars | column('tv_car-price') | default([0]) %}
 
-    {% if photo %}
+    {# {% if photo %}
         <div class="index-page-slider text-light">
             <div class="item other"
                  style="background-image: url('{{ photo }}');background-position: center;background-repeat: no-repeat;background-size: contain;width: 100%;">
@@ -105,7 +105,7 @@
                 </div>
             </div>
         </div>
-    {% endif %}
+    {% endif %} #}
 
     {% include '/partials/crumbs.twig' %}
     <div class="item-page pb-5 mt-4">
