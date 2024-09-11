@@ -405,6 +405,8 @@
             }) | raw }}
         </div>
     </div> #}
+    {% if modification is empty %}
+    {% else %}
     <div class="item-page pb-5">
         <div class="container">
             <div class="modifications-block pb-2">
@@ -596,6 +598,7 @@
         </div> #}
         </div>
     </div>
+    {% endif %}
     <div class="index-catalog-block2 pb-5" id="specialOffersBlock">
         <div class="container">
             <h2 class="h2 mb-5">Специальное предложение</h2>
