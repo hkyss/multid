@@ -372,11 +372,11 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td>{{ item['title'] }}</td>
-                                                        <td>{{ item['price'] | default("-") }}</td>
-                                                        <td>{{ item['price_old'] | default("-") }}</td>
-                                                        <td>{{ item['drive'] | default("-") }}</td>
-                                                        <td>{{ item['transmission'] | default("-") }}</td>
+                                                        <td data-label="Наименование">{{ item['title'] }}</td>
+                                                        <td data-label="Цена">{{ item['price'] | default("-") }}</td>
+                                                        <td data-label="Старая цена">{{ item['price_old'] | default("-") }}</td>
+                                                        <td data-label="Привод">{{ item['drive'] | default("-") }}</td>
+                                                        <td data-label="Коробка передач">{{ item['transmission'] | default("-") }}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -946,6 +946,41 @@
                 object-fit: cover;
             }
         }
+        @media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+    
+    thead {
+        display: none; /* Скрываем заголовок таблицы на мобильных */
+    }
+
+    tr {
+        margin-bottom: 15px; /* Добавляем отступ между строками */
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+    td::before {
+        content: attr(data-label); /* Добавляем метки из заголовков */
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+}
 
         @media (max-width: 991px) {
             .slider-for .slick-slide img {
