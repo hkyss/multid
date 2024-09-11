@@ -396,15 +396,15 @@
             </div>
         </div>
     </div>
-    <div class="page-form-block mb-5">
+    {# <div class="page-form-block mb-5">
         <div class="container">
-            {# {{ runSnippet('Form', {
+            {{ runSnippet('Form', {
                 formid: 'FormCallback',
                 path: '/templates/major/partials/forms/feedback/',
                 extension: 'twig'
-            }) | raw }} #}
+            }) | raw }}
         </div>
-    </div>
+    </div> #}
     <div class="item-page pb-5">
         <div class="container">
             <div class="modifications-block pb-2">
@@ -929,8 +929,12 @@
 
         .slider-for .slick-slide img {
             display: block;
-            height: 510px;
+            height: 399px;
             object-fit: cover;
+        }
+        .item-page .photo{
+            align-content: center;
+            height: 100%;
         }
 
         @media (max-width: 575px) {
