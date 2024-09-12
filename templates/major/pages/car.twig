@@ -549,6 +549,15 @@
                     {% endif %}
                 {% endfor %}
             </div>
+            <div class="container py-5">
+                <div class="row">
+                    {{ runSnippet('Form', {
+                        formid: 'FormCredit',
+                        path: '/templates/major/partials/forms/credit/',
+                        extension: 'twig'
+                    }) | raw }}
+                </div>
+            </div>
             {# <div class="main-info pb-3">
             <div class="block-name mb-4">
                 Основная информация
