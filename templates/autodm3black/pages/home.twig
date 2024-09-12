@@ -43,6 +43,7 @@ api: 0
     controller: 'catalog_filters',
     display: 20,
     parents: catalog_number,
+    orderBy: "RAND()",
     depth: 5,
     tvList:'car-price,old-car-price,credit_rate,car_photos,run,engine_power,gear,year,image',
     ownerTPL: '@T_FILE:partials/wrap',
@@ -58,7 +59,7 @@ api: 0
     filterRangeSeparator: ':',
     filterValuesSeparator: '|',
     filterDelimiter: '||',
-    __filterPriceId: 19,  
+    __filterPriceId: 19,
     filterList: '42:dropdown;43:dropdown;19:range',
     filterCurrencyId: 'RUB',
     filterTpl: '@T_FILE:partials/filters/tpl',
@@ -101,12 +102,12 @@ rowTpl:'@CODE: <div class="index-first-block" style="background: url([+image+]) 
             var monthIndex = monthNames.indexOf(monthName.toLowerCase());
 
             if (monthIndex !== -1) {
-				
+
                 var currentDate = new Date();
 				var day = currentDate.getDate();
         		var month = currentDate.getMonth();
         		var year = currentDate.getFullYear();
-                
+
                 var bannerDateObj = new Date(year, month, day);
 
                 bannerDateObj.setDate(bannerDateObj.getDate() + 3);
@@ -115,9 +116,9 @@ rowTpl:'@CODE: <div class="index-first-block" style="background: url([+image+]) 
                 var newTitleValue = titleValue.replace(dateRegex, 'до ' + newDate);
 
                 bannerHtml = bannerHtml.replace(titleMatches[0], '<h1>' + newTitleValue + '</h1>');
-				
+
                 console.log(bannerHtml);
-				
+
             } else {
                 console.log(titleValue);
             }
@@ -176,7 +177,7 @@ rowTpl:'@CODE: <div class="index-first-block" style="background: url([+image+]) 
 					<img src="/templates/autodm3yellow/img/service1.png">
 				</div>
 			</div>
-			
+
 			<div class="col-xl-4 col-md-6">
 				<div class="item">
 					<div class="name">
@@ -244,7 +245,7 @@ rowTpl:'@CODE: <div class="index-first-block" style="background: url([+image+]) 
   });
   </script>
 
-	
+
 <div class="feedback-block">
 	<div class="container-fluid">
 		{{ runSnippet('Form', {
@@ -280,5 +281,5 @@ var waitForJQuery2 = setInterval(function() {
 {% include('partials/banks.twig') %}
 {#% include '/partials/tradein.twig' %#}
 {#% endcache %#}
-		
+
 {% endblock %}
