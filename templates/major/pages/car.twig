@@ -947,12 +947,12 @@
                 object-fit: cover;
             }
         }
-        @media (max-width: 768px) {
+@media (max-width: 768px) {
     table, thead, tbody, th, td, tr {
         display: block;
         width: 100%;
     }
-    
+
     thead {
         display: none; /* Скрываем заголовок таблицы на мобильных */
     }
@@ -962,24 +962,19 @@
     }
 
     td {
-        display: flex;
-        justify-content: space-between;
+        display: block;
+        text-align: left;
         padding: 10px;
         border-bottom: 1px solid #ddd;
         position: relative;
-        padding-left: 50%;
-        text-align: left;
     }
 
     td::before {
-        content: attr(data-label); /* Добавляем метки из заголовков */
-        position: absolute;
-        left: 10px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align: left;
+        content: attr(data-label); /* Используем атрибут data-label для заголовков */
+        display: block;
         font-weight: bold;
+        margin-bottom: 5px; /* Добавляем отступ между заголовком и содержимым */
+        color: #000; /* Можно изменить цвет заголовков для лучшей читабельности */
     }
 }
 
