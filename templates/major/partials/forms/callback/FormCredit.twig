@@ -1,0 +1,36 @@
+{% set baseSettings = runSnippet('helpers', {action: 'getBaseSettings'}) %}
+
+<form>
+    <div class="credit-block mb-5">
+        <div class="container">
+                <div class="bottom">
+                <input type="hidden" name="docid" value="{{ data.docid | default(resource.id) }}">
+                <input type="hidden" name="price" value="{{ data.yourprice | default(resource[car-price]) }}" data-price>
+                {{ data['form.messages'] | raw }}
+                    <h2 class="mb-2">Оформить заявку</h2>
+                    <div class="top-text mb-3">
+                        Оставьте заявку чтобы зафиксировать Вашу скидку!
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6">
+                            <p class="mb-2">Ваше имя</p>
+                            <input type="text" name="first_name" value="{{ data.first_name }}" placeholder="Например Иван" class="{{ data['first_name.classname'] }} w-100 px-3 mb-3">
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <p class="mb-2">Ваш телефон</p>
+                            <input type="text" value="{{ data.mobile_tel }}" name="mobile_tel" placeholder="+7(___) ___-____" class="phone-imask {{ data['mobile_tel.classname'] }} w-100 px-3 mb-3">
+                        </div>
+                        <div class="col-md-4">
+                            <button class="w-100 mb-3" type="submit">Отправить заявку</button>
+                        </div>
+                        <div class="col-xl-4 offset-xl-8">
+                            <div class="bottom-text">
+                                Нажимая на кнопку "Отправить заявку" вы даете согласие на обработку <a href="/policy">персональных данных</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
