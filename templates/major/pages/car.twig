@@ -549,15 +549,6 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="container py-5">
-                <div class="row">
-                    {{ runSnippet('Form', {
-                        formid: 'FormCredit',
-                        path: '/templates/major/partials/forms/callback/',
-                        extension: 'twig'
-                    }) | raw }}
-                </div>
-            </div>
             {# <div class="main-info pb-3">
             <div class="block-name mb-4">
                 Основная информация
@@ -608,6 +599,15 @@
         </div>
     </div>
     {% endif %}
+    <div class="container py-5">
+        <div class="row">
+            {{ runSnippet('Form', {
+                formid: 'FormCredit',
+                path: '/templates/major/partials/forms/callback/',
+                extension: 'twig'
+            }) | raw }}
+        </div>
+    </div>
     <div class="index-catalog-block2 pb-5" id="specialOffersBlock">
         <div class="container">
             <h2 class="h2 mb-5">Специальное предложение</h2>
