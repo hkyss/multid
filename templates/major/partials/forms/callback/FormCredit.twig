@@ -1,7 +1,7 @@
 {% set baseSettings = runSnippet('helpers', {action: 'getBaseSettings'}) %}
 
 <form>
-    <div class="credit-block mb-5">
+    <div class="form-block-callback mb-5">
         <div class="container">
                 <div class="bottom">
                 <input type="hidden" name="docid" value="{{ data.docid | default(resource.id) }}">
