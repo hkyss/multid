@@ -1,5 +1,6 @@
 {% extends 'app.twig' %}
 {% block MAIN %}
+{% set catalog_number = baseSettings['catalog_number'] %}
 {% set cardphoto = runSnippet('morephoto', {
 images: resource["car_photos"],
 image: resource.car-photos,
@@ -30,6 +31,37 @@ tpl:'@T_CODE: <div class="gift__item">
     </div>
 </div>'
 })%}
+{% set DLCatalog = runSnippet('DocLister', {
+    id: 'catalog',
+    controller: 'catalog_filters',
+    display: 4,
+    parents: catalog_number,
+    orderBy: "RAND()",
+    depth: 5,
+    tvList:'car-price,old-car-price,credit_rate,car_photos,run,engine_power,gear,year,image',
+    ownerTPL: '@T_FILE:partials/wrap',
+    tpl:'@T_FILE:partials/catalogcard',
+    paginate:'pages',
+    TplNextP:'@CODE:<li><a href="[+link+]"><span class="next"></span></a></li>',
+    TplPrevP:'@CODE:<li><a href="[+link+]"><span class="prev"></span></a></li>',
+    TplPage:'@CODE:<li><a href="[+link+]">[+num+]</a></li>',
+    TplCurrentPage:'@CODE:<li><a class="active-link-paginate" href="[+link+]">[+num+]</a></li>',
+    TplWrapPaginate:'@CODE:<ul class="pages">[+wrap+]</ul>',
+    noneTPL:'@T_FILE:partials/noitems',
+    filter: 'filters',
+    filterRangeSeparator: ':',
+    filterValuesSeparator: '|',
+    filterDelimiter: '||',
+    __filterPriceId: 19,
+    filterList: '42:dropdown;43:dropdown;19:range',
+    filterCurrencyId: 'RUB',
+    filterTpl: '@T_FILE:partials/filters/tpl',
+    filterOwnerRange: '@T_FILE:partials/filters/ownerRange',
+    filterTplRange: '@T_FILE:partials/filters/tplRange',
+    filterOwnerCheckbox: '@T_FILE:partials/filters/ownerCheckbox',
+    filterTplCheckbox: '@T_FILE:partials/filters/tplCheckbox',
+    tvSortType: 'UNSIGNED'
+}) %}
 {% include('partials/crumbs.twig') %}
 {% set complectation = runSnippet('multiTV', {tvName: 'equipment', docid: 'id', display:'all'}) %}
 {% set car_photos = resource.car_photos | json %}
@@ -287,6 +319,16 @@ tpl:'@T_CODE: <div class="gift__item">
             </div>
         </div>
     </div>
+    <div class="catalog-block">
+	<div class="container-fluid catalog-products" id="catalog">
+		<h2>Похожие автомобили</h2>
+		{{DLCatalog |raw}}
+	</div>
+	<div class="bottom-button">
+		<button onclick="window.location.href = '{{ makeUrl(27) }}';">Смотреть все <span></span></button>
+	</div>
+</div>
+</div>
     {% include('partials/banks.twig') %}
 
 </main>
