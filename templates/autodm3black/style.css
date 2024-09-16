@@ -879,6 +879,7 @@ header .contacts button{
 .catalog-block .item .price span {
   font-size: 24px;
   line-height: 28px;
+  letter-spacing: 0.03em;
 }
 
 .catalog-block .item .special {
