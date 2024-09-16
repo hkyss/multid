@@ -9,6 +9,9 @@ ownerTPL: '[+wrap+]',
 display: 1
 })
 %}
+
+{% set price = resource['car-price'] | default(0) %}
+
 {#{{ runSnippet('carday', {carprice: resource["car-price"] }) | raw}} #}
 {% set oldprice = runSnippet('helpers', {caroldprice: resource['car-price'],
 action:'caroldprice'}) %}
@@ -36,8 +39,10 @@ tpl:'@T_CODE: <div class="gift__item">
     controller: 'catalog_filters',
     display: 4,
     parents: catalog_number,
-    orderBy: "RAND()",
+    orderBy: "car-price ASC",
     depth: 5,
+    addWhereList: "c.id not in (" ~ resource.id ~ ")",
+    filters: "AND(tv:car-price:>:" ~ (price - 50000) ~ ";tv:car-price:<:" ~ (price + 50000) ~ ")",
     tvList:'car-price,old-car-price,credit_rate,car_photos,run,engine_power,gear,year,image',
     ownerTPL: '@T_FILE:partials/wrap',
     tpl:'@T_FILE:partials/catalogcard',
