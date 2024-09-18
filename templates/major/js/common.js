@@ -137,3 +137,41 @@ document.addEventListener('DOMContentLoaded', function () {
     showAllButton.style.display = 'none'
   })
 })
+
+function applyStylesAfterLoad() {
+  const header = document.querySelector('.header');
+  const indexTopLine = document.querySelector('.index-top-line');
+  const indexTopLineMob = document.querySelector('.index-top-line.mob');
+  
+  header.classList.add('visible');
+  indexTopLine.classList.add('visible');
+  indexTopLineMob.classList.add('visible');
+
+  adjustMainMargin();
+}
+
+window.addEventListener('load', applyStylesAfterLoad);
+
+function adjustMainMargin() {
+  const headerHeight = document.querySelector('.header').offsetHeight;
+  const indexTopLineHeight = document.querySelector('.index-top-line').offsetHeight;
+  const indexTopLineMobHeight = document.querySelector('.index-top-line.mob').offsetHeight;
+  const totalMargin = headerHeight + indexTopLineHeight + indexTopLineMobHeight;
+  document.querySelector('.main').style.marginTop = totalMargin + 'px';
+}
+
+function adjustMainMarginClose() {
+  const headerHeight = document.querySelector('.header').offsetHeight;
+  const totalMargin = headerHeight;
+  document.querySelector('.main').style.marginTop = totalMargin + 'px';
+}
+
+window.addEventListener('load', adjustMainMargin);
+window.addEventListener('resize', adjustMainMargin);
+
+function closeBlock(event) {
+  adjustMainMarginClose();
+  event.preventDefault();
+  document.querySelector('.index-top-line').style.display = 'none';
+  document.querySelector('.index-top-line.mob').style.display = 'none';
+}
