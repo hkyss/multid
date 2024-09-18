@@ -563,6 +563,32 @@ main {
   left: 6px;
   background: #181818;
 }
+.header .logo{
+  background-color: #181818;
+  display: flex;
+  align-items: center;
+}
+.hidden {
+  display: none;
+}
+.visible {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+.visible.header {
+  top: 0;
+  background-color: white;
+}
+.visible.index-top-line {
+  top: 74px;
+}
+.visible.index-top-line.mob {
+  top: 90px;
+}
+.main {
+  transition: margin-top 0.3s;
+}
 .index-top-line {
   color: #fff;
   background: #3B80CC;
@@ -2385,7 +2411,7 @@ right: -58px;
     left: 0;
     /* background: rgba(1, 1, 1, 0.7); */
     background: #181818;
-    z-index: 11;
+    z-index: 1001;
     display: none;
   }
   .header ul {
@@ -2427,6 +2453,7 @@ right: -58px;
   .header .container{
     min-height: 90px;
   }
+
   /* .index-top-line img {
     display: none;
   } */
