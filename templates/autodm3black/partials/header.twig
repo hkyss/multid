@@ -11,20 +11,9 @@
         <div class="container-fluid flex">
             <a href="/">
                 {% if baseSettings["logo"] %}
-                        <img src="{{baseSettings["logo"]}}" style="height: 45px;">
-                    {% else %}
-                    <div style="width: 110px;
-                height: 48px;
-                font-style: normal;
-                font-weight: 400;
-                font-size: 20px;
-                line-height: 24px;
-                display: flex;
-                align-items: center;
-                text-transform: uppercase;
-                justify-content: center;
-                color: #D12D1E;">{{ baseSettings.pagetitle }}
-                    </div>
+                    <img src="{{baseSettings["logo"]}}" class="logoimg">
+                {% else %}
+                    <div  class="head_logo_text">{{ baseSettings.pagetitle }}</div>
                 {% endif %}
             </a>
             
@@ -42,7 +31,45 @@
 
     </header>
     <style>
+.logoimg{
+    height: 45px;
+}
+.header .head_info {
+    font-size: 14px;
+}
 
+.head_logo_text{
+    width: 110px;
+    height: 48px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    justify-content: center;
+    color: #D12D1E;
+}
+@media (max-width: 435px) {
+    .logoimg{
+        height: 36px;
+    }
+    .header .contacts {
+        width: 70%;
+    }
+    .header .head_info {
+        font-size: 12px;
+    }
+}
+@media (max-width: 382px) {
+    .logoimg{
+        height: 36px;
+    }
+    .header .contacts {
+        width: 66%;
+    }
+}
 
     </style>
 

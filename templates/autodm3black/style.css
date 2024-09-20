@@ -4139,6 +4139,12 @@ div#trade-in-popup .application-form .details2 .row {
   background: #ffffff url('img/next2.svg') center / contain;
 }
 
+@media (max-width: 410px) {
+  .main {
+    padding-top: 101px;
+  } 
+}
+
 @media (max-width: 400px) {
   .header .contacts {
     width: 60%;
@@ -4154,6 +4160,7 @@ div#trade-in-popup .application-form .details2 .row {
     width: 60%;
     margin-top: 0px;
   }
+  
 }
 
 @media (max-width: 340px) {

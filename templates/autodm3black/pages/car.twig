@@ -72,6 +72,9 @@ tpl:'@T_CODE: <div class="gift__item">
 {% set car_photos = resource.car_photos | json %}
 {% set car_photos = car_photos.fieldValue %}
 
+{% set mounth_pay = resource['car-price'] / 72 %}
+{% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
+
 <main class="item-page">
     <div class="container-fluid">
         <div class="row">
@@ -183,7 +186,20 @@ tpl:'@T_CODE: <div class="gift__item">
                             </div>
                         </div>
                     </div>
-                    <button type="button"data-toggle="modal" data-target="#oneclick">Рассчитать кредит</button>
+                    {# <button type="button"data-toggle="modal" data-target="#oneclick">Рассчитать кредит</button> #}
+                    <button class="btn" type="button" onclick="openPopupForm(this)"
+                        data-title="{{resource.pagetitle}}"
+                        data-image="{{ car_photos[0].image }}"
+                        data-year="{{resource.year}}"
+                        data-run="{{resource.run }}"
+                        data-engine-volume="{{ resource.engine_volume }}"
+                        data-gear="{{ resource.gear }}"
+                        data-engine-power="{{ resource.engine_power }}"
+                        data-price="{{ (resource['car-price'])|number_format(0, '.', '  ') }}"
+                        data-old-car-price="{{ (resource['old-car-price'])|number_format(0, '.', '  ') }}"
+                        data-mounth-pay="{{ mounth_pay }}">
+                        Купить в кредит
+                    </button>
                 </div>
                 <div class="price-block">
                     <div class="price">
@@ -203,9 +219,13 @@ tpl:'@T_CODE: <div class="gift__item">
                 </div>
 
                 <div class="buttons">
-                    <button type="button"data-toggle="modal" data-target="#oneclick">Забронировать</button>
-                    <button type="button"data-toggle="modal" data-target="#oneclick">Получить предложение</button>
-                    <button type="button"data-toggle="modal" data-target="#oneclick">Выгода по трейд-ин 250 000 ₽</button>
+                    {# <button type="button"data-toggle="modal" data-target="#oneclick">Забронировать</button> #}
+                    {# <button type="button"data-toggle="modal" data-target="#oneclick">Получить предложение</button>
+                    <button type="button"data-toggle="modal" data-target="#oneclick">Выгода по трейд-ин 250 000 ₽</button> #}
+                    <button type="button" data-toggle="modal" data-target="#booking">Забронировать</button>
+                    <button type="button" data-toggle="modal" data-target="#callback2">Получить предложение</button>
+                    <button type="button" data-toggle="modal" data-target="#tradein">Выгода по трейд-ин 250 000 ₽</button>
+
                 </div>
                 <div class="icons-block">
                     <div class="row">

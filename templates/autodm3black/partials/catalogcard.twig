@@ -16,6 +16,9 @@ action:'caroldprice'}) %}
     action:'randomPhoto'})
 %}
 
+{% set mounth_pay = data['tv.car-price'] / 72 %}
+{% set mounth_pay = mounth_pay | round | number_format(0, '.', ' ') %}
+
 {#{ runSnippet('morephoto', {
 images: data['tv.car_photos'],
 tpl: '@CODE:[+image+]',
@@ -65,7 +68,8 @@ display: 1
                 data-gear="{{ data['tv.gear'] }}"
                 data-engine-power="{{ data['tv.engine_power'] }}"
                 data-price="{{ ( data['tv.car-price'] )|number_format(0, '.', ' ') }}"
-                data-old-car-price="{{ data['tv.old-car-price']|number_format(0, '.', ' ') }}">
+                data-old-car-price="{{ data['tv.old-car-price']|number_format(0, '.', ' ') }}"
+                data-mounth-pay="{{ mounth_pay }}">
                 Купить в кредит
             </button>
         </div>
