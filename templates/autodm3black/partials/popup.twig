@@ -61,7 +61,7 @@
         {% else %}
           <h1 class="col-12 text-center" id="form-text"><span class="city">ТЮМЕНЬ</span><br>ПРОБЕГ</h1>
         {% endif %} 
-        <h5 class="modal-title text-center" id="feedbackLabel">Получить предложение</h5>
+        <h5 class="modal-title form-trade text-center" id="feedbackLabel">Получить предложение</h5>
         <p class="text-center">Наши специалисты ответят на все интересующие вопросы</p>
       </div>
       {{ runSnippet('Form', {
@@ -72,6 +72,15 @@
     </div>
   </div>
 </div>
+<script>
+  $('#callback2').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var title = button.data('title');
+    var modal = $(this);
+    modal.find('.modal-title').text(title);
+  });
+</script>
+
 
 <!-- Модальное окно для Трейд-ин -->
 <div class="modal fade" id="tradein" tabindex="-1" role="dialog" aria-labelledby="oneclick" aria-hidden="true">
