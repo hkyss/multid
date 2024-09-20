@@ -3259,6 +3259,9 @@ div#trade-in-popup .application-form .form-header-mob{
 }
 
 @media (max-width: 575px) {
+  .main{
+    padding-top: 82px;
+  }
   .container-fluid {
     width: auto;
   }
