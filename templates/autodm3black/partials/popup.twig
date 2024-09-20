@@ -20,6 +20,85 @@
   </div>
 </div>
 
+<!-- Модальное окно для Брони -->
+<div class="modal fade" id="booking" tabindex="-1" role="dialog" aria-labelledby="oneclick" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background: #b71f25;">
+    <div class="modal-content border-0">
+        <div class="modal-header border-0">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-titles">
+          {% if baseSettings.logo_text %}
+            <h1 class="col-12 text-center">{{ baseSettings.logo_text }}</h1>
+          {% else %}
+            <h1 class="col-12 text-center"><span class="city">ТЮМЕНЬ</span><br>ПРОБЕГ</h1>
+          {% endif %} 
+            <h5 class="modal-title text-center" id="feedbackLabel">Забронировать</h5>
+            <p class="text-center">Наши специалисты ответят на все интересующие вопросы</p>
+        </div>
+        {{ runSnippet('Form', {
+          formid: 'FormCallback',
+          path: '/templates/autodm3black/partials/forms/booking_modal/',
+          extension: 'twig'
+        }) | raw }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно для Звонка -->
+<div class="modal fade" id="callback2" tabindex="-1" role="dialog" aria-labelledby="oneclick" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header border-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-titles">
+        {% if baseSettings.logo_text %}
+          <h1 class="col-12 text-center">{{ baseSettings.logo_text }}</h1>
+        {% else %}
+          <h1 class="col-12 text-center" id="form-text"><span class="city">ТЮМЕНЬ</span><br>ПРОБЕГ</h1>
+        {% endif %} 
+        <h5 class="modal-title text-center" id="feedbackLabel">Получить предложение</h5>
+        <p class="text-center">Наши специалисты ответят на все интересующие вопросы</p>
+      </div>
+      {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/autodm3black/partials/forms/callback_modal2/',
+        extension: 'twig'
+      }) | raw }}
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно для Трейд-ин -->
+<div class="modal fade" id="tradein" tabindex="-1" role="dialog" aria-labelledby="oneclick" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content border-0">
+
+      <div class="modal-header border-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-titles">
+        {% if baseSettings.logo_text %}
+          <h1 class="col-12 text-center">{{ baseSettings.logo_text }}</h1>
+        {% else %}
+          <h1 class="col-12 text-center"><span class="city">ТЮМЕНЬ</span><br>ПРОБЕГ</h1>
+        {% endif %} 
+        <h5 class="modal-title text-center" id="feedbackLabel">Выгода по трейд-ин 250 000 ₽</h5>
+        <p class="text-center">Наши специалисты ответят на все интересующие вопросы</p>
+      </div>
+      {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/autodm3black/partials/forms/tradein_modal/',
+        extension: 'twig'
+      }) | raw }}
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -67,6 +146,7 @@ function openPopupForm(button) {
     var equipment = button.getAttribute('data-equipment');
     var price = button.getAttribute('data-price');
     var oldPrice = button.getAttribute('data-old-car-price');
+    var mounthPay = button.getAttribute('data-mounth-pay');
 
     // Заполняем модальное окно данными
     document.getElementById('modal-car-title').innerText = title;
@@ -80,6 +160,7 @@ function openPopupForm(button) {
     document.getElementById('modal-equipment').innerText = equipment;
     document.getElementById('modal-price').innerText = price + ' ₽';
     document.getElementById('modal-oldPrice').innerText = oldPrice + ' ₽.';
+    document.getElementById('modal-mounthPay').innerText = 'от ' + mounthPay + ' ₽.';
 
     // Открываем модальное окно
     $.fancybox.open({
@@ -176,7 +257,7 @@ function openPopupForm(button) {
             </div>
             <div class="flex" style="border-bottom: 1px solid #D8D8D8;">
               <p>Ежемесячный платеж:</p>
-              <strong>от 15 049 ₽</strong>
+              <strong id= "modal-mounthPay">от 15 049 ₽</strong>
             </div>
           </div>
         </div>
