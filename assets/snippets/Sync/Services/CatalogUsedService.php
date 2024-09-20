@@ -28,6 +28,38 @@ class CatalogUsedService extends AbstractService
     }
 
     /**
+     * @return string
+     */
+    public function catalog(): string
+    {
+        $catalog = $this->getCatalogData();
+
+        if (empty($catalog)) {
+            return 'Empty catalog';
+        }
+
+        $ids = $this->getProductIds();
+
+        foreach ($catalog as $item) {
+            $item_key_id = $this->getItemKeyId();
+            $id_old = $item[$item_key_id];
+            $params = $this->params($item);
+
+            if (empty($params)) {
+                continue;
+            }
+
+            if (empty($ids[$id_old])) {
+                $this->create($params);
+            } else {
+                $this->update($ids[$id_old], $params);
+            }
+        }
+
+        return 'Done!';
+    }
+
+    /**
      * @param  array  $item
      * @return array
      */
@@ -204,5 +236,13 @@ class CatalogUsedService extends AbstractService
         }
 
         return $photos;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getItemKeyId(): string
+    {
+        return "car_id";
     }
 }

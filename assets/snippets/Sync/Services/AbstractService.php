@@ -44,7 +44,8 @@ abstract class AbstractService
         $ids = $this->getProductIds();
 
         foreach ($catalog as $key => $item) {
-            $id_old = (int) $item['id'];
+            $item_key_id = $this->getItemKeyId();
+            $id_old = (int) $item[$item_key_id];
             $params = $this->params($item);
 
             if (empty($params)) {
@@ -136,5 +137,13 @@ abstract class AbstractService
             $result[(int) $item['value']] = (int) $item['contentid'];
             return $result;
         }, []);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getItemKeyId(): string
+    {
+        return "id";
     }
 }
