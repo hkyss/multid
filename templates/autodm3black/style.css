@@ -2846,7 +2846,8 @@ div#trade-in-popup .details1{
     display: flex;
     flex-direction: column;
     padding-right: 8px;
-    width: 154px;
+    /* width: 154px; */
+    width: 195px;
   }
   .header ul li {
     margin-right: 15px;
