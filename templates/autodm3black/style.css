@@ -2497,6 +2497,11 @@ header .contacts button{
   line-height: 59px;
   font-size: 58px;
 }
+.modal-title.form-trade {
+  margin-bottom: 0;
+  line-height: 59px;
+  font-size: 58px;
+}
 .modal-body .form-control {
   display: block;
   width: 100%;
@@ -3214,6 +3219,7 @@ div#trade-in-popup .application-form .form-header-mob{
     color: #b71f25;
     font-size: 30px;
 }
+.modal-title.form-trade,
 .modal-title {
     margin-bottom: 0;
     line-height: 24px;
