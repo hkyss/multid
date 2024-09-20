@@ -13,7 +13,7 @@
       "required": "Обязательно к заполнению"
     }
   },
-  "subject": "Купить автомобиль: Наличные",
+  "subject": "Забронировать автомобиль: Наличные",
   "prepare": "prepareFormConfig",
   "prepareAfterProcess": "CatchFormResult",
   "formControls": "agree",
