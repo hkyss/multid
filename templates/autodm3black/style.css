@@ -4181,6 +4181,19 @@ div#trade-in-popup .application-form .details2 .row {
   .main {
     padding-top: 101px;
   } 
+  .head_logo_text2 {
+    width: 53%;
+    /* height: 73px; */
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 39px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    justify-content: center;
+    color: #D12D1E;
+  }
 }
 
 @media (max-width: 400px) {

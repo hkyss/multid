@@ -1,6 +1,6 @@
-<div class="modal fade" id="oneclick" tabindex="-1" role="dialog" aria-labelledby="oneclick" aria-hidden="true">
+{# <div class="modal fade" id="oneclick" tabindex="-1" role="dialog" aria-labelledby="oneclick" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content" style="background: #b71f25;" >
+    <div class="modal-content" style="background: #b71f25;" > #}
       <!--div class="modal-header">
         <h5 class="modal-title" id="oneclick">Форма обратной связи</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -8,17 +8,18 @@
         </button>
       </div-->
       <!--div class="modal-body">
-        Оставьте заявку - и наш менеджер свяжется с Вами в ближайшее время      </div-->{{ runSnippet('Form', {
+        Оставьте заявку - и наш менеджер свяжется с Вами в ближайшее время      </div-->
+        {# {{ runSnippet('Form', {
                             formid: 'FormCallback',
                             path: '/templates/autodm3black/partials/forms/feedback_modal/',
                             extension: 'twig'
-                        })  | raw }}
+                        })  | raw }} #}
       <!--div class="modal-footer">
         <button type="button" class="btn btn-primary">Отправить</button>
       </div-->
-    </div>
+    {# </div>
   </div>
-</div>
+</div> #}
 
 <!-- Модальное окно для Брони -->
 <div class="modal fade" id="booking" tabindex="-1" role="dialog" aria-labelledby="oneclick" aria-hidden="true">
@@ -29,12 +30,12 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         </div>
         <div class="modal-titles">
-          {# {% if baseSettings.logo_text %}
-            <h1 class="col-12 text-center" class="city2">{{ baseSettings.logo_text }}</h1> #}
-          {% if baseSettings["logo"] %}
-              <div class="d-flex justify-content-center"><img src="{{baseSettings["logo"]}}" class="logoimg"></div>
-          {% elseif baseSettings.pagetitle %}
-              <div class="d-flex justify-content-center"><div class="head_logo_text2">{{ baseSettings.pagetitle }}</div></div>
+        {% if baseSettings.logo_text %}
+          <h1 class="col-12 text-center">{{ baseSettings.logo_text | raw }}</h1>
+        {% elseif baseSettings["logo"] %}
+          <div class="d-flex justify-content-center"><img src="{{baseSettings["logo"]}}" class="logoimg"></div>
+        {% elseif baseSettings.pagetitle %}
+          <div class="d-flex justify-content-center"><div class="head_logo_text2">{{ baseSettings.pagetitle }}</div></div>
           {% else %}
             <h1 class="col-12 text-center"><span class="city">{{ baseSettings.city }}</span><br>ПРОБЕГ</h1>
           {% endif %} 
@@ -61,7 +62,7 @@
       </div>
       <div class="modal-titles">
         {% if baseSettings.logo_text %}
-          <h1 class="col-12 text-center">{{ baseSettings.logo_text }}</h1>
+          <h1 class="col-12 text-center">{{ baseSettings.logo_text | raw }}</h1>
         {% elseif baseSettings["logo"] %}
           <div class="d-flex justify-content-center"><img src="{{baseSettings["logo"]}}" class="logoimg"></div>
         {% elseif baseSettings.pagetitle %}
@@ -100,7 +101,11 @@
       </div>
       <div class="modal-titles">
         {% if baseSettings.logo_text %}
-          <h1 class="col-12 text-center">{{ baseSettings.logo_text }}</h1>
+          <h1 class="col-12 text-center">{{ baseSettings.logo_text | raw }}</h1>
+        {% elseif baseSettings["logo"] %}
+          <div class="d-flex justify-content-center"><img src="{{baseSettings["logo"]}}" class="logoimg"></div>
+        {% elseif baseSettings.pagetitle %}
+          <div class="d-flex justify-content-center"><div class="head_logo_text2">{{ baseSettings.pagetitle }}</div></div>
         {% else %}
           <h1 class="col-12 text-center"><span class="city">{{ baseSettings.city }}</span><br>ПРОБЕГ</h1>
         {% endif %} 
@@ -110,6 +115,36 @@
       {{ runSnippet('Form', {
         formid: 'FormCallback',
         path: '/templates/autodm3black/partials/forms/tradein_modal/',
+        extension: 'twig'
+      }) | raw }}
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="oneclick" tabindex="-1" role="dialog" aria-labelledby="oneclick" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content border-0">
+
+      <div class="modal-header border-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-titles">
+        {% if baseSettings.logo_text %}
+          <h1 class="col-12 text-center">{{ baseSettings.logo_text | raw }}</h1>
+        {% elseif baseSettings["logo"] %}
+          <div class="d-flex justify-content-center"><img src="{{baseSettings["logo"]}}" class="logoimg"></div>
+        {% elseif baseSettings.pagetitle %}
+          <div class="d-flex justify-content-center"><div class="head_logo_text2">{{ baseSettings.pagetitle }}</div></div>
+        {% else %}
+          <h1 class="col-12 text-center"><span class="city">{{ baseSettings.city }}</span><br>ПРОБЕГ</h1>
+        {% endif %} 
+        <h5 class="modal-title form-trade text-center" id="feedbackLabel">Давайте мы Вам позвоним!</h5>
+        <p class="text-center">Наши специалисты ответят на все интересующие вопросы</p>
+      </div>
+      {{ runSnippet('Form', {
+        formid: 'FormCallback',
+        path: '/templates/autodm3black/partials/forms/callback_modal2/',
         extension: 'twig'
       }) | raw }}
     </div>
