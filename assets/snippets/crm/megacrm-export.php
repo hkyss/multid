@@ -90,10 +90,21 @@ foreach ($results as $item) {
         }
     }
 
+    $name = trim((string) $fields['name']);
+    $phone = trim((string) $fields['phone']);
+
+    if (empty($name)) {
+        $name = trim((string) $fields['first_name']);
+    }
+
+    if (empty($phone)) {
+        $phone = trim((string) $fields['mobile_tel']);
+    }
+
     $data[] = [
-        'mobile_tel' => preg_replace('/[^0-9]/', '', $fields['phone']),
+        'mobile_tel' => preg_replace('/[^0-9]/', '', $phone),
         'last_name' => "",
-        'first_name' => $fields['name'],
+        'first_name' => $name,
         'middle_name' => "",
         'brand' => $brand,
         'model' => $model,
