@@ -72,6 +72,11 @@ foreach ($results as $item) {
     $model = (string) $fields['model'];
 
     $resourceId = (int) $fields['resourceId'];
+
+    if (empty($resourceId)) {
+        $resourceId = (int) $fields['docid'];
+    }
+
     $car_cost = 0;
     $model_year = "";
     $mileage = 0;
