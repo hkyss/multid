@@ -545,6 +545,20 @@ header .contacts button{
   display: block;
 }
 
+.head_logo_text2 {
+  width: 50%;
+  /* height: 73px; */
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.5rem;
+  line-height: 50px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  justify-content: center;
+  color: #D12D1E;
+}
+
 .left-listCall {
   display: none;
 }
@@ -3123,6 +3137,20 @@ div#trade-in-popup .application-form .form-header-mob{
     justify-content: center;
     margin-top: 20px;
     font-size: 16px;
+  }
+
+  .head_logo_text2 {
+    width: 35%;
+    /* height: 73px; */
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 39px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    justify-content: center;
+    color: #D12D1E;
   }
 
   .footer .li-foot{

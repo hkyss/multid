@@ -29,10 +29,14 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         </div>
         <div class="modal-titles">
-          {% if baseSettings.logo_text %}
-            <h1 class="col-12 text-center">{{ baseSettings.logo_text }}</h1>
+          {# {% if baseSettings.logo_text %}
+            <h1 class="col-12 text-center" class="city2">{{ baseSettings.logo_text }}</h1> #}
+          {% if baseSettings["logo"] %}
+              <div class="d-flex justify-content-center"><img src="{{baseSettings["logo"]}}" class="logoimg"></div>
+          {% elseif baseSettings.pagetitle %}
+              <div class="d-flex justify-content-center"><div class="head_logo_text2">{{ baseSettings.pagetitle }}</div></div>
           {% else %}
-            <h1 class="col-12 text-center"><span class="city">ТЮМЕНЬ</span><br>ПРОБЕГ</h1>
+            <h1 class="col-12 text-center"><span class="city">{{ baseSettings.city }}</span><br>ПРОБЕГ</h1>
           {% endif %} 
             <h5 class="modal-title text-center" id="feedbackLabel">Забронировать</h5>
             <p class="text-center">Наши специалисты ответят на все интересующие вопросы</p>
@@ -58,8 +62,12 @@
       <div class="modal-titles">
         {% if baseSettings.logo_text %}
           <h1 class="col-12 text-center">{{ baseSettings.logo_text }}</h1>
+        {% elseif baseSettings["logo"] %}
+          <div class="d-flex justify-content-center"><img src="{{baseSettings["logo"]}}" class="logoimg"></div>
+        {% elseif baseSettings.pagetitle %}
+          <div class="d-flex justify-content-center"><div class="head_logo_text2">{{ baseSettings.pagetitle }}</div></div>
         {% else %}
-          <h1 class="col-12 text-center" id="form-text"><span class="city">ТЮМЕНЬ</span><br>ПРОБЕГ</h1>
+          <h1 class="col-12 text-center" id="form-text"><span class="city">{{ baseSettings.city }}</span><br>ПРОБЕГ</h1>
         {% endif %} 
         <h5 class="modal-title form-trade text-center" id="feedbackLabel">Получить предложение</h5>
         <p class="text-center">Наши специалисты ответят на все интересующие вопросы</p>
@@ -94,7 +102,7 @@
         {% if baseSettings.logo_text %}
           <h1 class="col-12 text-center">{{ baseSettings.logo_text }}</h1>
         {% else %}
-          <h1 class="col-12 text-center"><span class="city">ТЮМЕНЬ</span><br>ПРОБЕГ</h1>
+          <h1 class="col-12 text-center"><span class="city">{{ baseSettings.city }}</span><br>ПРОБЕГ</h1>
         {% endif %} 
         <h5 class="modal-title form-trade text-center" id="feedbackLabel">Выгода по трейд-ин 250 000 ₽</h5>
         <p class="text-center">Наши специалисты ответят на все интересующие вопросы</p>
@@ -282,3 +290,6 @@ function openPopupForm(button) {
   </div>
 </div>
 </div>
+<style>
+
+</style>
