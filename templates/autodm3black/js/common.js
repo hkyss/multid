@@ -195,7 +195,7 @@ $(document).ready(function() {
     //   paymentSpan.text(payment.toLocaleString('ru-RU', { maximumFractionDigits: 0 }) + ' р/мес.');
     // }
 
-    const interest = 7.8;
+    const interest = 5.6;
 
     amount = Number(amount);
     let years = Number(amount2) / 12;
